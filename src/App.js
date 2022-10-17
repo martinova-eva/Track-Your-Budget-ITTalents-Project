@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import { Routes, Route, Link } from "react-router-dom";
+import RegistrationForm from './components/registration/registration';
+import LoginForm from './components/login/login';
 
 function App() {
   
@@ -14,18 +16,12 @@ function App() {
         </>} />
 
         <Route path="/register" element={<>
-        <h1>Welcome to Register</h1>
-        <Link to="/login">You already have an account, click here!</Link><br></br>
-        <Link to="/">Go to Demo Page!</Link>
+        <RegistrationForm></RegistrationForm>
         </>} />
 
         <Route path="/login" element={<>
-        <h1>Welcome to Log In</h1>
-        <Link to="/">Go to Demo Page!</Link><br></br>
-        <Link to="/homePage">Go To Home Page!</Link><br></br>
-        <Link to="/register">You don't have an account, click here!</Link>
+        <LoginForm/>
         </>} />
-
         <Route path="/homePage" element={<>
         <h1>Welcome to Home Page</h1>
         <Link to="/accountPage">Go To Account Page!</Link><br></br>

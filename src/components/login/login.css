@@ -1,0 +1,18 @@
+.paperStyle{
+    padding: 30px 20px;
+    width: 500px;
+    margin: 50px auto;
+}
+.fieldStyle{
+    margin: 8px auto;
+    
+}
+.formStyle{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.wrapper{
+    display: flex;
+    flex-wrap: wrap;
+}
