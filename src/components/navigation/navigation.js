@@ -20,7 +20,7 @@ export default function Navigation() {
           >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${"lg"}`}>
-              <img src='./budgetingLogo.png' width={25}></img>
+              <img src='./budgetingLogo.png' width={25} alt='logo.png'></img>
                    Budget tracker
               </Offcanvas.Title>
             </Offcanvas.Header>
@@ -44,7 +44,7 @@ export default function Navigation() {
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav>
-                <Button variant="outline-success"><Link to="/" className="nav-link active text-dark">EXIT</Link></Button>
+                <Button variant="outline-dark"><Link to="/" className="nav-link active">EXIT</Link></Button>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>

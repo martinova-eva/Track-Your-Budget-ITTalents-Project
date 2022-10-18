@@ -1,0 +1,19 @@
+.wrapper-select-elements{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+    gap: 5%;
+    justify-content: center;
+}
+.wrapper-select-elements > div{
+    margin: 2vh 2vw;  
+    padding: 5vh; 
+  }
+.select-element{
+    margin: 2vh 5vw;
+    display: flex;
+    max-width: 30vw;
+    min-width: 20vw;
+    
+}
