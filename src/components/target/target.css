@@ -1,0 +1,21 @@
+.progressBarContainer{
+    width: 31rem;
+   
+}
+.targetImage{
+    height: 5rem;
+}
+.target{
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+    align-items: center;
+}
+.targetWrapper{
+    margin: 1.8rem auto;
+  
+    
+}
+.progress-bar {  
+    background-color: #13b977;
+  }
