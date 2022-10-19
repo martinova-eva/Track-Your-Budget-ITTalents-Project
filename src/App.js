@@ -3,11 +3,19 @@ import { Routes, Route, Link } from "react-router-dom";
 import RegistrationForm from './components/registration/registration';
 import LoginForm from './components/login/login';
 import Navigation from './components/navigation/navigation';
+import Target from './components/target/target';
+import AccountsList from './components/accountsList/AccountsList';
+
+import CreateCheckingAccount from './components/CheckingAccountForm/CheckingAccountForm';
+
+
+
 
 
 function App() {
-  
+ 
   return (
+    
     <div className="App">
       <Routes>
         <Route path="/" element={<>
@@ -25,7 +33,9 @@ function App() {
         </>} />
         <Route path="/homePage" element={<>
           <Navigation/>
-        <h1>Welcome to Home Page</h1>
+        <Target/>
+        <AccountsList/>
+        
         </>} />
 
         <Route path="/accountPage" element={<>
@@ -47,12 +57,17 @@ function App() {
           <Navigation/>
         <h1>Here you can create a new transaction category</h1>
         </>} />
-
+        <Route path="/createCheckingsAccount" element={<>
+          <Navigation/>
+        <CreateCheckingAccount/>
+        </>} />
         <Route path="*" element={<>
         <h1>ooooopppppsss 404!</h1>
         </>} />
       </Routes>
     </div>
+  
+
   );
 }
 

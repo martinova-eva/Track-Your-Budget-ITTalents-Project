@@ -1,18 +1,21 @@
-.paperStyle{
-    padding: 30px 20px;
-    width: 500px;
-    margin: 50px auto;
+.registerPaperStyle{
+    padding: 1.8rem 1.25rem;
+    width: 35rem;
+    margin: 3.0rem auto;
 }
 .fieldStyle{
-    margin: 8px auto;
+    margin: 0.5rem auto;
     
 }
 .formStyle{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0.7rem;
 }
 .wrapper{
     display: flex;
     flex-wrap: wrap;
+}
+#submitButton{
+   background-color:#13b977;
 }

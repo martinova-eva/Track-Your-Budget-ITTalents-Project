@@ -7,8 +7,8 @@ import "./login.css";
 export default function LoginForm() {
    return (
       <Grid className="wrapper" >
-         <Paper elevation={20} className="paperStyle">
-            <Avatar className="fieldStyle" src="./budgetingLogo.png" />
+         <Paper elevation={20} className="loginPaperStyle">
+            <Avatar className="fieldStyle" src='../assets/10491-logo-wallet.png'/>
             <h2>Sign in</h2>
             <form className="formStyle">
                <TextField
@@ -19,7 +19,7 @@ export default function LoginForm() {
                   label="Email"
                   placeholder="Enter your email" />
                <PasswordFields placeholder={"Enter a password"} labels={"Password"} />
-               <Button type="submit" variant="contained" size="large" color="primary">Sign in</Button>
+               <Button type="submit" variant="contained" size="large" id="submitButton">Sign in</Button>
             </form>
             <Grid className="fieldStyle">
             <Link to="/register">You don't have an account? Click here to create one.</Link>

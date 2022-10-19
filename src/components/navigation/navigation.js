@@ -11,7 +11,7 @@ export default function Navigation() {
     return (
         <Navbar key="lg" bg="light" expand="lg" className="mb-3">
         <Container fluid>
-          <Navbar.Brand >LOGO HERE</Navbar.Brand>
+          <Navbar.Brand ><img width={50} className='navLogo' src='../assets/10491-logo-wallet.png'></img> </Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${"lg"}`} />
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-${"lg"}`}
