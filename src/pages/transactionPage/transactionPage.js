@@ -8,6 +8,7 @@ import {FormControl,  Input,  Button, Box, Avatar} from '@mui/material';
 import { possibleIncomeObjs } from '../../components/categoryCreator/listOfAllIncomes';
 import { allOutcomeCategories } from '../../components/categoryCreator/listOfAllOutcomes'
 import InputBase from '@mui/material/InputBase/InputBase';
+import BasicDatePicker from '../../components/CheckingAccountForm/datePicker';
 
 // import { green } from '@mui/material/colors';
 // import Icon from '@mui/material/Icon';
@@ -18,9 +19,9 @@ export default function TransactionPage() {
 
   return (
     <div className='wrapper-select-elements'>
-      <Box sx={{ border: 1, borderColor: 'primary.main', boxShadow: 5, minWidth: 80, display: "flex", flexDirection: 'column' }}>
+      <Box sx={{ border: 1, borderColor: 'paper', boxShadow: 5, minWidth: 80, display: "flex", flexDirection: 'column' }}>
 
-        <Avatar className="fieldStyle" alt="logo" src=".\budgetingLogo.png" size="lg" />
+        <Avatar className="fieldStyle" alt="logo" src="..\assets\10491-logo-wallet.png" size="lg" />
         <h2>Add a transaction</h2>
 
         <SelectElement className="select-element" title={"Choose account:"}>
@@ -44,9 +45,8 @@ export default function TransactionPage() {
           {allOutcomeCategories.map((option, i) => <option key={i} value={option.title}>{option.title}</option>)}
         </SelectElement>
 
-        
-
         <FormControl>
+            <BasicDatePicker className="datePicker"/>
           <Input className="inputStyle" type="text" placeholder="transaction description" required={true}/>
           <InputBase className="inputStyle" type="number"   placeholder="enter amount" required={true}/>
 

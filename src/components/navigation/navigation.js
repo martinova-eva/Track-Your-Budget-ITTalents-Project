@@ -20,7 +20,7 @@ export default function Navigation() {
           >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${"lg"}`}>
-              <img src='./budgetingLogo.png' width={25} alt='logo.png'></img>
+              <img src='..\assets\10491-logo-wallet.png' width={25} alt='logo.png'></img>
                    Budget tracker
               </Offcanvas.Title>
             </Offcanvas.Header>
@@ -30,13 +30,12 @@ export default function Navigation() {
                <Link to="/accountPage" className="nav-link active text-dark">Accounts</Link>
                <Link to="/accountSavings" className="nav-link active text-dark">Savings account</Link>
                 <NavDropdown
-                  title="Add transaction"
+                  title="Transactions"
                   className="text-dark"
                   id={`offcanvasNavbarDropdown-expand-${"lg"}`}
                 >
-                  <NavDropdown.Item ><Link to="/addTransaction" className="nav-link active text-dark">Add to account in lv</Link></NavDropdown.Item>
                   <NavDropdown.Item >
-                  <Link to="/addTransaction" className="nav-link active text-dark">Add to account in $</Link>
+                  <Link to="/addTransaction" className="nav-link active text-dark">Add a transaction</Link>
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item >

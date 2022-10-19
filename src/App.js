@@ -8,7 +8,7 @@ import CreateCategoryPage from './pages/createCategoryPage/createCategoryPage';
 import Target from './components/target/target';
 import AccountsList from './components/accountsList/AccountsList';
 import CreateCheckingAccount from './components/CheckingAccountForm/CheckingAccountForm';
-import TransactionPage from './pages/transactionPage/transactionPage'
+// import TransactionPage from './pages/transactionPage/transactionPage'
 
 function App() {
  
