@@ -7,8 +7,8 @@ import "./registration.css";
 export default function RegistrationForm() {
    return (
       <Grid className="wrapper">
-         <Paper elevation={20} className="paperStyle">
-            <Avatar className="fieldStyle" src="./budgetingLogo.png" />
+         <Paper elevation={20} className="registerPaperStyle">
+            <Avatar className="fieldStyle" src='../assets/10491-logo-wallet.png' />
             <h2>Sign up</h2>
             <form className="formStyle">
                <TextField
@@ -27,7 +27,7 @@ export default function RegistrationForm() {
                   placeholder="Enter your email" />
                <PasswordFields placeholder={"Enter a password"} labels={"Password"} />
                <PasswordFields placeholder={"Confirm your password"} labels={"Confirm"} />
-               <Button type="submit" variant="contained" size="large" color="primary">Sign up</Button>
+               <Button type="submit" variant="contained" size="large" id="submitButton" >Sign up</Button>
             </form>
             <Grid className="fieldStyle">
                <Link to="/login">You already have an account? Login Here!</Link>

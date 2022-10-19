@@ -1,6 +1,6 @@
-.registerPaperStyle{
+.paperStyle{
     padding: 1.8rem 1.25rem;
-    width: 35rem;
+    width: 40rem;
     margin: 3.0rem auto;
 }
 .fieldStyle{
@@ -17,5 +17,5 @@
     flex-wrap: wrap;
 }
 #submitButton{
-   background-color:#13b977;
-}
+    background-color:#13b977;
+ }

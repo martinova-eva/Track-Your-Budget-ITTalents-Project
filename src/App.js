@@ -5,10 +5,15 @@ import LoginForm from './components/login/login';
 import Navigation from './components/navigation/navigation';
 import TransactionPage from './pages/transactionPage/transactionPage';
 import CreateCategoryPage from './pages/createCategoryPage/createCategoryPage';
+import Target from './components/target/target';
+import AccountsList from './components/accountsList/AccountsList';
+import CreateCheckingAccount from './components/CheckingAccountForm/CheckingAccountForm';
+import TransactionPage from './pages/transactionPage/transactionPage'
 
 function App() {
-  
+ 
   return (
+    
     <div className="App">
       <Routes>
         <Route path="/" element={<>
@@ -26,7 +31,9 @@ function App() {
         </>} />
         <Route path="/homePage" element={<>
           <Navigation/>
-        <h1>Welcome to Home Page</h1>
+        <Target/>
+        <AccountsList/>
+        
         </>} />
 
         <Route path="/accountPage" element={<>
@@ -49,12 +56,17 @@ function App() {
           <Navigation/> 
           <CreateCategoryPage/>
         </>} />
-
+        <Route path="/createCheckingsAccount" element={<>
+          <Navigation/>
+        <CreateCheckingAccount/>
+        </>} />
         <Route path="*" element={<>
         <h1>ooooopppppsss 404!</h1>
         </>} />
       </Routes>
     </div>
+  
+
   );
 }
 
