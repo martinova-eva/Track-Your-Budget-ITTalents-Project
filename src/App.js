@@ -5,12 +5,8 @@ import LoginForm from './components/login/login';
 import Navigation from './components/navigation/navigation';
 import Target from './components/target/target';
 import AccountsList from './components/accountsList/AccountsList';
-
 import CreateCheckingAccount from './components/CheckingAccountForm/CheckingAccountForm';
-
-
-
-
+import TransactionPage from './pages/transactionPage/transactionPage'
 
 function App() {
  
@@ -46,16 +42,18 @@ function App() {
         <Route path="/accountSavings" element={<>
           <Navigation/>
         <h1>Create a savings account here, add target, and set percentage, which will come here</h1>
+
         </>} />
 
         <Route path="/addTransaction" element={<>
-          <Navigation/>
-        <h1>Add a transaction</h1>
+            <Navigation/>
+            <TransactionPage></TransactionPage>
         </>} />
 
         <Route path="/createNewCategory" element={<>
-          <Navigation/>
+          <Navigation/> 
         <h1>Here you can create a new transaction category</h1>
+          {/* <NewCategoryPage/> */}
         </>} />
         <Route path="/createCheckingsAccount" element={<>
           <Navigation/>
