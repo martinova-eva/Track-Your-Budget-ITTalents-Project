@@ -10,6 +10,7 @@ const possibleOutcomeArr = [
     { title: "sport", type: "outcome"},
     { title: "trips", type: "outcome"},
     { title: "gifts", type: "outcome"},
+    { title: "shopping", type: "outcome"},
     { title: "house renovation", type: "outcome"},
     { title: "house insuranse", type: "outcome"},
     { title: "car supplies and renovation", type: "outcome"},
@@ -24,6 +25,7 @@ const symbolls = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
 
 export const allOutcomeCategories = possibleOutcomeArr.map(c => {
     c.id = `${Math.floor(Math.random()*500)}${symbolls[Math.floor(Math.random()*(symbolls.length))]}`;
+    
     return c;
 });
 

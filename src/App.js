@@ -3,7 +3,8 @@ import { Routes, Route, Link } from "react-router-dom";
 import RegistrationForm from './components/registration/registration';
 import LoginForm from './components/login/login';
 import Navigation from './components/navigation/navigation';
-import TransactionPage from './pages/transactionPage/transactionPage'
+import TransactionPage from './pages/transactionPage/transactionPage';
+import CreateCategoryPage from './pages/createCategoryPage/createCategoryPage';
 
 function App() {
   
@@ -46,8 +47,7 @@ function App() {
 
         <Route path="/createNewCategory" element={<>
           <Navigation/> 
-        <h1>Here you can create a new transaction category</h1>
-          {/* <NewCategoryPage/> */}
+          <CreateCategoryPage/>
         </>} />
 
         <Route path="*" element={<>

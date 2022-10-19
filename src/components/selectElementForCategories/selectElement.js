@@ -14,7 +14,7 @@ export default function SelectElement(props) {
       }
     }
     return (
-      <FormControl className="select-element" onChange={(e)=>handleChange(e)} value={option}>
+      <FormControl className="select-element" onChange={(e)=>handleChange(e)} value={option} fullWidth>
         <InputLabel variant="standard" htmlFor="uncontrolled-native"> 
           {props.title}
         </InputLabel>

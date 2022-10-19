@@ -7,6 +7,12 @@ import {FormControl,  Input,  Button, Box, Avatar} from '@mui/material';
 // import ListOfAllOutcomes from '../categoryCreator/listOfAllOutcomes';
 import { possibleIncomeObjs } from '../../components/categoryCreator/listOfAllIncomes';
 import { allOutcomeCategories } from '../../components/categoryCreator/listOfAllOutcomes'
+import InputBase from '@mui/material/InputBase/InputBase';
+
+// import { green } from '@mui/material/colors';
+// import Icon from '@mui/material/Icon';
+// import { ArrowRight, Camera } from '@mui/icons-material'
+// import CameraIcon from "@mui/icons-material/Camera";
 
 export default function TransactionPage() {
 
@@ -31,17 +37,18 @@ export default function TransactionPage() {
 
         {/* според избора трябва да се disable елемента, който не е нужен */}
         <SelectElement className="select-element" title={"Choose from income category:"} >
-          {possibleIncomeObjs.map((option, i) => <option key={i} value={option.title}>{option.title}</option>)}
+        {possibleIncomeObjs.map((option, i) => <option key={i} value={option.title}>{option.title} </option>)}
         </SelectElement>
 
         <SelectElement className="select-element" title={"Choose from outcome category:"} >
           {allOutcomeCategories.map((option, i) => <option key={i} value={option.title}>{option.title}</option>)}
         </SelectElement>
 
-        <Input className="select-element" type="text" placeholder="transaction description" />
+        
 
         <FormControl>
-          <Input className="select-element" type="number" id="my-input" aria-describedby="my-helper-text" placeholder="enter amount" />
+          <Input className="inputStyle" type="text" placeholder="transaction description" required={true}/>
+          <InputBase className="inputStyle" type="number"   placeholder="enter amount" required={true}/>
 
           {/* след като е попълнено всичко да ревъртне активен бутон */}
           <Button type="submit" disabled>Add transaction</Button>
