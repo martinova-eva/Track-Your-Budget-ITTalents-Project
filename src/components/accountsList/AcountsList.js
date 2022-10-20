@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import CreateCheckingAccount from '../CheckingAccountForm/CheckingAccountForm';
 
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -27,6 +28,7 @@ export default function AccountsList() {
   return (
     <div className="accountsWrapper">
       <h3>Your accounts</h3>
+
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

@@ -5,8 +5,9 @@ import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
 import { Typography } from "@mui/material";
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import SortButtons from "./SortButtons";
-import { Pie } from "react-chartjs-2";
-
+import { Doughnut, Pie } from "react-chartjs-2";
+import {Chart, ArcElement} from 'chart.js'
+Chart.register(ArcElement);
 
 
 
@@ -14,13 +15,12 @@ import { Pie } from "react-chartjs-2";
 export default function TransactionsList() {
     const data = {
         labels: [
-          'Incomes',
-          'Expenses',
-          
+            'income',
+            'expenses'
         ],
         datasets: [{
           label: 'My First Dataset',
-          data: [30,30,30,30,30,30,30,30],
+          data: [30,30],
           backgroundColor: [
             'rgb(19,185,119)',
             'rgb(255, 99, 132)',
@@ -82,6 +82,7 @@ export default function TransactionsList() {
                 </ListGroup.Item>
             </ListGroup>
            <div className="pieChart">
+          <Pie data={data}></Pie>
             
             </div>
             </div>

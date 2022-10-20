@@ -9,7 +9,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Typography } from '@mui/material';
 
 export default function Navigation() {
-<<<<<<< HEAD
     return (
         <Navbar key="lg" bg="light" expand="lg" className="mb-3">
         <Container fluid>
@@ -53,8 +52,7 @@ export default function Navigation() {
       </Navbar>
     );
   }
-=======
-  return (
+  /*return (
     <Navbar key="lg" bg="light" expand="lg" className="mb-3">
       <Container fluid>
         <Link to="/homePage" className="nav-link active text-dark">
@@ -95,8 +93,7 @@ export default function Navigation() {
       </Container>
     </Navbar>
   );
-}
->>>>>>> a62b36d57371e449b1e691412ac87e8a51fc2265
+}*/
 
 // export default function Navigation() {
 //   return (
