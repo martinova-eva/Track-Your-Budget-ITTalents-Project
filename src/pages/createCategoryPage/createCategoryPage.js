@@ -13,6 +13,17 @@ const primary = green[500]; // #13b977
 
 export default function CreateCategoryPage() {
 
+    const [nameOfCategory, setNameOfCategory] = useState('');
+    const [typeOfCategory, setTypeOfCategory] = useState('');
+    const [iconName, setIconName] = useState('');
+    
+    const handleCreateNewCategory = ()=> {
+        if(nameOfCategory && typeOfCategory && iconName){
+            console.log(nameOfCategory, typeOfCategory, iconName);
+            // {nameOfCategory, typeOfCategory, iconName}
+        }
+    }
+
     return (
         <Grid className='wrapper-new-category'>
             <Box sx={{ border: 1, borderColor: 'paper', boxShadow: 5,  display: "flex", flexDirection: 'column' }}>
@@ -22,22 +33,37 @@ export default function CreateCategoryPage() {
 
                 <FormControl >
                     <Grid className="category-center">
-                    <Input className="distance-inputs"  type="text" placeholder="enter name of category" required={true} />
-                    <SelectElement title={"Transaction type:"}>
+                    <Box >
+                    <Input  type="text" placeholder="enter name of category" 
+                                         value={nameOfCategory} 
+                                         onChange={e => setNameOfCategory(e.target.value)}/>
+
+                    <SelectElement title={"Transaction type:"} placeholder="Transaction type:"
+                                        value={typeOfCategory} 
+                                         onChange={e=> setTypeOfCategory(e.target.value)}>
                         <option value=''></option>
                         <option value="income">Income</option>
                         <option value="outcome">Outcome</option>
                     </SelectElement>
+                    </Box>
                     </Grid>
                         <Box className="icons-container" sx={{ border: 0.5, borderColor: 'paper', boxShadow: 2,  display: "flex", flexDirection: 'column' }}>
                         <h3>Choose icon</h3>
-                        <RadioGroup>
+                        <RadioGroup >
+                            <Box>
+                            
+                            {/* value={iconName} 
+                            onChange={e=> setIconName(e.target.value)} */}
                         {iconsArrOfObjects.map((icon, i) =>
-                            <FormControlLabel  key={i} value={icon.title} control={<Radio  color="success"/>} label={icon.tag}/>
+                            <FormControlLabel 
+                             key={i} value={icon.title} 
+                             control={<Radio  color="success"/>} label={icon.tag}
+                             />
                             )}
+                            </Box>
                         </RadioGroup>
                         </Box>
-                    <Button type="submit">Add this category</Button>
+                    <Button type="button" onClick={handleCreateNewCategory}>Add this category</Button>
                 </FormControl>
                    
             </Box>

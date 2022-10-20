@@ -56,10 +56,12 @@ function App() {
           <Navigation/> 
           <CreateCategoryPage/>
         </>} />
+
         <Route path="/createCheckingsAccount" element={<>
           <Navigation/>
         <CreateCheckingAccount/>
         </>} />
+        
         <Route path="*" element={<>
         <h1>ooooopppppsss 404!</h1>
         </>} />
