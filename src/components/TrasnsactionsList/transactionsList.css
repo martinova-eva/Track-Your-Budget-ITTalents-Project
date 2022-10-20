@@ -1,0 +1,55 @@
+.transactionsListWrapper{
+    margin: 3rem auto;
+    width: 70rem;
+
+}
+.transactionList{
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+.categoryIcon{
+    color: #13b977;;
+}
+.category{
+    display: flex;
+    gap: 0.6rem;
+}
+.transactionAmmountOutcome{
+    color:red;
+    font-weight: 500;
+}
+.transactionAmmountIncome{
+    color:green;
+    font-weight: 500;
+}
+.sortWrapper{
+    width: 50rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 3rem auto;
+}
+#category-btn{
+    background-color:#13b977;
+}
+#date-btn{
+    background-color:#13b977;
+}
+#incomes-btn{
+    background-color:#13b977;
+}
+.transactionsHeader{
+    padding: 0.5rem 0.5rem;
+}
+.listandChart{
+
+    display: flex;
+    justify-content: center;
+  
+    gap: 5rem;
+    
+}
+.pieChart{
+    width: 20rem;
+}

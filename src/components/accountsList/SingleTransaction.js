@@ -6,6 +6,7 @@ export default function SingleTransaction() {
 
         <div>
             <ListGroup.Item variant="danger">Expenses</ListGroup.Item>
+            
         </div>
 
     );

@@ -3,7 +3,9 @@
    
 }
 .targetImage{
-    height: 5rem;
+    color: #13b977;
+    
+   
 }
 .target{
     display: flex;
@@ -18,4 +20,7 @@
 }
 .progress-bar {  
     background-color: #13b977;
+  }
+  .avatarTarget{
+    background-color: white;
   }
