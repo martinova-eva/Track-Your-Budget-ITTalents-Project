@@ -3,12 +3,15 @@ import { Routes, Route, Link } from "react-router-dom";
 import RegistrationForm from './components/registration/registration';
 import LoginForm from './components/login/login';
 import Navigation from './components/navigation/navigation';
+import TransactionPage from './pages/transactionPage/transactionPage';
+import CreateCategoryPage from './pages/createCategoryPage/createCategoryPage';
 import Target from './components/target/target';
 import CreateCheckingAccount from './components/CheckingAccountForm/CheckingAccountForm';
 import TransactionPage from './pages/transactionPage/transactionPage'
 import TransactionsList from './components/TrasnsactionsList/TransactionsList';
 import AccountsList from './components/accountsList/AcountsList';
 
+import DemoPage from './pages/demoPage/demoPage';
 
 function App() {
  
@@ -17,7 +20,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<>
-        <h1>Welcome to OUR Demo Page!</h1>
+        <DemoPage/>
         <Link to="/login">You already have an account, click here!</Link><br></br>
         <Link to="/register">You don't have an account, click here!</Link>
         </>} />
@@ -55,9 +58,9 @@ function App() {
 
         <Route path="/createNewCategory" element={<>
           <Navigation/> 
-        <h1>Here you can create a new transaction category</h1>
-          {/* <NewCategoryPage/> */}
+          <CreateCategoryPage/>
         </>} />
+
         <Route path="/createCheckingsAccount" element={<>
           <Navigation/>
         <CreateCheckingAccount/>
@@ -68,6 +71,7 @@ function App() {
           <TransactionsList/>
         
         </>} />
+        
         <Route path="*" element={<>
         <h1>ooooopppppsss 404!</h1>
         </>} />

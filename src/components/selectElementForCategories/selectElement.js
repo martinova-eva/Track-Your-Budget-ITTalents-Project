@@ -9,12 +9,12 @@ export default function SelectElement(props) {
 
     const handleChange = (e) => {
       if(e.target.value ){
-       // console.log(e.target.value)
+        // console.log(e.target.value)
         setOption(e.target.value);
       }
     }
     return (
-      <FormControl className="select-element" onChange={(e)=>handleChange(e)} value={option}>
+      <FormControl className="select-element" onChange={(e)=>handleChange(e)} value={option} fullWidth>
         <InputLabel variant="standard" htmlFor="uncontrolled-native"> 
           {props.title}
         </InputLabel>
