@@ -6,12 +6,13 @@ import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import {Link} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Typography } from '@mui/material';
 
 export default function Navigation() {
     return (
         <Navbar key="lg" bg="light" expand="lg" className="mb-3">
         <Container fluid>
-          <Navbar.Brand ><img width={50} className='navLogo' src='../assets/10491-logo-wallet.png'></img> </Navbar.Brand>
+          <Navbar.Brand ><img width={50} className='navLogo' src='../assets/10491-logo-wallet.png'></img>  </Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${"lg"}`} />
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-${"lg"}`}

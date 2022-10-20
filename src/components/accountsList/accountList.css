@@ -7,3 +7,10 @@
     color: #13b977;
     
 }
+.linkBtn{
+    text-decoration: none;
+    color: black;
+}
+.linkBtn:hover{
+    color: #13b977;
+}
