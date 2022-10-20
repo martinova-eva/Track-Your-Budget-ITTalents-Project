@@ -12,6 +12,21 @@ export const theme = createTheme({
           },
         success:{
             main: '#13b977'
-        }
+        }, 
+        info: {
+            main: '#13b977',
+            light: '#13b977',
+            main: '#13b977',
+            dark: '#13b977',
+            contrastText: '#13b977',
+          },
+          secondary: {
+            main: '#13b977',
+            light: '#13b977',
+            main: '#13b977',
+            dark: '#13b977',
+            contrastText: '#13b977',
+          },
+          
     }
 })

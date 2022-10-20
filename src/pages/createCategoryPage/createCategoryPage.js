@@ -25,10 +25,12 @@ export default function CreateCategoryPage() {
     }
 
     return (
-        <Grid className='wrapper-new-category'>
-            <Box sx={{ border: 1, borderColor: 'paper', boxShadow: 5,  display: "flex", flexDirection: 'column' }}>
+        <Grid >
+            <Box sx={{ border: 1, borderColor: 'paper', boxShadow: 5,  display: "flex", flexDirection: 'column',margin: 10 }}>
 
-                <Avatar className="fieldStyle" alt="logo" src="..\assets\10491-logo-wallet.png" size="lg" />
+                <Avatar className="fieldStyle" alt="logo" src="..\assets\10491-logo-wallet.png" size="lg" 
+                    sx={{ marginTop: 5 }}
+                />
                 <h2>Create new category</h2>
 
                 <FormControl >

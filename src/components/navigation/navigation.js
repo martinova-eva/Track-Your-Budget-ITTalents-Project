@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './navigation.css'
 
 export default function Navigation() {
   return (
@@ -43,7 +44,7 @@ export default function Navigation() {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Button variant="outline-dark"><Link to="/" className="nav-link active">EXIT</Link></Button>
+            <Button className="exit" variant="outline-dark"><Link to="/" className="nav-link active ">EXIT</Link></Button>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
       </Container>
