@@ -8,7 +8,7 @@ import CreateCategoryPage from './pages/createCategoryPage/createCategoryPage';
 import Target from './components/target/target';
 import AccountsList from './components/accountsList/AccountsList';
 import CreateCheckingAccount from './components/CheckingAccountForm/CheckingAccountForm';
-// import TransactionPage from './pages/transactionPage/transactionPage'
+import DemoPage from './pages/demoPage/demoPage';
 
 function App() {
  
@@ -17,7 +17,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<>
-        <h1>Welcome to OUR Demo Page!</h1>
+        <DemoPage/>
         <Link to="/login">You already have an account, click here!</Link><br></br>
         <Link to="/register">You don't have an account, click here!</Link>
         </>} />

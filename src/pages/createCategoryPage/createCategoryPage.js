@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import SelectElement from '../../components/selectElementForCategories/selectElement';
 import { FormControl, FormLabel, Input, Button, Box, Avatar, RadioGroup, FormControlLabel, Radio, Grid } from '@mui/material';
 import { iconsArrOfObjects } from '../../components/categoryCreator/icons';
+import {green} from '@mui/material/colors';
+
+const primary = green[500]; // #13b977
 // import ListOfAllIncome from '../categoryCreator/listOfAllIncomes';
 // import ListOfAllOutcomes from '../categoryCreator/listOfAllOutcomes';
 // import { possibleIncomeObjs } from '../../components/categoryCreator/listOfAllIncomes';
@@ -30,17 +33,14 @@ export default function CreateCategoryPage() {
                         <h3>Choose icon</h3>
                         <RadioGroup>
                         {iconsArrOfObjects.map((icon, i) =>
-                            <FormControlLabel key={i} value={icon.title} control={<Radio  color="success"/>} label={icon.tag}/>
+                            <FormControlLabel  key={i} value={icon.title} control={<Radio  color="success"/>} label={icon.tag}/>
                             )}
                         </RadioGroup>
                         </Box>
                     <Button type="submit">Add this category</Button>
                 </FormControl>
-                
                    
             </Box>
         </Grid>
     )
 }
-
-
