@@ -15,7 +15,7 @@ export default function TransactionPage() {
   const [selectedAccount, setSelectedAccount] = useState('');
   const [typeOfTransaction, setTypeOfTransaction] = useState('');
   const [categoryName, setCategoryName] = useState('');
-  const [data, setData] = useState();
+  const [data, setData] = useState(new Date());
   const [description, setDescription] = useState();
   const [amount, setAmount] = useState();
   const btnAtribute = false;
@@ -72,7 +72,7 @@ export default function TransactionPage() {
         <FormControl>
             <BasicDatePicker className="datePicker" 
                       value={data} 
-                      onChange={e=> setData(e.target.value)}
+                      onChange={e => setData(e.target.value)}
             />
           <Input className="inputStyle" type="text" placeholder="transaction description" required={true}
                   value={description} 
@@ -84,7 +84,7 @@ export default function TransactionPage() {
           />
 
           {/* след като е попълнено всичко да ревъртне активен бутон */}
-          {btnAtribute ? <Button type="submit">Add transaction</Button> : <Button type="submit" disabled>Add transaction</Button>}
+           <Button type="button">Add transaction</Button>
           {/* {при АДД винаги трябва да сравнява дали има сума равна или по- голяма на посочената, ако не да извести} */}
         </FormControl>
       </Box>
