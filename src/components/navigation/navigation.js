@@ -13,7 +13,9 @@ export default function Navigation() {
     return (
         <Navbar key="lg" bg="light" expand="lg" className="mb-3">
         <Container fluid>
-          <Navbar.Brand ><img width={50} className='navLogo' src='../assets/10491-logo-wallet.png'></img>  </Navbar.Brand>
+        <Link to="/homePage" className="nav-link active text-dark">
+          <Navbar.Brand ><img width={50} className='navLogo' src='../assets/10491-logo-wallet.png'></img></Navbar.Brand>
+          </Link>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${"lg"}`} />
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-${"lg"}`}
@@ -22,7 +24,7 @@ export default function Navigation() {
           >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${"lg"}`}>
-              <img src='./budgetingLogo.png' width={25} alt='logo.png'></img>
+              <img src='../assets/10491-logo-wallet.png' width={40} alt='logo.png'></img>
                    Budget tracker
               </Offcanvas.Title>
             </Offcanvas.Header>
@@ -32,21 +34,18 @@ export default function Navigation() {
                <Link to="/accountPage" className="nav-link active text-dark">Accounts</Link>
                <Link to="/accountSavings" className="nav-link active text-dark">Savings account</Link>
                 <NavDropdown
-                  title="Add transaction"
+                  title="Transactions"
                   className="text-dark"
                   id={`offcanvasNavbarDropdown-expand-${"lg"}`}
                 >
-                  <NavDropdown.Item ><Link to="/addTransaction" className="nav-link active text-dark">Add to account in lv</Link></NavDropdown.Item>
-                  <NavDropdown.Item >
-                  <Link to="/addTransaction" className="nav-link active text-dark">Add to account in $</Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item >
-                  <Link to="/createNewCategory" className="nav-link active text-dark">Create new category</Link>
-                  </NavDropdown.Item>
-                </NavDropdown>
+                  <NavDropdown.Item as={Link} to="/addTransaction">Add a transaction 
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item as={Link} to="/createNewCategory">Create new category
+                </NavDropdown.Item>
+              </NavDropdown>
               </Nav>
-                <Button variant="outline-dark"><Link to="/" className="nav-link active">EXIT</Link></Button>
+                <Button className="exit" variant="outline-dark"><Link to="/" className="nav-link active">EXIT</Link></Button>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>
