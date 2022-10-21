@@ -10,8 +10,12 @@ import TransactionPage from './pages/transactionPage/transactionPage'
 import TransactionsList from './components/TrasnsactionsList/TransactionsList';
 import AccountsList from './components/accountsList/AcountsList';
 import DemoPage from './pages/demoPage/demoPage';
+import { useSelector } from 'react-redux';
 
 export default function App() {
+
+  const loggedUser = useSelector(state => state.activeUser)
+
   return (
     
     <div className="App">
@@ -29,33 +33,33 @@ export default function App() {
         <Route path="/login" element={<>
         <LoginForm/>
         </>} />
-        <Route path="/homePage" element={<>
+        <Route path="/home" element={<>
           <Navigation/>
         <Target/>
         <AccountsList/>
         </>} />
 
-        <Route path="/allTransactions" element={<>
+        <Route path="/transactions" element={<>
           <Navigation/>
           <TransactionsList/>
         </>} />
 
-        <Route path="/addAccount" element={<>
+        <Route path="/add-account" element={<>
           <Navigation/>
           <CreateCheckingAccount/>
         </>} />
 
-        <Route path="/addTransaction" element={<>
+        <Route path="/add-transaction" element={<>
             <Navigation/>
             <TransactionPage></TransactionPage>
         </>} />
 
-        <Route path="/createNewCategory" element={<>
+        <Route path="/create-category" element={<>
           <Navigation/> 
           <CreateCategoryPage/>
         </>} />
 
-        <Route path="/createCheckingsAccount" element={<>
+        <Route path="/create-account" element={<>
           <Navigation/>
         <CreateCheckingAccount/>
         </>} />

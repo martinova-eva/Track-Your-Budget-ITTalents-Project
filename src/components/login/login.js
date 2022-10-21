@@ -1,10 +1,29 @@
 import React from "react";
 import { Avatar, Button, Grid, Paper, TextField } from "@mui/material";
 import PasswordFields from "../registration/passowrdField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./login.css";
+import { useDispatch, useSelector} from "react-redux";
+import { useState } from "react";
+import { loginUser } from "../../store/activeUserSlice";
+import { loginUser as logUser} from "../../server/users";
+import {login} from "../../store/activeUserSlice";
 
 export default function LoginForm() {
+   //const user = useSelector(state => state.activeUser);
+   const navigate = useNavigate();
+   const dispatch = useDispatch();
+
+   const [username, setUsername] = useState(''); 
+   const [password, setPassword] = useState(''); 
+
+   const handleLogin = () => {
+      logUser(username, password);
+      dispatch(loginUser({ username, password }));
+      dispatch(login({ username, password }));
+      navigate('/home');
+  }
+
    return (
       <Grid className="wrapper" >
          <Paper elevation={20} className="loginPaperStyle">
@@ -16,10 +35,14 @@ export default function LoginForm() {
                   required
                   fullWidth
                   id="outlined-required"
-                  label="Email"
-                  placeholder="Enter your email" />
-               <PasswordFields placeholder={"Enter a password"} labels={"Password"} />
-               <Button type="submit" variant="contained" size="large" id="submitButton">Sign in</Button>
+                  label="Username"
+                  placeholder="Enter your username"
+                  value={username} 
+                  onChange={e => setUsername(e.target.value)} />
+               <PasswordFields placeholder={"Enter a password"} labels={"Password"}
+                  value={password} 
+                  onChange={value => setPassword(value)} />
+               <Button type="button" variant="contained" size="large" id="submitButton" onClick={handleLogin}>Sign in</Button>
             </form>
             <Grid className="fieldStyle">
             <Link to="/register">You don't have an account? Click here to create one.</Link>

@@ -7,16 +7,19 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import "./registration.css";
+import { PropaneSharp } from "@mui/icons-material";
 
 
-export default function PasswordFields({ labels, placeholder }){
+export default function PasswordFields({ labels, placeholder, onChange }){
    const [values, setValues] = React.useState({
       password: '',
       showPassword: false,
 
    });
    const handleChange = (prop) => (event) => {
+      //console.log(event.target.value)
       setValues({ ...values, [prop]: event.target.value });
+      onChange(event.target.value);
    };
 
    const handleClickShowPassword = () => {
