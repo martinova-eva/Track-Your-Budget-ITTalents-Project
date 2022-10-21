@@ -31,12 +31,15 @@
     margin: 3rem auto;
 }
 #category-btn{
+    color: white;
     background-color:#13b977;
 }
 #date-btn{
+    color: white;
     background-color:#13b977;
 }
 #incomes-btn{
+    color: white;
     background-color:#13b977;
 }
 .transactionsHeader{

@@ -1,19 +1,17 @@
 .paperStyle {
-    padding: 1.8rem 1.25rem;
+    padding: 1.2rem 1.2rem 1.2rem 1.2rem;
     width: 40rem;
     margin: 3.0rem auto;
 }
 
 .fieldStyle {
-    margin: 0.2
-    rem auto;
-
+    margin: 0.2rem auto;
 }
 
 .formStyle {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
+    
 }
 
 .wrapper {

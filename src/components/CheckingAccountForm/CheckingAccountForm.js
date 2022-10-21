@@ -6,9 +6,7 @@ import BasicDatePicker from "./datePicker";
 import CloseIcon from '@mui/icons-material/Close';
 
 
-
 export default function CreateCheckingAccount({handleClose}) {
-
    return (
       <Grid className="wrapper">
          <Paper elevation={20} className="paperStyle">
@@ -23,8 +21,8 @@ export default function CreateCheckingAccount({handleClose}) {
                   id="outlined-required"
                   label="Account Name"
                   placeholder="Enter name for your account" />
-               <DropDownOptions label="Type" helperText={"Please choose the type of your account"} />
-               <DropDownOptions label="Currency" helperText={"Please choose the currency"} />
+               <DropDownOptions fullWidth label="Type" helperText={"Please choose the type of your account"} />
+               <DropDownOptions fullWidth label="Currency" helperText={"Please choose the currency"} />
                <TextField
                   className="inputStyle"
                   required
@@ -40,5 +38,4 @@ export default function CreateCheckingAccount({handleClose}) {
          </Paper>
       </Grid>
    )
-
 }

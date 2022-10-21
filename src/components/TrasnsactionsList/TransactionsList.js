@@ -20,7 +20,7 @@ export default function TransactionsList() {
         ],
         datasets: [{
           label: 'My First Dataset',
-          data: [30,30],
+          data: [30,30,30,50,70,20,50,70],
           backgroundColor: [
             'rgb(19,185,119)',
             'rgb(255, 99, 132)',
