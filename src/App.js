@@ -11,8 +11,7 @@ import TransactionsList from './components/TrasnsactionsList/TransactionsList';
 import AccountsList from './components/accountsList/AcountsList';
 import DemoPage from './pages/demoPage/demoPage';
 
-function App() {
- 
+export default function App() {
   return (
     
     <div className="App">
@@ -34,19 +33,16 @@ function App() {
           <Navigation/>
         <Target/>
         <AccountsList/>
-       
-        
         </>} />
 
-        <Route path="/accountPage" element={<>
+        <Route path="/allTransactions" element={<>
           <Navigation/>
-        <h1>Personal Account Page</h1>
+          <TransactionsList/>
         </>} />
 
-        <Route path="/accountSavings" element={<>
+        <Route path="/addAccount" element={<>
           <Navigation/>
-        <h1>Create a savings account here, add target, and set percentage, which will come here</h1>
-
+          <CreateCheckingAccount/>
         </>} />
 
         <Route path="/addTransaction" element={<>
@@ -63,12 +59,6 @@ function App() {
           <Navigation/>
         <CreateCheckingAccount/>
         </>} />
-        <Route path="/allTransactions" element={<>
-          <Navigation/>
-          
-          <TransactionsList/>
-        
-        </>} />
         
         <Route path="*" element={<>
         <h1>ooooopppppsss 404!</h1>
@@ -79,5 +69,3 @@ function App() {
 
   );
 }
-
-export default App;
