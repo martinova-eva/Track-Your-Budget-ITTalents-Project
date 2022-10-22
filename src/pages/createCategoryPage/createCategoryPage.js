@@ -4,11 +4,6 @@ import SelectElement from '../../components/selectElementForCategories/selectEle
 import { FormControl, TextField, Input, Button, Box, Avatar, RadioGroup, FormControlLabel, Radio, Grid } from '@mui/material';
 import { iconsArrOfObjects, getTheIcon } from '../../components/categoryCreator/icons';
 
-// import ListOfAllIncome from '../categoryCreator/listOfAllIncomes';
-// import ListOfAllOutcomes from '../categoryCreator/listOfAllOutcomes';
-// import { possibleIncomeObjs } from '../../components/categoryCreator/listOfAllIncomes';
-// import { allOutcomeCategories } from '../../components/categoryCreator/listOfAllOutcomes'
-
 export default function CreateCategoryPage() {
 
     const [nameOfCategory, setNameOfCategory] = useState('');
@@ -28,13 +23,11 @@ export default function CreateCategoryPage() {
     }
 
     return (
-        <Grid >
-            <Box sx={{ border: 1, borderColor: 'paper', boxShadow: 5,  display: "flex", flexDirection: 'column',margin: 5 }}>
+        <Grid className="fieldStyle">
+            <Box  sx={{ border: 1, borderColor: 'paper', boxShadow: 5,  display: "flex", flexDirection: 'column', margin: 2}}>
 
-                <Avatar className="fieldStyle" alt="logo" src="..\assets\10491-logo-wallet.png" size="lg" 
-                    
-                />
-                <h2>Create new category</h2>
+                <Avatar className="fieldStyle"  alt="logo" src="..\assets\10491-logo-wallet.png" size="lg"/>
+                <h3>Create new category</h3>
 
                 <FormControl >
                     <Grid className="category-center">

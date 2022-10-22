@@ -1,21 +1,24 @@
 .wrapper-select-elements{
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    
-    justify-content: center;
+    justify-content: center; */
 }
-.datePicker{
+/* .datePicker{
    padding-top: 4vh;
     display: flex;
     max-width: 30vw;
     min-width: 20vw;
-}
+} */
 .transactionsInputs{
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     margin: 2vh 0;
-    max-width: 30vw;
-    min-width: 20vw;
+    max-width: 40vw;
+    min-width: 30vw;
+}
+.select-element{
+    max-width: 40vw;
+    min-width: 30vw;
 }

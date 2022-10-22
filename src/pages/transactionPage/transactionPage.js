@@ -1,17 +1,11 @@
 import './transactionPage.css';
 import React, { useState } from "react";
-//import { FormControl, InputLabel, NativeSelect } from '@mui/material';
 import SelectElement from '../../components/selectElementForCategories/selectElement';
 import { Input, Button, Box, Avatar, TextField } from '@mui/material';
-// import ListOfAllIncome from '../categoryCreator/listOfAllIncomes';
-// import ListOfAllOutcomes from '../categoryCreator/listOfAllOutcomes';
 import { possibleIncomeArr } from '../../components/categoryCreator/listOfAllIncomes';
 import { possibleOutcomeArr } from '../../components/categoryCreator/listOfAllOutcomes'
-import InputBase from '@mui/material/InputBase/InputBase';
 import BasicDatePicker from '../../components/CheckingAccountForm/datePicker';
-import { FormGroup } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
 
 export default function TransactionPage() {
   const navigate = useNavigate();
@@ -42,7 +36,7 @@ export default function TransactionPage() {
 
   return (
     <div className='wrapper-select-elements'>
-      <Box sx={{ border: 1, borderColor: 'paper', boxShadow: 5, minWidth: 80, display: "flex", flexDirection: 'column' }}>
+      <Box sx={{ border: 1, borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column' }}>
 
         <Avatar className="fieldStyle" alt="logo" src="..\assets\10491-logo-wallet.png" size="lg" />
         <h2>Add a transaction</h2>
@@ -79,7 +73,6 @@ export default function TransactionPage() {
         
           <BasicDatePicker 
             format="MM-dd-yyyy"
-            className="datePicker"
             value={date}
             onChange={value => setDate(value)}
           />

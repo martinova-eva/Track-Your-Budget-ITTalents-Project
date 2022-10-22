@@ -14,8 +14,11 @@
     padding: 2vh 2vw;
 }
 .fieldStyle{
-    margin: 5% auto; 
-    
+    margin: 2vh 4vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 .category-center{
     display: flex;
