@@ -10,7 +10,7 @@ import "./accountList.css"
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import CreateCheckingAccount from '../CheckingAccountForm/CheckingAccountForm';
-
+import { Bar } from 'react-chartjs-2';
 
 const style = {
   position: 'absolute',
@@ -24,6 +24,7 @@ export default function AccountsList() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  
  
   return (
     <div className="accountsWrapper">
