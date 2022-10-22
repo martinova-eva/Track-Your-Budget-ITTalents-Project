@@ -33,6 +33,7 @@ export default function PasswordFields({ labels, placeholder }){
       <FormControl fullWidth variant="outlined">
          <InputLabel required htmlFor="outlined-adornment-password">{labels}</InputLabel>
          <OutlinedInput
+         fullWidth
             required
             placeholder={placeholder}
             id="outlined-adornment-password"

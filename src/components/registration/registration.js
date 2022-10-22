@@ -10,16 +10,15 @@ export default function RegistrationForm() {
          <Paper elevation={20} className="registerPaperStyle">
             <Avatar className="fieldStyle" src='../assets/10491-logo-wallet.png' />
             <h2>Sign up</h2>
+            
             <form className="formStyle">
                <TextField
-                  className="inputStyle"
                   required
                   fullWidth
                   id="outlined-required"
                   label="Name"
                   placeholder="Enter your name" />
                <TextField
-                  className="inputStyle"
                   required
                   fullWidth
                   id="outlined-required"
