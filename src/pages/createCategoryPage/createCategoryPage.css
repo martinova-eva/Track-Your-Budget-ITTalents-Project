@@ -20,9 +20,15 @@
 .category-center{
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
+    gap: 1rem;
 }
 .distance-inputs{
     margin: 0 2vw;
+}
+.form-margin{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh
 }
