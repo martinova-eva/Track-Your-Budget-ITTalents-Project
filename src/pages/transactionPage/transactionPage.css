@@ -2,30 +2,20 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    width: 100%;
-    gap: 5%;
-    justify-content: center;
-    padding: 2vh;
-}
-.fieldStyle{
-    margin: 5% auto; 
-}
-.select-element{
-    margin: 2vh 5vw;
-    display: flex;
-    max-width: 30vw;
-    min-width: 20vw;
     
-}
-.inputStyle{
-    margin-top: 2vh;
-    display: flex;
-    max-width: 30vw;
-    min-width: 20vw;
+    justify-content: center;
 }
 .datePicker{
    padding-top: 4vh;
     display: flex;
+    max-width: 30vw;
+    min-width: 20vw;
+}
+.transactionsInputs{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 2vh 0;
     max-width: 30vw;
     min-width: 20vw;
 }
