@@ -5,8 +5,8 @@ import SelectElement from '../../components/selectElementForCategories/selectEle
 import { Input, Button, Box, Avatar, TextField } from '@mui/material';
 // import ListOfAllIncome from '../categoryCreator/listOfAllIncomes';
 // import ListOfAllOutcomes from '../categoryCreator/listOfAllOutcomes';
-import { possibleIncomeObjs } from '../../components/categoryCreator/listOfAllIncomes';
-import { allOutcomeCategories } from '../../components/categoryCreator/listOfAllOutcomes'
+import { possibleIncomeArr } from '../../components/categoryCreator/listOfAllIncomes';
+import { possibleOutcomeArr } from '../../components/categoryCreator/listOfAllOutcomes'
 import InputBase from '@mui/material/InputBase/InputBase';
 import BasicDatePicker from '../../components/CheckingAccountForm/datePicker';
 import { FormGroup } from '@mui/material';
@@ -25,10 +25,17 @@ export default function TransactionPage() {
   const handleCreateNewTransaction = () => {
     if (selectedAccount && typeOfTransaction && categoryName && date &&  amount && description ) {
       console.log(selectedAccount, typeOfTransaction, categoryName, date, amount, description);
+
       // {selectedAccount, typeOfTransaction, categoryName, date, description, amount}
       // navigate('/transactions');
+      setSelectedAccount('');
+      setTypeOfTransaction('');
+      setCategoryName('');
+      setDate(new Date());
+      setDescription('');
+      setAmount('');
     } else {
-      console.log('ooooppsss we can`t create new transactions')
+      alert('ooooppsss we can`t create new transactions')
     }
 
   }
@@ -61,13 +68,13 @@ export default function TransactionPage() {
           value={categoryName}
           onChange={value => setCategoryName(value)}
         >
-          {possibleIncomeObjs.map((option, i) => <option key={i} value={option.title}>{option.title} </option>)}
+          {possibleIncomeArr.map((option, i) => <option key={i} value={option.title}>{option.title} </option>)}
         </SelectElement> :
           <SelectElement className="select-element" title={"Choose from outcome category:"}
             value={categoryName}
             onChange={value => setCategoryName(value)}
           >
-            {allOutcomeCategories.map((option, i) => <option key={i} value={option.title}>{option.title}</option>)}
+            {possibleOutcomeArr.map((option, i) => <option key={i} value={option.title}>{option.title}</option>)}
           </SelectElement>}
         
           <BasicDatePicker 
@@ -99,7 +106,8 @@ export default function TransactionPage() {
             onChange={e => setDescription(e.target.value)}
           />
           <Button type="button" onClick={handleCreateNewTransaction}>Add transaction</Button>
-          {/* {при АДД винаги трябва да сравнява дали има сума равна или по- голяма на посочената, ако не да извести} */}
+          {/* {при АДД винаги трябва да сравнява дали има сума равна или по- голяма на посочената, 
+          ако не - да извести и да не приема транзакзията/действия} */}
         </form>
       </Box>
     </div>

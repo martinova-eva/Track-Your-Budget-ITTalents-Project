@@ -2,10 +2,8 @@ import './createCategoryPage.css';
 import React, { useState } from "react";
 import SelectElement from '../../components/selectElementForCategories/selectElement';
 import { FormControl, TextField, Input, Button, Box, Avatar, RadioGroup, FormControlLabel, Radio, Grid } from '@mui/material';
-import { iconsArrOfObjects } from '../../components/categoryCreator/icons';
-import {green} from '@mui/material/colors';
+import { iconsArrOfObjects, getTheIcon } from '../../components/categoryCreator/icons';
 
-//const primary = green[500]; // #13b977
 // import ListOfAllIncome from '../categoryCreator/listOfAllIncomes';
 // import ListOfAllOutcomes from '../categoryCreator/listOfAllOutcomes';
 // import { possibleIncomeObjs } from '../../components/categoryCreator/listOfAllIncomes';
@@ -19,10 +17,13 @@ export default function CreateCategoryPage() {
     
     const handleCreateNewCategory = ()=> {
         if(nameOfCategory && typeOfCategory && iconTitle){
-            console.log(nameOfCategory, typeOfCategory, iconTitle);
-            // {nameOfCategory, typeOfCategory, iconTitle}
+            console.log(nameOfCategory, typeOfCategory, getTheIcon(iconTitle));
+            // {nameOfCategory, typeOfCategory, getTheIcon(iconTitle)}
+            setNameOfCategory('');
+            setTypeOfCategory('');
+            setIconTitle('');
         }else{
-            console.log("something is omitted");
+            alert("something is omitted, try again");
         }
     }
 
