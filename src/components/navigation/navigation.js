@@ -4,16 +4,29 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './navigation.css'
 import { Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import {logout, logoutUser} from '../../store/activeUserSlice';
+import { logoutFromStorage } from '../../server/users';
 
 export default function Navigation() {
+  const sessionId = useSelector(state => state.sessionId);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleLogout = ()=> {
+    logoutFromStorage();
+    dispatch(logoutUser(sessionId));
+    dispatch(logout());
+    logoutFromStorage();//ще приема юзер когато вече трябва да знае на кой данните да върне в общия масиви и ще стане първо
+    navigate('/login');
+  }
     return (
         <Navbar key="lg" bg="light" expand="lg" className="mb-3">
         <Container fluid>
-        <Link to="/homePage" className="nav-link active text-dark">
+        <Link to="/home" className="nav-link active text-dark">
           <Navbar.Brand ><img width={50} className='navLogo' src='../assets/10491-logo-wallet.png'></img></Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${"lg"}`} />
@@ -30,22 +43,22 @@ export default function Navigation() {
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3">
-               <Link to="/homePage" className="nav-link active text-dark">Home page</Link>
-               <Link to="/allTransactions" className="nav-link active text-dark">Accounts</Link>
-               <Link to="/addAccount" className="nav-link active text-dark">Add new account</Link>
+               <Link to="/home" className="nav-link active text-dark">Home page</Link>
+               <Link to="/transactions" className="nav-link active text-dark">Accounts</Link>
+               <Link to="/add-account" className="nav-link active text-dark">Add new account</Link>
                 <NavDropdown
                   title="Transactions"
                   className="text-dark"
                   id={`offcanvasNavbarDropdown-expand-${"lg"}`}
                 >
-                  <NavDropdown.Item as={Link} to="/addTransaction">Add a transaction 
+                  <NavDropdown.Item as={Link} to="/add-transaction">Add a transaction 
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item as={Link} to="/createNewCategory">Create new category
+                <NavDropdown.Item as={Link} to="/create-category">Create new category
                 </NavDropdown.Item>
               </NavDropdown>
               </Nav>
-                <Button className="exit" variant="outline-dark"><Link to="/" className="nav-link active">EXIT</Link></Button>
+                <Button onClick={handleLogout} className="exit" variant="outline-dark">EXIT</Button>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>

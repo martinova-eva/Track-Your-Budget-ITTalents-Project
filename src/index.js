@@ -10,15 +10,19 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import {theme} from './/theme';
 import { ThemeProvider } from '@emotion/react';
+import { Provider } from 'react-redux';
+import {store} from "./store/store"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+  <Provider store={store}>
   <ThemeProvider theme={theme}>
   <BrowserRouter>
     <App />
     </BrowserRouter>
     </ThemeProvider>
+    </Provider>
   </React.StrictMode>
   
 );
