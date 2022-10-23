@@ -22,15 +22,23 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import SchoolIcon from '@mui/icons-material/School';
 import FamilyRestroomIcon from '@mui/icons-material/FamilyRestroom';
 import BabyChangingStationIcon from '@mui/icons-material/BabyChangingStation';
+import CheckroomIcon from '@mui/icons-material/Checkroom';
+import DiningIcon from '@mui/icons-material/Dining';
+import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import LocalBarIcon from '@mui/icons-material/LocalBar';
 
-export const possibleIcons = [
+export const iconsArrOfObjects = [
+    { title: "add another", tag: <AutoAwesomeIcon color="success"/>},
     { title: "salary", tag: <AddCardIcon className="iconsStyle" color="success"/> },
+    { title: "clothes", tag: <CheckroomIcon className="iconsStyle" color="success"/> },
+    { title: "dining", tag: <DiningIcon className="iconsStyle" color="success"/> },
     { title: "bonuses", tag: <CardGiftcardIcon color="success"/>},
+    { title: "gasStation", tag: <LocalGasStationIcon color="success"/>},
+    { title: "coctails", tag: <LocalBarIcon color="success"/>},
     { title: "devices", tag: <DevicesOtherIcon color="success"/>},
     { title: "freelance projects",tag:<AddTaskIcon color="success"/> },
     { title: "investments", tag: <MonetizationOnIcon color="success"/> },
     { title: "others", tag: <AddCircleOutlineIcon color="success"/>},
-    { title: "add another", tag: <AutoAwesomeIcon color="success"/>},
     { title: "rent",tag: <AddHomeWorkIcon color="success"/>},
     { title: "store",tag: <StoreIcon color="success"/>},
     { title: "mortgage", tag: <HomeIcon color="success"/>},
@@ -51,9 +59,12 @@ export const possibleIcons = [
     { title: 'familly', tag: <FamilyRestroomIcon color="success"/>},
     { title: 'kids', tag: <BabyChangingStationIcon color="success"/>},
 ]
-const symbolls = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
 
-export const iconsArrOfObjects = possibleIcons.map(i => {
-    i.id = `${Math.floor(Math.random()*20)}${symbolls[Math.floor(Math.random()*(symbolls.length))]}`;
-    return i;
-});
+export function getTheIcon(titleOfIcon){
+    const neededTag = iconsArrOfObjects.map(icon => {
+        if(icon.title === titleOfIcon){
+            return icon.tag;
+        }
+    })
+    return neededTag;
+}

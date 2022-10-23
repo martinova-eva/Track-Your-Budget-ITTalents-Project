@@ -43,15 +43,11 @@ export default function LoginForm() {
                   value={password} 
                   onChange={value => setPassword(value)} />
                <Button type="button" variant="contained" size="large" id="submitButton" onClick={handleLogin}>Sign in</Button>
-               </FormControl>
-            <FormControl  className="formStyle" fullWidth variant="outlined">
+            </FormControl>
             <Grid className="fieldStyle">
             <Link to="/register">You don't have an account? Click here to create one.</Link>
-               <p className="fieldStyle">You need more information?</p>
-               <Link to="/">Click here to see our Demo page.</Link>
-               
+               <Link to="/"><p className="fieldStyle">You need more information?</p></Link>
             </Grid>
-            </FormControl>
          </Paper>
       </Grid>
    )
