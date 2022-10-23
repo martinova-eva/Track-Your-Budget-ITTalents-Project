@@ -51,10 +51,10 @@ export default function Navigation() {
                   className="text-dark"
                   id={`offcanvasNavbarDropdown-expand-${"lg"}`}
                 >
-                  <NavDropdown.Item as={Link} to="/add-transaction">Add a transaction 
+                  <NavDropdown.Item className="onclickNav" as={Link} to="/add-transaction">Add a transaction 
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item as={Link} to="/create-category">Create new category
+                <NavDropdown.Item className="onclickNav" as={Link} to="/create-category">Create new category
                 </NavDropdown.Item>
               </NavDropdown>
               </Nav>

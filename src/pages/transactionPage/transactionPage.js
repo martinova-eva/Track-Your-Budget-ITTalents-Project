@@ -1,7 +1,7 @@
 import './transactionPage.css';
 import React, { useState } from "react";
 import SelectElement from '../../components/selectElementForCategories/selectElement';
-import { Input, Button, Box, Avatar, TextField } from '@mui/material';
+import { Input, Button, Box, Avatar, TextField, MenuItem } from '@mui/material';
 import { possibleIncomeArr } from '../../components/categoryCreator/listOfAllIncomes';
 import { possibleOutcomeArr } from '../../components/categoryCreator/listOfAllOutcomes'
 import BasicDatePicker from '../../components/CheckingAccountForm/datePicker';
@@ -62,6 +62,12 @@ export default function TransactionPage() {
           value={categoryName}
           onChange={value => setCategoryName(value)}
         >
+        {/* {possibleIncomeArr.map((option,i) =>(
+          
+          <MenuItem key={i} value={option.title}>
+            {option.title}
+          </MenuItem>
+        ))} */}
           {possibleIncomeArr.map((option, i) => <option key={i} value={option.title}>{option.title} </option>)}
         </SelectElement> :
           <SelectElement className="select-element" title={"Choose from outcome category:"}
@@ -79,7 +85,7 @@ export default function TransactionPage() {
           <TextField
             type="number"
             variant='outlined'
-            min={1}
+            InputProps={{ inputProps: { min: 0 } }}
             required
             fullWidth
             label="enter amount"
