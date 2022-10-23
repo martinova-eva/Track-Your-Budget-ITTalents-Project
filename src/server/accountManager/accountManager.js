@@ -1,7 +1,7 @@
 import {v4 as uuidV4} from 'uuid'
 
 class Account{
-    constructor(id, name, ownerId, transactions = [], currency, balance){
+    constructor(name, ownerId, transactions = [], currency, balance){
         this.id = uuidV4(); 
         this.name = name;
         this.ownerId = ownerId;
@@ -101,7 +101,7 @@ class AccountManager {
         })
         localStorage.setItem('accounts', JSON.stringify(accounts));
     }
-    removeTransaction( transactionId, accountsId){
+    removeTransaction( transactionId, accountsId, ownerId){
         let accounts = this.getAllAccounts();
         accounts = accounts.map(a => {
             if(a.id === accountsId){
@@ -110,6 +110,18 @@ class AccountManager {
                         if(tr.type === "outcome"){
                             a.balance += tr.amount;
                         }else{
+                            let savingsAccount = this.checkForSavingsAccount(ownerId);
+                            if(savingsAccount){
+                                savingsAccount.balance -= (tr.amount * savingsAccount.percentage);
+
+                                let allSavingsAccount = this.getAllSavingsAccounts();
+                                allSavingsAccount = allSavingsAccount.map(s => {
+                                    if(s.ownerId === ownerId){
+                                        s.balance = savingsAccount.balance;
+                                    }
+                                    })
+                                localStorage.setItem('savings', JSON.stringify(savings));
+                            }
                             a.balance -= tr.amount; 
                         }
                     }
