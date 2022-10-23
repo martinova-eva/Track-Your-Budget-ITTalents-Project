@@ -6,3 +6,7 @@
     background-color: #088050;
     color: white;
 }
+.onclickNav:active{
+    background-color: #13b977;
+    color: white;
+}
