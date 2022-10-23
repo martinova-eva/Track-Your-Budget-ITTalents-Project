@@ -1,7 +1,8 @@
 .paperStyle {
     padding: 1.2rem 1.2rem 1.2rem 1.2rem;
     width: 40rem;
-    margin: 3.0rem auto;
+    margin:
+     auto;
 }
 
 .fieldStyle {
@@ -26,4 +27,10 @@
 .closeIconContainer {
     display: flex;
     justify-content: end;
+
+}
+#formHeading{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
