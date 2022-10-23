@@ -4,9 +4,26 @@ import "./accountForm.css";
 import DropDownOptions from "./dropDownOptions";
 import CloseIcon from '@mui/icons-material/Close';
 import { iconsArrOfObjects } from '../../components/categoryCreator/icons';
+import { useState } from "react";
+import { create } from "../../store/checkingAccountSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 
 
 export default function CreateCheckingAccount({ handleClose }) {
+   const [accountName, setAccountName] = useState('');
+   const [accountStartAmount, setAccountStartAmount] = useState('');
+   const [currency, setCurrency] = useState('');
+   const [type, setType] = useState('');
+
+   const navigate = useNavigate();
+   const dispatch = useDispatch();
+   const handleDispatch = ()=> {
+       dispatch(create({accountName, currency, accountStartAmount}))
+       navigate('/home');
+   }
+  
    const currencies = [
       {
          value: 'USD',
@@ -32,14 +49,7 @@ export default function CreateCheckingAccount({ handleClose }) {
          label: 'savings',
       },
    ];
-   const [currency, setCurrency] = React.useState('');
-   const [type, setType] = React.useState('');
-   const handleCurrency = (event) => {
-      setCurrency(event.target.value);
-   };
-   const handleType = (event) => {
-      setType(event.target.value);
-   };
+  
    let form;
    if (type === "savings") {
       form = <div className="formStyle">
@@ -48,7 +58,8 @@ export default function CreateCheckingAccount({ handleClose }) {
             fullWidth
             id="outlined-required"
             label="Account Name"
-            placeholder="Enter name for your account" />
+            placeholder="Enter name for your account"
+            />
          <DropDownOptions
             required
             fullWidth
@@ -56,7 +67,7 @@ export default function CreateCheckingAccount({ handleClose }) {
             helperText={"Please choose the currency"}
             arr={currencies}
             value={currency}
-            handleChange={handleCurrency}
+            handleChange={(e)=> setCurrency(e.target.value)}
          />
          <TextField
             required
@@ -112,7 +123,8 @@ export default function CreateCheckingAccount({ handleClose }) {
             fullWidth
             id="outlined-required"
             label="Account Name"
-            placeholder="Enter name for your account" />
+            placeholder="Enter name for your account" 
+            onChange={(e)=> setAccountName(e.target.value)}/>
          <DropDownOptions
             required
             fullWidth
@@ -120,7 +132,8 @@ export default function CreateCheckingAccount({ handleClose }) {
             helperText={"Please choose the currency"}
             arr={currencies}
             value={currency}
-            handleChange={handleCurrency}
+            handleChange={(e)=> setCurrency(e.target.value)}
+            
          />
          <TextField
             required
@@ -130,6 +143,7 @@ export default function CreateCheckingAccount({ handleClose }) {
             InputProps={{ inputProps: { min: 0 } }}
             label="Starting amount"
             placeholder="Enter starting amount"
+            onChange={(e)=> setAccountStartAmount(e.target.value)}
          />
       </div>
    }
@@ -151,10 +165,18 @@ export default function CreateCheckingAccount({ handleClose }) {
                   helperText={"Please choose the type of your account"}
                   arr={accountTypes}
                   value={type}
-                  handleChange={handleType}
+                  handleChange={(e)=> setType(e.target.value)}
                />
                <div>{form}</div>
-               <Button type="submit" variant="contained" size="large" id="submitButton" >Create new account</Button>
+               <Button
+                type="button"
+                variant="contained" 
+                size="large" 
+                id="submitButton" 
+                onClick={handleDispatch}
+                 >
+                  Create new account
+                  </Button>
             </form>
          </Paper>
       </Grid>

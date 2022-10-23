@@ -14,3 +14,13 @@
 .linkBtn:hover{
     color: #13b977;
 }
+.accountsImageHeader{
+    display: flex;
+    margin:1rem 1rem;
+    justify-content: center;
+    align-items: center;
+}
+.accountsImage{
+    height: 7rem;
+    
+}

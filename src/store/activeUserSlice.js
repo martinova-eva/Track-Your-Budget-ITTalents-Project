@@ -46,13 +46,13 @@ export const activeUserSlice = createSlice({
     logout: (state) => {
         state.username = initialState.username;
         state.password = initialState.password;
-        state.sessionId = initialState.sessionId;
+        //state.sessionId = initialState.sessionId;
     }
 
   },
   extraReducers: (builder) => {
     builder.addCase(loginUser.fulfilled, (state, { payload }) => {    
-        state.sessionId = payload;
+        state.sessionId = payload.sessionId;
         state.userLoading = false;
     })
     builder.addCase(loginUser.rejected, (state, action) => {

@@ -10,7 +10,7 @@ import "./accountList.css"
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import CreateCheckingAccount from '../CheckingAccountForm/CheckingAccountForm';
-import { Bar } from 'react-chartjs-2';
+import { accountManager } from '../../server/accountManager/accountManager';
 
 const style = {
   position: 'absolute',
@@ -24,61 +24,57 @@ export default function AccountsList() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
- 
-  return (
-    <div className="accountsWrapper">
-      <h3>Your accounts</h3>
+  const accounts = accountManager.accounts;
 
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>Checkings Account</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <ShortTransactionsList />
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography>Savings Account</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <ShortTransactionsList />
-        </AccordionDetails>
-      </Accordion>
+
+  return (
+    <div className="accountsWrapper" >
+      <div className='accountsImageHeader'>
+        <Typography variant="h5" >
+          Your accounts
+        </Typography>
+      </div>
+      {accounts.map(account => (
+        <Accordion
+          key={account.id}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography>{account.name}</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <ShortTransactionsList />
+          </AccordionDetails>
+        </Accordion>))}
+
+
       <Accordion expanded={true}>
         <AccordionSummary >
 
 
-          
-        
+
+
           <Typography onClick={handleOpen}>
-            <AddCircleOutlineIcon className="addNewIcon"/>
+            <AddCircleOutlineIcon className="addNewIcon" />
             Add new account
           </Typography>
           <div>
-     
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-       <CreateCheckingAccount  onClose={handleClose}/>
-        </Box>
-      </Modal>
-    </div>
-          
-         
+
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <CreateCheckingAccount onClose={handleClose} />
+              </Box>
+            </Modal>
+          </div>
+
+
         </AccordionSummary>
       </Accordion>
     </div>

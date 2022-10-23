@@ -34,6 +34,7 @@ export default function App() {
         <LoginForm/>
         </>} />
         <Route path="/home" element={<>
+        
           <Navigation/>
         <Target/>
         <AccountsList/>

@@ -11,7 +11,7 @@ class UserManager {
     constructor() {
         this.users = [];
         this.activeUser;
-       
+
         if(localStorage.getItem('users')){
             this.users = JSON.parse(localStorage.getItem('users'));
         }
@@ -40,7 +40,6 @@ class UserManager {
         if (user) {
             localStorage.setItem('activeUser', JSON.stringify(user));
         }
-    
         return user;
     }
     
