@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import CreateCheckingAccount from '../CheckingAccountForm/CheckingAccountForm';
 import { accountManager } from '../../server/accountManager/accountManager';
+import { useNavigate } from 'react-router-dom';
 
 const style = {
   position: 'absolute',
@@ -19,13 +20,17 @@ const style = {
   transform: 'translate(-50%, -50%)',
 };
 
-
 export default function AccountsList() {
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const accounts = accountManager.accounts;
-
+  const savingsAccounts = accountManager.savingsAccounts;
+const goToAccountPage = () => { 
+ 
+  navigate('/transactions')
+}
 
   return (
     <div className="accountsWrapper" >
@@ -34,6 +39,7 @@ export default function AccountsList() {
           Your accounts
         </Typography>
       </div>
+
       {accounts.map(account => (
         <Accordion
           key={account.id}>
@@ -42,26 +48,35 @@ export default function AccountsList() {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography>{account.name}</Typography>
+            <Typography onClick={goToAccountPage}>{account.name}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <ShortTransactionsList />
           </AccordionDetails>
         </Accordion>))}
 
+        {savingsAccounts.map(account => (
+        <Accordion
+          key={account.id}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography onClick={goToAccountPage}>{account.name}</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <ShortTransactionsList />
+          </AccordionDetails>
+        </Accordion>))}
 
       <Accordion expanded={true}>
         <AccordionSummary >
-
-
-
-
           <Typography onClick={handleOpen}>
             <AddCircleOutlineIcon className="addNewIcon" />
             Add new account
           </Typography>
           <div>
-
             <Modal
               open={open}
               onClose={handleClose}

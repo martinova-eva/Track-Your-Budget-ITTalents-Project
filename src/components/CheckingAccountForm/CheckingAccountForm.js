@@ -8,6 +8,7 @@ import { useState } from "react";
 import { create } from "../../store/checkingAccountSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { createSavingsAccount } from "../../store/SavingsAccountSlice";
 
 
 
@@ -16,12 +17,23 @@ export default function CreateCheckingAccount({ handleClose }) {
    const [accountStartAmount, setAccountStartAmount] = useState('');
    const [currency, setCurrency] = useState('');
    const [type, setType] = useState('');
+   const [target, setTarget] = useState('');
+   const [percentage, setPercentage] = useState('');
+   const [icon, setIcon] = useState('');
 
    const navigate = useNavigate();
    const dispatch = useDispatch();
    const handleDispatch = ()=> {
-       dispatch(create({accountName, currency, accountStartAmount}))
-       navigate('/home');
+      if(type === "checking"){
+         dispatch(create({accountName, currency, accountStartAmount}))
+         navigate('/home');
+
+      }
+      if(type === "savings"){
+         dispatch(createSavingsAccount({accountName, currency, accountStartAmount,target , percentage, icon}))
+         navigate('/home');
+      }
+     
    }
   
    const currencies = [
@@ -59,6 +71,7 @@ export default function CreateCheckingAccount({ handleClose }) {
             id="outlined-required"
             label="Account Name"
             placeholder="Enter name for your account"
+            onChange={(e)=> setAccountName(e.target.value)}
             />
          <DropDownOptions
             required
@@ -77,6 +90,7 @@ export default function CreateCheckingAccount({ handleClose }) {
             InputProps={{ inputProps: { min: 0 } }}
             label="Starting amount"
             placeholder="Enter starting amount"
+            onChange={(e)=> setAccountStartAmount(e.target.value)}
          />
          <TextField
             required
@@ -86,6 +100,7 @@ export default function CreateCheckingAccount({ handleClose }) {
             id="outlined-number"
             label="Target amount"
             placeholder="Enter target amount"
+            onChange={(e)=> setTarget(e.target.value)}
          />
          <TextField
             required
@@ -95,12 +110,13 @@ export default function CreateCheckingAccount({ handleClose }) {
             InputProps={{ inputProps: { min: 0, max: 100 } }}
             label="Incomes %"
             placeholder="Set % of the incomes, you wish to save"
+            onChange={(e)=> setPercentage(e.target.value)}
          />
          <Box sx={{ pl: 1, display: "flex", flexDirection: 'column' }}>
             <Typography variant="body2" >
                Choose target icon
             </Typography>
-            <RadioGroup >
+            <RadioGroup onChange={(e)=> setIcon(e.target.value)} >
                <Box>
                   {iconsArrOfObjects.map((icon, i) =>
                      <FormControlLabel

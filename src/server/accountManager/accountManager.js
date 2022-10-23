@@ -11,13 +11,15 @@ export let accountManager = (function(){
         }
     }
     class SavingsAccount{
-        constructor(id, name, ownerId, target, balance, percentage){
-            this.id = uuidV4(); 
+        constructor(ownerId, name, currency,  target, balance, percentage, icon){
+            this.id = uuidV4();
+            this.ownerId = ownerId; 
             this.name = name;
-            this.ownerId = ownerId;
+            this.currency = currency; 
             this.balance = balance;
             this.target = target;
             this.percentage = percentage;
+            this.icon = icon;
         }
     }
     class Transaction{
@@ -50,7 +52,6 @@ export let accountManager = (function(){
         
         addAccount(id, nameOfAccount, ownerId, transactions, currency, balance) {
             let accounts = this.getAllAccounts();
-            //ownerId,name, currency, balance, transactions = []
             let newAccount = new Account(id, nameOfAccount, ownerId, transactions, currency, balance)
             accounts.push(newAccount);
             localStorage.setItem('accounts', JSON.stringify(accounts));
@@ -131,9 +132,10 @@ export let accountManager = (function(){
             let existSavingsAccount = accounts.find(accounts => accounts.ownerId === ownerId);
             return existSavingsAccount;
         }
-        createSavingsAccount(id, nameOfAccount, ownerId, target, balance, percentage) {
+        
+        createSavingsAccount(ownerId, name, currency,  target, balance, percentage, icon) {
             let savings = this.getAllSavingsAccounts();
-            let newAccount = new SavingsAccount(id, nameOfAccount, ownerId, target, balance, percentage)
+            let newAccount = new SavingsAccount(ownerId, name, currency,  target, balance, percentage, icon)
             savings.push(newAccount);
             localStorage.setItem('savings', JSON.stringify(savings));
         }
