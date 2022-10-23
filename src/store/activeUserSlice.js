@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { json } from 'react-router-dom';
 
 const initialState = {
     username: '',
@@ -18,7 +19,12 @@ export const loginUser = createAsyncThunk(
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(res => res.json());   
+    }).then(res => res.json())
+    .then(data => {
+      const activeUser = JSON.parse(localStorage.getItem('activeUser'));
+      activeUser.sessionId = data.sessionId;
+      localStorage.setItem('activeUser', JSON.stringify(activeUser));
+    });   
   }
 )
 export const logoutUser = createAsyncThunk(

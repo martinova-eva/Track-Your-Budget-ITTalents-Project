@@ -23,7 +23,7 @@ export let accountManager = (function(){
         }
     }
     class Transaction{
-        constructor(id, date, type, amount, description, accountsId){
+        constructor( date, type, amount, description, accountsId){
             this.id = uuidV4(); 
             this.date = date;
             this.type = type;
