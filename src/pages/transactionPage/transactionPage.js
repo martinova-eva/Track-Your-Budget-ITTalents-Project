@@ -18,9 +18,9 @@ export default function TransactionPage() {
 
   const handleCreateNewTransaction = () => {
     if (selectedAccount && typeOfTransaction && categoryName && date &&  amount && description ) {
-      console.log(selectedAccount, typeOfTransaction, categoryName, date, amount, description);
+      console.log(selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, amount, description);
 
-      // {selectedAccount, typeOfTransaction, categoryName, date, description, amount}
+      // {selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, description, amount}
       // navigate('/transactions');
       setSelectedAccount('');
       setTypeOfTransaction('');
@@ -91,7 +91,6 @@ export default function TransactionPage() {
             label="enter amount"
             value={amount}
             onChange={e => {
-              console.log(e.target.value)
               setAmount(e.target.value)
             }}
           />
