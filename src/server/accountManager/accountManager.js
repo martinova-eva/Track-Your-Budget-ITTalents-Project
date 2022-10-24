@@ -73,13 +73,14 @@ export let accountManager = (function(){
             return userAccounts;
         }
         checkAccountBalance(accountId){
-            let userAccounts = this.getAllUserAccounts;
+            let userAccounts = this.getAllUserAccounts();
             let balance = 0;
             userAccounts.map(a => {
                 if(a.id === accountId){
                     balance = a.balance;
                 }
             })
+            return balance;
         }
         
         addAccount(id, nameOfAccount, owner, transactions, currency, balance) {

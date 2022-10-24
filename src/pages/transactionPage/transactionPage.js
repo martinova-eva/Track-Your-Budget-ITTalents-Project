@@ -18,34 +18,34 @@ export default function TransactionPage() {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState(0);
 
-  const owner = useSelector(state => state.username);
-  const accounts = accountManager.getAllUserAccounts(owner); //като вземем успешно името!
+  //const owner = useSelector(state => state.username);
+ // const accounts = accountManager.getAllUserAccounts(owner); //като вземем успешно името!
 
   const handleCreateNewTransaction = () => {
     if (selectedAccount && typeOfTransaction && categoryName && date &&  amount ) {
       console.log(selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, amount, description);
 
-      let accountBalance = accountManager.checkAccountBalance(selectedAccount);
-      if(accountBalance > amount){
-        accountManager.addTransaction( date, typeOfTransaction, amount, description, selectedAccount, owner);
+      //let accountBalance = accountManager.checkAccountBalance(selectedAccount);
+      //console.log(accountBalance);
+      //if(accountBalance >= amount){
+       
+       // accountManager.addTransaction( date, typeOfTransaction, amount, description, selectedAccount, owner);
         // {selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, description, amount}
       // navigate('/transactions');
-        setSelectedAccount('');
-        setTypeOfTransaction('');
-        setCategoryName('');
-        setDate(new Date());
-        setDescription('');
-        setAmount('');
-      }else{
-        alert('ooooppsss you don`t have enough money in this account');
-      }
+      //   setSelectedAccount('');
+      //   setTypeOfTransaction('');
+      //   setCategoryName('');
+      //   setDate(new Date());
+      //   setDescription('');
+      //   setAmount('');
+      // }else{
+      //   alert('ooooppsss you don`t have enough money in this account');
+      // }
       
     } else {
       alert('ooooppsss we can`t create new transactions');
     }
-
   }
-
   return (
     <div className='wrapper-select-elements'>
       <Box sx={{ border: 1, borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column' }}>
@@ -58,9 +58,9 @@ export default function TransactionPage() {
           onChange={value => setSelectedAccount(value)}
         >
           {/* тези опции трябва да са динамични, според това колко сметки има юзера, value-то ще е account's id */}          
-          {accounts.map((account, i) => ( <MenuItem key={account.id} value={account.id}>
+          {/* {accounts.map((account, i) => ( <MenuItem key={account.id} value={account.id}>
               {account.name}
-            </MenuItem>))}
+            </MenuItem>))} */}
         </SelectElement>
 
         <SelectElement className="select-element" title={"Transaction type:"}
