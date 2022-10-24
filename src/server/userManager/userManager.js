@@ -11,9 +11,12 @@ export let userManager = (function () {
     class UserManager {
         constructor() {
             this.users = [];
-            this.activeUser = null;
+            this.activeUser = {};
             if (localStorage.getItem('users')) {
                 this.users = JSON.parse(localStorage.getItem('users'));
+            }
+            if(localStorage.getItem('activeUser')){
+                this.activeUser = JSON.parse(localStorage.getItem('activeUser'));
             }
         }
         getAllUsers() {
