@@ -3,7 +3,7 @@ import { accountManager } from '../server/accountManager/accountManager';
 
 
 const initialState = {
-  ownerId: '',
+  owner: '',
   accountName: '',
   currency: '',
   accountStartAmount: '',
@@ -28,7 +28,7 @@ export const savingsAccountSlice = createSlice({
       state.icon = action.payload.icon;
       if (state.accountName && state.currency && state.accountStartAmount && state.accountStartAmount && state.percentage) {
         accountManager.createSavingsAccount(
-          state.ownerId, state.accountName, state.currency, state.accountStartAmount, state.target , state.percentage, state.icon)
+          state.owner, state.accountName, state.currency, state.accountStartAmount, state.target , state.percentage, state.icon)
       }
     }
   },

@@ -6,6 +6,7 @@ import "./registration.css";
 import { useState} from "react";
 import { registerUser } from "../../server/users";
 import { useDispatch } from "react-redux";
+import { userManager } from "../../server/userManager/userManager";
 import {registerUser as registerNewUser} from "../../store/registerUserSlice";
 
 export default function RegistrationForm() {
@@ -19,11 +20,10 @@ export default function RegistrationForm() {
     const dispatch = useDispatch();
 
     const handleRegister = () => {
-         if(password.trim() === confirmPass.trim() && username && email){
-            if(registerUser(username, password)) {
+         
+            if(userManager.registerUser(username, password, confirmPass)) {
                dispatch(registerNewUser({username, password}));
                navigate('/login');
-
                setUsername('');
                setEmail('');
                setPassword('');
@@ -31,9 +31,7 @@ export default function RegistrationForm() {
             }else {
                console.log('Error'); //покажи съобщение
            }
-         }else {
-            console.log('Error');//покажи съобщение
-        }
+         
     }
 
    return (

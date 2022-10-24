@@ -6,7 +6,7 @@ import "./login.css";
 import { useDispatch, useSelector} from "react-redux";
 import { useState } from "react";
 import { loginUser } from "../../store/activeUserSlice";
-import { loginUser as logUser} from "../../server/users";
+import { userManager } from "../../server/userManager/userManager";
 import {login} from "../../store/activeUserSlice";
 
 export default function LoginForm() {
@@ -18,10 +18,14 @@ export default function LoginForm() {
    const [password, setPassword] = useState(''); 
 
    const handleLogin = () => {
-      logUser(username, password);
-      dispatch(loginUser({ username, password }));
-      dispatch(login({ username, password }));
-      navigate('/home');
+      if(userManager.loginUser(username, password)){
+         dispatch(loginUser({ username, password }));
+         //dispatch(login({ username, password }));
+         navigate('/home');
+      }else{
+         //message 
+      }
+      
   }
 
    return (

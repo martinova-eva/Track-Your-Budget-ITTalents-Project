@@ -1,9 +1,9 @@
 import { v4 as uuidV4 } from 'uuid'
 export let accountManager = (function(){
     class Account{
-        constructor(ownerId,name, currency, balance, transactions = []){
+        constructor(owner,name, currency, balance, transactions = []){
             this.id = uuidV4(); 
-            this.ownerId = ownerId;
+            this.owner = owner;
             this.name = name;
             this.currency = currency; 
             this.balance = balance;
@@ -11,9 +11,9 @@ export let accountManager = (function(){
         }
     }
     class SavingsAccount{
-        constructor(ownerId, name, currency,  target, balance, percentage, icon){
+        constructor(owner, name, currency,  target, balance, percentage, icon){
             this.id = uuidV4();
-            this.ownerId = ownerId; 
+            this.owner = owner; 
             this.name = name;
             this.currency = currency; 
             this.balance = balance;
@@ -50,9 +50,9 @@ export let accountManager = (function(){
             return JSON.parse(localStorage.getItem('accounts')) || [];
         }
         
-        addAccount(id, nameOfAccount, ownerId, transactions, currency, balance) {
+        addAccount(id, nameOfAccount, owner, transactions, currency, balance) {
             let accounts = this.getAllAccounts();
-            let newAccount = new Account(id, nameOfAccount, ownerId, transactions, currency, balance)
+            let newAccount = new Account(id, nameOfAccount, owner, transactions, currency, balance)
             accounts.push(newAccount);
             localStorage.setItem('accounts', JSON.stringify(accounts));
         }
@@ -65,7 +65,7 @@ export let accountManager = (function(){
             })
             localStorage.setItem('accounts', JSON.stringify(accounts));
         }
-        addTransaction( date, type, amount, description, accountsId, ownerId){
+        addTransaction( date, type, amount, description, accountsId, owner){
             let accounts = this.getAllAccounts();
             let transaction = new Transaction( date, type, amount, description, accountsId);
             accounts = accounts.map(a => {
@@ -76,14 +76,14 @@ export let accountManager = (function(){
     
                     }else if(transaction.type === "income"){
                         //ако този клиент има спестовна сметка със заложен процент , премести % в спестовната сметка
-                        let savingsAccount = this.checkForSavingsAccount(ownerId);
+                        let savingsAccount = this.checkForSavingsAccount(owner);
                         if(savingsAccount){
                             let currentIncome = transaction.amount * savingsAccount.percentage
                             savingsAccount.balance += currentIncome;
     
                            let allSavingsAccount = this.getAllSavingsAccounts();
                            allSavingsAccount = allSavingsAccount.map(s => {
-                            if(s.ownerId === ownerId){
+                            if(s.owner === owner){
                                 s.balance = savingsAccount.balance;
                             }
                             })
@@ -127,15 +127,15 @@ export let accountManager = (function(){
         getAllSavingsAccounts() {
             return JSON.parse(localStorage.getItem('savings')) || [];
         }
-        checkForSavingsAccount(ownerId){
+        checkForSavingsAccount(owner){
             let accounts = this.getAllSavingsAccounts();
-            let existSavingsAccount = accounts.find(accounts => accounts.ownerId === ownerId);
+            let existSavingsAccount = accounts.find(accounts => accounts.owner === owner);
             return existSavingsAccount;
         }
         
-        createSavingsAccount(ownerId, name, currency,  target, balance, percentage, icon) {
+        createSavingsAccount(owner, name, currency,  target, balance, percentage, icon) {
             let savings = this.getAllSavingsAccounts();
-            let newAccount = new SavingsAccount(ownerId, name, currency,  target, balance, percentage, icon)
+            let newAccount = new SavingsAccount(owner, name, currency,  target, balance, percentage, icon)
             savings.push(newAccount);
             localStorage.setItem('savings', JSON.stringify(savings));
         }

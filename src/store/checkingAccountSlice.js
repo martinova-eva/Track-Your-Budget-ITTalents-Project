@@ -4,7 +4,7 @@ import { accountManager } from '../server/accountManager/accountManager';
 
 const initialState = {
 
-  ownerId: '',
+  owner: '',
   accountName: '',
   currency: '',
   accountStartAmount: '',
@@ -22,7 +22,7 @@ export const checkingAccountSlice = createSlice({
       state.currency = action.payload.currency;
       state.accountStartAmount = action.payload.accountStartAmount;
       if (state.accountName && state.currency && state.accountStartAmount) {
-        accountManager.addAccount(state.ownerId, state.accountName, state.currency, state.accountStartAmount)
+        accountManager.addAccount(state.owner, state.accountName, state.currency, state.accountStartAmount)
       }
     }
   },
