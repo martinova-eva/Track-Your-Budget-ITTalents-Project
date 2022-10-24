@@ -14,12 +14,12 @@ const initialState = {
 }
 
 
-
 export const savingsAccountSlice = createSlice({
   name: 'savingsAccount',
   initialState,
   reducers: {
     createSavingsAccount: (state, action) => {
+      state.owner = action.payload.owner;
       state.accountName = action.payload.accountName;
       state.currency = action.payload.currency;
       state.accountStartAmount = action.payload.accountStartAmount;

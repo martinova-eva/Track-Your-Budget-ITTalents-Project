@@ -9,7 +9,6 @@ export let userManager = (function () {
     }
 
     class UserManager {
-
         constructor() {
             this.users = [];
             this.activeUser = null;

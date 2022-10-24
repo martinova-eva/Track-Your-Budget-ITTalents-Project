@@ -18,6 +18,7 @@ export const checkingAccountSlice = createSlice({
   initialState,
   reducers: {
     create: (state, action) => {
+      state.owner = action.payload.owner;
       state.accountName = action.payload.accountName;
       state.currency = action.payload.currency;
       state.accountStartAmount = action.payload.accountStartAmount;
