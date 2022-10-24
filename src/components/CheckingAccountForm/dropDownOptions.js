@@ -10,7 +10,6 @@ export default function DropDownOptions({ helperText, label, arr, value, handleC
   return (
     <Grid className="wrapper">
       <TextField
-        
         fullWidth
         id="outlined-select-currency"
         select
