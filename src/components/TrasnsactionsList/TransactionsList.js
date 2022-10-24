@@ -8,13 +8,16 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { Doughnut, Pie } from "react-chartjs-2";
 import {Chart, ArcElement} from 'chart.js';
 import SelectElement from "../selectElementForCategories/selectElement";
+import { accountManager } from "../../server/accountManager/accountManager";
 
 Chart.register(ArcElement);
 
 
 export default function TransactionsList() {
     const [typeOfTransaction, setTypeOfTransaction] = useState('');
-
+    //взимайки Id на сметката, ще вземем всички нейни транзакции => обикаляме масива долу на всяка нов ListItem
+    //const allTransactionForThisAccount = accountManager.showAllTransactionForThisAccount(accountId);
+    
     const data = {
         labels: [
             'income',

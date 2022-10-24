@@ -82,7 +82,15 @@ export let accountManager = (function(){
             })
             return balance;
         }
-        
+        showAllTransactionForThisAccount(accountId){
+            let allAccounts = this.getAllAccounts();
+            let transaction = [];
+            allAccounts.map(a => {
+                if(a.id === accountId){
+                    transaction = [...a.transaction];
+                }
+            })
+        }
         addAccount(id, nameOfAccount, owner, transactions, currency, balance) {
             let accounts = this.getAllAccounts();
             let newAccount = new Account(id, nameOfAccount, owner, transactions, currency, balance)

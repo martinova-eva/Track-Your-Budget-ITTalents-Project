@@ -27,7 +27,6 @@ export let userManager = (function () {
                 return false;
             }
             if(password.trim() === confirmPass.trim()){
-               // let newUser = new User(username, password)
                 users.push( new User(username, password) );
                 localStorage.setItem('users', JSON.stringify(users));
                 return true;
@@ -40,7 +39,7 @@ export let userManager = (function () {
                 user => user.username === username && user.password === password
             );
 
-            if (userExist) {
+            if (user) {
                 localStorage.setItem('activeUser', JSON.stringify(new User(username, password)));
                 return true;
             }
