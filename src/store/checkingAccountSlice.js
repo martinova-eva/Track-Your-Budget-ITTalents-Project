@@ -3,7 +3,6 @@ import { accountManager } from '../server/accountManager/accountManager';
 
 
 const initialState = {
-
   owner: '',
   accountName: '',
   currency: '',

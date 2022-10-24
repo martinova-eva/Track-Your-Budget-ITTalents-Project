@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Button, Grid, Paper, TextField, FormControl} from "@mui/material";
+import { Avatar, Button, Grid, Paper, TextField, FormControl, Typography} from "@mui/material";
 import PasswordFields from "../registration/passowrdField";
 import { Link, useNavigate } from "react-router-dom";
 import "./login.css";
@@ -8,6 +8,7 @@ import { useState } from "react";
 import { loginUser } from "../../store/activeUserSlice";
 import { userManager } from "../../server/userManager/userManager";
 import {login} from "../../store/activeUserSlice";
+
 
 export default function LoginForm() {
    //const user = useSelector(state => state.activeUser);
@@ -18,10 +19,12 @@ export default function LoginForm() {
    const [password, setPassword] = useState(''); 
 
    const handleLogin = () => {
-      if(userManager.loginUser(username, password)){
+      if(loginUser(username, password)){
          dispatch(loginUser({ username, password }));
          dispatch(login({ username, password }));
          navigate('/home');
+         setUsername('');
+         setPassword('');
       }else{
          //message 
       }
@@ -43,15 +46,21 @@ export default function LoginForm() {
                   label="Username"
                   placeholder="Enter your username"
                   value={username} 
-                  onChange={e => setUsername(e.target.value)} />
+                  onChange={e => setUsername(e.target.value.trim())} />
                <PasswordFields placeholder={"Enter a password"} labels={"Password"}
                   value={password} 
                   onChange={value => setPassword(value)} />
                <Button type="button" variant="contained" size="large" id="submitButton" onClick={handleLogin}>Sign in</Button>
             </FormControl>
-            <Grid className="fieldStyle">
-            <Link to="/register">You don't have an account? Click here to create one.</Link>
-               <Link to="/"><p className="fieldStyle">You need more information?</p></Link>
+            <Grid className="loginRegisterLinks">
+            <Link className="loginRegisterLinks" to="/register">
+                <Typography variant="caption" display="block" >
+                You don't have an account? Click here to create one.
+                  </Typography>
+               </Link>
+               <Link className="loginRegisterLinks" to="/"> <Typography  variant="caption" display="block" >
+                     Click here for more information
+                  </Typography></Link>
             </Grid>
          </Paper>
       </Grid>

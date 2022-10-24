@@ -1,5 +1,5 @@
 import React from "react";
-import { InputLabel } from "@mui/material";
+import { FormHelperText, InputLabel,TextField } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -10,14 +10,13 @@ import "./registration.css";
 import { PropaneSharp } from "@mui/icons-material";
 
 
-export default function PasswordFields({ labels, placeholder, onChange }){
+export default function PasswordFields({ helperText, labels, placeholder, onChange, error }){
    const [values, setValues] = React.useState({
       password: '',
       showPassword: false,
 
    });
    const handleChange = (prop) => (event) => {
-      //console.log(event.target.value)
       setValues({ ...values, [prop]: event.target.value });
       onChange(event.target.value);
    };
@@ -33,15 +32,15 @@ export default function PasswordFields({ labels, placeholder, onChange }){
       event.preventDefault();
    };
    return (
-      <FormControl fullWidth variant="outlined">
+      <FormControl  error = {error} fullWidth variant="outlined">
          <InputLabel required htmlFor="outlined-adornment-password">{labels}</InputLabel>
          <OutlinedInput
          fullWidth
             required
+           
             placeholder={placeholder}
-            id="outlined-adornment-password"
             type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
+            value={values.password.trim()}
             onChange={handleChange('password')}
             endAdornment={
                <InputAdornment position="end">
@@ -57,6 +56,7 @@ export default function PasswordFields({ labels, placeholder, onChange }){
             }
             label="Password"
          />
+         <FormHelperText id="outlined-error-helper-text">{helperText}</FormHelperText>
       </FormControl>
 
    )
