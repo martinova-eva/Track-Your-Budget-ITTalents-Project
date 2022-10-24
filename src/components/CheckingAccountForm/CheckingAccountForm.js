@@ -21,6 +21,7 @@ export default function CreateCheckingAccount({ handleClose }) {
    const [target, setTarget] = useState('');
    const [percentage, setPercentage] = useState('');
    const [icon, setIcon] = useState('');
+
    const activeUser = userManager.getActiveUser();
    let owner = activeUser.username;
 
@@ -33,11 +34,21 @@ export default function CreateCheckingAccount({ handleClose }) {
          dispatch(create({owner, accountName, currency, accountStartAmount}))
          navigate('/home');
          console.log(activeUser.username)
+         setAccountName('');
+         setCurrency('');
+         setAccountStartAmount('');
 
       }
       if(type === "savings"){
          dispatch(createSavingsAccount({owner,accountName, currency, accountStartAmount,target , percentage, icon}))
          navigate('/home');
+         
+         setAccountName('');
+         setCurrency('');
+         setAccountStartAmount('');
+         setTarget('');
+         setPercentage('');
+         setIcon('');
       }
      
    }
