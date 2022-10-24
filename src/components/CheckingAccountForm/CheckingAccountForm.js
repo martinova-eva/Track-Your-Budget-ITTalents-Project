@@ -31,10 +31,14 @@ export default function CreateCheckingAccount({ handleClose }) {
       if(type === "checking"){
          dispatch(create({owner, accountName, currency, accountStartAmount}))
          navigate('/home');
+<<<<<<< HEAD
+         console.log(activeUser)
+=======
          
          setAccountName('');
          setCurrency('');
          setAccountStartAmount('');
+>>>>>>> cfc67c00c00a327a411a51c42c460e6bd7a326b9
 
       }
       if(type === "savings"){

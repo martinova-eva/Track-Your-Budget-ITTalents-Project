@@ -1,9 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+const initialState = {
+  username: '',
+  password: '',
+  userLoading: false,
+  isWrongName: false,
+
+}
+
 export const registerUser = createAsyncThunk(
   'register',
-  // Declare the type your function argument here:
   ({username, password}) => {
     return fetch(`https://itt-voting-api.herokuapp.com/users`, {
       method: 'POST',
@@ -11,14 +18,11 @@ export const registerUser = createAsyncThunk(
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(res => res.json());   
+    }).then(res => res.json())
+    
   }
 )
-const initialState = {
-  username: '',
-  password: '',
-  userLoading: false
-}
+
 
 export const registerUserSlice = createSlice({
   name: 'registerUser',
@@ -32,12 +36,16 @@ export const registerUserSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(registerUser.fulfilled, (state, action) => {
         state.userLoading = false;
+        
     })
     builder.addCase(registerUser.rejected, (state, action) => {
       state.userLoading = false;
+      state.isWrongName = true;
+      
     })
     builder.addCase(registerUser.pending, (state, action) => {
-      state.userLoading = true;
+   
+      
     })
   },
 })

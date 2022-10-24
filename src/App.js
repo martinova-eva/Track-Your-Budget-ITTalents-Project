@@ -11,6 +11,7 @@ import TransactionsList from './components/TrasnsactionsList/TransactionsList';
 import AccountsList from './components/accountsList/AcountsList';
 import DemoPage from './pages/demoPage/demoPage';
 import { useSelector } from 'react-redux';
+import { render } from '@testing-library/react';
 
 export default function App() {
 

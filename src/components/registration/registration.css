@@ -19,3 +19,10 @@
 #submitButton{
     color: white;
 }
+.loginRegisterLinks{
+    margin: 1rem auto;  
+    color: #717f99
+}
+.loginRegisterLinks:hover{
+    color: #13b977;
+}

@@ -12,7 +12,6 @@ export let userManager = (function () {
         constructor() {
             this.users = [];
             this.activeUser = null;
-
             if (localStorage.getItem('users')) {
                 this.users = JSON.parse(localStorage.getItem('users'));
             }
@@ -24,7 +23,7 @@ export let userManager = (function () {
         registerUser(username, password, confirmPass) {
             let users = this.getAllUsers();
             const isUserTaken = users.find(user => user.username === username);
-            if (isUserTaken) {
+            if (isUserTaken ) {
                 return false;
             }
             if(password.trim() === confirmPass.trim()){
@@ -37,25 +36,22 @@ export let userManager = (function () {
 
         loginUser(username, password) {
             let users = this.getAllUsers();
-            console.log(users)
-            const userExist = users.map(user => {
-                if(user.username === username && user.password === password){
-                    return true;
-                }
-                return false;
-                }            
+            const user = users.find(
+                user => user.username === username && user.password === password
             );
 
             if (userExist) {
                 localStorage.setItem('activeUser', JSON.stringify(new User(username, password)));
                 return true;
             }
-            return false;
+        
+            return user;
             
         }
 
         getActiveUser() {
             return JSON.parse(localStorage.getItem('activeUser'));
+            
         }
         logoutFromStorage() {
             ///ще трябва да прехвърли всичко в общия масив
@@ -65,3 +61,4 @@ export let userManager = (function () {
     }
     return new UserManager();
 })();
+
