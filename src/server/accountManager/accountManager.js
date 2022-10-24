@@ -23,7 +23,7 @@ export let accountManager = (function(){
         }
     }
     class Transaction{
-        constructor( date, type, amount, description, accountsId){
+        constructor( date, type, amount, description = '', accountsId){
             this.id = uuidV4(); 
             this.date = date;
             this.type = type;
@@ -62,6 +62,25 @@ export let accountManager = (function(){
         getAllAccounts() {
             return JSON.parse(localStorage.getItem('accounts')) || [];
         }
+        getAllUserAccounts(owner){
+            let allAccounts = this.getAllAccounts();
+            let userAccounts = [];
+            allAccounts.map(a => {
+                if(a.owner === owner){
+                    userAccounts.push(a);
+                }
+            })
+            return userAccounts;
+        }
+        checkAccountBalance(accountId){
+            let userAccounts = this.getAllUserAccounts;
+            let balance = 0;
+            userAccounts.map(a => {
+                if(a.id === accountId){
+                    balance = a.balance;
+                }
+            })
+        }
         
         addAccount(id, nameOfAccount, owner, transactions, currency, balance) {
             let accounts = this.getAllAccounts();
@@ -94,24 +113,23 @@ export let accountManager = (function(){
                             let currentIncome = transaction.amount * savingsAccount.percentage
                             savingsAccount.balance += currentIncome;
     
-                           let allSavingsAccount = this.getAllSavingsAccounts();
-                           allSavingsAccount = allSavingsAccount.map(s => {
-                            if(s.owner === owner){
-                                s.balance = savingsAccount.balance;
-                            }
-                            })
+                                let allSavingsAccount = this.getAllSavingsAccounts();
+                                allSavingsAccount = allSavingsAccount.map(s => {
+                                    if(s.owner === owner){
+                                        s.balance = savingsAccount.balance;
+                                    }
+                                    })
                             //localStorage.setItem('savings', JSON.stringify(savings));
                             a.balance += (transaction.amount - currentIncome);
                             a.transactions.push(transaction);
                         }else{
+                            a.transactions.push(transaction);
+
                             a.balance += transaction.amount;
                             a.transactions.push(transaction);
                         }
                         
-                    }else{
-                        alert('You dont`t have enough money for this transaction');
-                    }
-                   
+                    }                   
                 }
             })
             localStorage.setItem('accounts', JSON.stringify(accounts));
@@ -135,8 +153,6 @@ export let accountManager = (function(){
             })
             localStorage.setItem('accounts', JSON.stringify(accounts));
         }
-    
-    
         getAllSavingsAccounts() {
             return JSON.parse(localStorage.getItem('savings')) || [];
         }

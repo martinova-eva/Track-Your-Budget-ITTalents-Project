@@ -61,10 +61,9 @@ export const iconsArrOfObjects = [
 ]
 
 export function getTheIcon(titleOfIcon){
-    const neededTag = iconsArrOfObjects.map(icon => {
+    iconsArrOfObjects.map(icon => {
         if(icon.title === titleOfIcon){
             return icon.tag;
         }
     })
-    return neededTag;
 }
