@@ -31,16 +31,22 @@
     margin: 3rem auto;
 }
 #category-btn{
-    color: white;
-    background-color:#13b977;
+    color:#13b977;
+    background-color:white;
+    min-width: 15vw;
+    max-width: 20vw;
 }
 #date-btn{
-    color: white;
-    background-color:#13b977;
+    color:#13b977;
+    background-color:white;
+    min-width: 15vw;
+    max-width: 20vw;
 }
 #incomes-btn{
-    color: white;
-    background-color:#13b977;
+    color:#13b977;
+    background-color:white;
+    min-width: 15vw;
+    max-width: 20vw;
 }
 .transactionsHeader{
     padding: 0.5rem 0.5rem;

@@ -1,18 +1,20 @@
-import React from "react";
+import {React, useState} from "react";
 import { ListGroup } from "react-bootstrap";
 import "./transactionsList.css";
 import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
-import { Typography } from "@mui/material";
+import { Typography, Box, MenuItem, Button } from "@mui/material";
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import SortButtons from "./SortButtons";
+
 import { Doughnut, Pie } from "react-chartjs-2";
-import {Chart, ArcElement} from 'chart.js'
+import {Chart, ArcElement} from 'chart.js';
+import SelectElement from "../selectElementForCategories/selectElement";
+
 Chart.register(ArcElement);
 
 
-
-
 export default function TransactionsList() {
+    const [typeOfTransaction, setTypeOfTransaction] = useState('');
+
     const data = {
         labels: [
             'income',
@@ -37,11 +39,31 @@ export default function TransactionsList() {
         }]
       };
 
+    
     return (
+
         <div className="transactionsListWrapper">
-            <SortButtons />
-            <div className="listandChart">
+            <Box className="sortWrapper"
+                component="form"
+                sx={{
+                    '& .MuiTextField-root': { m: 2, width: '15vw'},
+                }}
+                noValidate
+                autoComplete="off"
+            >
+                <SelectElement title={"Transaction type:"}
+                    value={typeOfTransaction}
+                    onChange={value => setTypeOfTransaction(value)}
+                >
+                    {<MenuItem key={'income'} value={'income'} >{'Income'}</MenuItem>}
+                    {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
+                </SelectElement>
             
+            <Button type="submit" variant="contained" size="large" id="date-btn">Filter by date</Button>
+            <Button type="submit" variant="contained" size="large" id="incomes-btn">Clear filters</Button>
+            </Box>
+
+            <div className="listandChart">
             <ListGroup>
             <Typography className="transactionsHeader" variant="h6">
                 List of transactions for Checkings account
@@ -63,6 +85,7 @@ export default function TransactionsList() {
                         -$50.00
                     </Typography>
                 </ListGroup.Item>
+
                 <ListGroup.Item className="transactionList">
                     <div className="category">
                         <MonetizationOnIcon className="categoryIcon" />

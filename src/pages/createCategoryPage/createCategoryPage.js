@@ -15,7 +15,7 @@ export default function CreateCategoryPage() {
         if (nameOfCategory && typeOfCategory && iconTitle) {
             console.log(nameOfCategory, typeOfCategory, getTheIcon(iconTitle));
 
-            accountManager.addCustomCategory(owner, nameOfCategory, typeOfCategory, iconTitle);
+           // accountManager.addCustomCategory(owner, nameOfCategory, typeOfCategory, iconTitle);
             setNameOfCategory('');
             setTypeOfCategory('');
             setIconTitle('');
