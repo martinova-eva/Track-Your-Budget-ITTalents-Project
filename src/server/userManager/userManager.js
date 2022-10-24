@@ -27,8 +27,8 @@ export let userManager = (function () {
                 return false;
             }
             if(password.trim() === confirmPass.trim()){
-                let newUser = new User(username, password)
-                users.push({ newUser });
+               // let newUser = new User(username, password)
+                users.push( new User(username, password) );
                 localStorage.setItem('users', JSON.stringify(users));
                 return true;
             }
@@ -36,14 +36,22 @@ export let userManager = (function () {
 
         loginUser(username, password) {
             let users = this.getAllUsers();
-            const user = users.find(
-                user => user.username === username && user.password === password
+            console.log(users)
+            const userExist = users.map(user => {
+                if(user.username === username && user.password === password){
+                    return true;
+                }
+                return false;
+                }            
             );
 
-            if (user) {
-                localStorage.setItem('activeUser', JSON.stringify(user));
+            if (userExist) {
+                console.log("vrushta li")
+                localStorage.setItem('activeUser', JSON.stringify(new User(username, password)));
+                return true;
             }
-            return user;
+            return false;
+            
         }
 
         getActiveUser() {
