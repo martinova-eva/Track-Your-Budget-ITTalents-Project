@@ -47,7 +47,6 @@ export let userManager = (function () {
             );
 
             if (userExist) {
-                console.log("vrushta li")
                 localStorage.setItem('activeUser', JSON.stringify(new User(username, password)));
                 return true;
             }

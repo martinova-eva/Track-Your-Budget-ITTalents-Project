@@ -10,8 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createSavingsAccount } from "../../store/SavingsAccountSlice";
 import { userManager } from "../../server/userManager/userManager";
-
-
+import { accountManager } from "../../server/accountManager/accountManager";
 
 export default function CreateCheckingAccount({ handleClose }) {
    const [accountName, setAccountName] = useState('');
@@ -21,26 +20,25 @@ export default function CreateCheckingAccount({ handleClose }) {
    const [target, setTarget] = useState('');
    const [percentage, setPercentage] = useState('');
    const [icon, setIcon] = useState('');
-
-   const activeUser = userManager.getActiveUser();
-   let owner = activeUser.username;
-
-
-
+   
    const navigate = useNavigate();
    const dispatch = useDispatch();
+
+   const user = userManager.getActiveUser();
+   const owner = user.username;
+   
    const handleDispatch = ()=> {
       if(type === "checking"){
          dispatch(create({owner, accountName, currency, accountStartAmount}))
          navigate('/home');
-         console.log(activeUser.username)
+         
          setAccountName('');
          setCurrency('');
          setAccountStartAmount('');
 
       }
       if(type === "savings"){
-         dispatch(createSavingsAccount({owner,accountName, currency, accountStartAmount,target , percentage, icon}))
+         dispatch(createSavingsAccount({owner, accountName, currency, accountStartAmount,target , percentage, icon}))
          navigate('/home');
          
          setAccountName('');

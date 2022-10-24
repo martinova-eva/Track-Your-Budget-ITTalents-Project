@@ -32,18 +32,31 @@ export let accountManager = (function(){
             this.accountsId = accountsId;
         }
     }
+    class Category {
+        constructor(owner, title, type, tag){
+            this.title = title;
+            this.id = uuidV4();
+            this.type = type;
+            this.tag = tag;
+            this.owner = owner;
+        }
+    }
     
     class AccountManager {
             
         constructor() {
             this.accounts = [];
-            this.savingsAccounts = []
+            this.savingsAccounts = [];
+            this.customCategories = [];
            
             if(localStorage.getItem('accounts')){
                 this.accounts = JSON.parse(localStorage.getItem('accounts'));
             }
             if(localStorage.getItem('savings')){
                 this.savingsAccounts = JSON.parse(localStorage.getItem('savings'));
+            }
+            if(localStorage.getItem('categories')){
+                this.customCategories = JSON.parse(localStorage.getItem('categories'));
             }
         }
         getAllAccounts() {
@@ -147,6 +160,25 @@ export let accountManager = (function(){
                 }
             })
             localStorage.setItem('savings', JSON.stringify(accounts));
+        }
+        getAllCategories() {
+            return JSON.parse(localStorage.getItem('categories')) || [];
+        }
+        addCustomCategory(owner, title, type, tag){
+            let allCategories = this.getAllCategories();
+            let newCategory = new Category(owner, title, type, tag);
+            allCategories.push(newCategory);
+            localStorage.setItem('categories', JSON.stringify(allCategories));
+        }
+        checkForUserCustomCategories(owner){
+            let allCategories = this.getAllCategories();
+            let customCategories = []
+            allCategories.map(c => {
+                if(c.owner === owner){
+                    customCategories.push(c);
+                }
+            })
+            return customCategories;
         }
     }
     return new AccountManager()
