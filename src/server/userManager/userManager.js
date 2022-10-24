@@ -12,7 +12,6 @@ export let userManager = (function () {
         constructor() {
             this.users = [];
             this.activeUser = null;
-
             if (localStorage.getItem('users')) {
                 this.users = JSON.parse(localStorage.getItem('users'));
             }

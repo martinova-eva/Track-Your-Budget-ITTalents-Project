@@ -4,7 +4,6 @@ import PasswordFields from "./passowrdField";
 import { Link , useNavigate } from "react-router-dom";
 import "./registration.css";
 import { useState} from "react";
-import { registerUser } from "../../server/users";
 import { useDispatch } from "react-redux";
 import { userManager } from "../../server/userManager/userManager";
 import {registerUser as registerNewUser} from "../../store/registerUserSlice";
@@ -12,23 +11,22 @@ import {registerUser as registerNewUser} from "../../store/registerUserSlice";
 export default function RegistrationForm() {
 
    const [username, setUsername] = useState('');   
-   const [email, setEmail] = useState(''); 
     const [password, setPassword] = useState('');   
     const [confirmPass, setConfirmPass] = useState(''); 
+    let isWrong = false;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleRegister = () => {
-         
             if(userManager.registerUser(username, password, confirmPass)) {
                dispatch(registerNewUser({username, password}));
                navigate('/login');
                setUsername('');
-               setEmail('');
                setPassword('');
                setConfirmPass('');
             }else {
+             isWrong = true;
                console.log('Error'); //покажи съобщение
            }
          
@@ -41,7 +39,18 @@ export default function RegistrationForm() {
             <h2>Sign up</h2>
             
             <form className="formStyle">
+     
+        <TextField
+          error = {false}
+          id="outlined-error-helper-text"
+          label="Error"
+          defaultValue="Hello World"
+          helperText="Incorrect entry."
+        />
+     
                <TextField
+               error = {isWrong}
+               
                   required
                   fullWidth
                   id="outlined-required"
@@ -50,14 +59,7 @@ export default function RegistrationForm() {
                   value={username} 
                   onChange={e => setUsername(e.target.value)}
                   />
-               <TextField
-                  required
-                  fullWidth
-                  id="outlined-required"
-                  label="Email"
-                  placeholder="Enter your email"
-                  value={email} 
-                  onChange={e => setEmail(e.target.value)} />
+              
                <PasswordFields  placeholder={"Enter a password"} labels={"Password"} 
                   value={password} 
                   onChange={value => setPassword(value)}/>

@@ -20,7 +20,7 @@ export default function LoginForm() {
    const handleLogin = () => {
       if(userManager.loginUser(username, password)){
          dispatch(loginUser({ username, password }));
-         //dispatch(login({ username, password }));
+         dispatch(login({ username, password }));
          navigate('/home');
       }else{
          //message 
@@ -35,6 +35,7 @@ export default function LoginForm() {
             <h2>Sign in</h2>
             <FormControl  className="formStyle" fullWidth variant="outlined">
             {/* <form className="formStyle"> */}
+            
                <TextField
                   required
                   fullWidth
