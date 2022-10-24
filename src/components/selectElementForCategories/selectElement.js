@@ -17,22 +17,7 @@ export default function SelectElement(props) {
       }
     }
     return (
-      <FormControl className="select-element" onChange={(e)=>handleChange(e)} value={option} fullWidth>
-       
-        <InputLabel variant="outlined" htmlFor="uncontrolled-native"> 
-          {props.title}
-        </InputLabel>
-       
-      <NativeSelect>
-        {props.children}
-      </NativeSelect>
-      </FormControl>
-    );
-}
-
-
-
-{/* <TextField
+      <TextField
           className="select-element"
           id="outlined-select-currency"
           select
@@ -41,4 +26,6 @@ export default function SelectElement(props) {
           onChange={(e)=>handleChange(e)}
         >
          {props.children}
-</TextField> */}
+    </TextField> 
+    );
+}

@@ -24,6 +24,13 @@ export const loginUser = createAsyncThunk(
       const activeUser = JSON.parse(localStorage.getItem('activeUser'));
       activeUser.sessionId = data.sessionId;
       localStorage.setItem('activeUser', JSON.stringify(activeUser));
+      const allUsers = JSON.parse(localStorage.getItem('users'));
+      allUsers.map(u => {
+        if(u.username === activeUser.username){
+          u.sessionId = data.sessionId;
+        }
+      })
+      localStorage.setItem('users', JSON.stringify(allUsers))
     });   
   }
 )

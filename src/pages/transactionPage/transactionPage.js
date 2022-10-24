@@ -17,7 +17,7 @@ export default function TransactionPage() {
   const [amount, setAmount] = useState(0);
 
   const handleCreateNewTransaction = () => {
-    if (selectedAccount && typeOfTransaction && categoryName && date &&  amount && description ) {
+    if (selectedAccount && typeOfTransaction && categoryName && date &&  amount ) {
       console.log(selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, amount, description);
 
       // {selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, description, amount}
@@ -46,35 +46,33 @@ export default function TransactionPage() {
           onChange={value => setSelectedAccount(value)}
         >
           {/* тези опции трябва да са динамични, според това колко сметки има юзера, value-то ще е account's id */}
-          <option value='accountInLv'>Account in lv</option>
-          <option value='accountInUSD'>Account in USD</option>
+          {<MenuItem key={'accountInLv'} value={'accountInLv'}>{'accountInLv'}</MenuItem>}
+          {<MenuItem key={'accountInUSD'} value={'accountInUSD'}>{'accountInUSD'}</MenuItem>}
         </SelectElement>
 
         <SelectElement className="select-element" title={"Transaction type:"}
           value={typeOfTransaction}
           onChange={value => setTypeOfTransaction(value)}
         >
-          <option value="income">Income</option>
-          <option value="outcome">Outcome</option>
+          {<MenuItem key={'income'} value={'income'}>{'Income'}</MenuItem>}
+          {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
         </SelectElement>
 
         {typeOfTransaction === "income" ? <SelectElement className="select-element" title={"Choose from income category:"}
           value={categoryName}
           onChange={value => setCategoryName(value)}
         >
-        {/* {possibleIncomeArr.map((option,i) =>(
-          
-          <MenuItem key={i} value={option.title}>
-            {option.title}
-          </MenuItem>
-        ))} */}
-          {possibleIncomeArr.map((option, i) => <option key={i} value={option.title}>{option.title} </option>)}
+          {possibleIncomeArr.map((option, i) => ( <MenuItem key={i} value={option.title}>
+              {option.title}
+            </MenuItem>))}
         </SelectElement> :
           <SelectElement className="select-element" title={"Choose from outcome category:"}
             value={categoryName}
             onChange={value => setCategoryName(value)}
           >
-            {possibleOutcomeArr.map((option, i) => <option key={i} value={option.title}>{option.title}</option>)}
+              {possibleOutcomeArr.map((option, i) => ( <MenuItem key={i} value={option.title}>
+              {option.title}
+            </MenuItem>))}
           </SelectElement>}
         
           <BasicDatePicker 
@@ -97,7 +95,6 @@ export default function TransactionPage() {
           <TextField
             type="text"
             variant='outlined'
-            required
             fullWidth
             label="transaction description"
             value={description}
