@@ -6,6 +6,8 @@ import { possibleIncomeArr } from '../../components/categoryCreator/listOfAllInc
 import { possibleOutcomeArr } from '../../components/categoryCreator/listOfAllOutcomes'
 import BasicDatePicker from '../../components/CheckingAccountForm/datePicker';
 import { useNavigate } from 'react-router-dom';
+import { accountManager } from '../../server/accountManager/accountManager';
+import { useSelector } from 'react-redux';
 
 export default function TransactionPage() {
   const navigate = useNavigate();
@@ -16,24 +18,42 @@ export default function TransactionPage() {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState(0);
 
+  //const owner = useSelector(state => state.username);
+ // const accounts = accountManager.getAllUserAccounts(owner); //като вземем успешно името!
+//  let customCategories = accountManager.checkForUserCustomCategories(owner);
+//  customCategories.map(c => {
+//   if(c.type === "income"){
+//     possibleIncomeArr.push(c);
+//   }else{
+//     possibleOutcomeArr.push(c);
+//   }
+//  })
+
   const handleCreateNewTransaction = () => {
     if (selectedAccount && typeOfTransaction && categoryName && date &&  amount ) {
       console.log(selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, amount, description);
 
-      // {selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, description, amount}
+      //let accountBalance = accountManager.checkAccountBalance(selectedAccount);
+      //console.log(accountBalance);
+      //if(accountBalance >= amount){
+       
+       // accountManager.addTransaction( date, typeOfTransaction, amount, description, selectedAccount, owner);
+        // {selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, description, amount}
       // navigate('/transactions');
-      setSelectedAccount('');
-      setTypeOfTransaction('');
-      setCategoryName('');
-      setDate(new Date());
-      setDescription('');
-      setAmount('');
+      //   setSelectedAccount('');
+      //   setTypeOfTransaction('');
+      //   setCategoryName('');
+      //   setDate(new Date());
+      //   setDescription('');
+      //   setAmount('');
+      // }else{
+      //   alert('ooooppsss you don`t have enough money in this account');
+      // }
+      
     } else {
-      alert('ooooppsss we can`t create new transactions')
+      alert('ooooppsss we can`t create new transactions');
     }
-
   }
-
   return (
     <div className='wrapper-select-elements'>
       <Box sx={{ border: 1, borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column' }}>
@@ -45,9 +65,10 @@ export default function TransactionPage() {
           value={selectedAccount}
           onChange={value => setSelectedAccount(value)}
         >
-          {/* тези опции трябва да са динамични, според това колко сметки има юзера, value-то ще е account's id */}
-          {<MenuItem key={'accountInLv'} value={'accountInLv'}>{'accountInLv'}</MenuItem>}
-          {<MenuItem key={'accountInUSD'} value={'accountInUSD'}>{'accountInUSD'}</MenuItem>}
+          {/* тези опции трябва да са динамични, според това колко сметки има юзера, value-то ще е account's id */}          
+          {/* {accounts.map((account, i) => ( <MenuItem key={account.id} value={account.id}>
+              {account.name}
+            </MenuItem>))} */}
         </SelectElement>
 
         <SelectElement className="select-element" title={"Transaction type:"}

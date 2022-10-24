@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import SelectElement from '../../components/selectElementForCategories/selectElement';
 import { FormControl, TextField, Input, Button, Box, Avatar, RadioGroup, FormControlLabel, Radio, Grid, MenuItem } from '@mui/material';
 import { iconsArrOfObjects, getTheIcon } from '../../components/categoryCreator/icons';
+import { accountManager } from '../../server/accountManager/accountManager';
 
 export default function CreateCategoryPage() {
 
@@ -13,7 +14,8 @@ export default function CreateCategoryPage() {
     const handleCreateNewCategory = () => {
         if (nameOfCategory && typeOfCategory && iconTitle) {
             console.log(nameOfCategory, typeOfCategory, getTheIcon(iconTitle));
-            // {nameOfCategory, typeOfCategory, getTheIcon(iconTitle)}
+
+            accountManager.addCustomCategory(owner, nameOfCategory, typeOfCategory, iconTitle);
             setNameOfCategory('');
             setTypeOfCategory('');
             setIconTitle('');

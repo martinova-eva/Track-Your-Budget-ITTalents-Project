@@ -39,9 +39,10 @@ export let userManager = (function () {
             const user = users.find(
                 user => user.username === username && user.password === password
             );
-        
-            if (user) {
-                localStorage.setItem('activeUser', JSON.stringify(user));
+
+            if (userExist) {
+                localStorage.setItem('activeUser', JSON.stringify(new User(username, password)));
+                return true;
             }
         
             return user;
