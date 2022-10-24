@@ -20,6 +20,14 @@ export default function TransactionPage() {
 
   //const owner = useSelector(state => state.username);
  // const accounts = accountManager.getAllUserAccounts(owner); //като вземем успешно името!
+//  let customCategories = accountManager.checkForUserCustomCategories(owner);
+//  customCategories.map(c => {
+//   if(c.type === "income"){
+//     possibleIncomeArr.push(c);
+//   }else{
+//     possibleOutcomeArr.push(c);
+//   }
+//  })
 
   const handleCreateNewTransaction = () => {
     if (selectedAccount && typeOfTransaction && categoryName && date &&  amount ) {
