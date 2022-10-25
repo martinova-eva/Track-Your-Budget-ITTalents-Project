@@ -9,19 +9,25 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './navigation.css'
 import { Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import {logout, logoutUser} from '../../store/activeUserSlice';
-import { logoutFromStorage } from '../../server/users';
+import {logOutUser} from '../../store/activeUserSlice';
+import { userManager } from '../../server/userManager/userManager';
+//import { logoutFromStorage } from '../../server/users';
 
 export default function Navigation() {
-  const sessionId = useSelector(state => state.sessionId);
+  const activeUser = useSelector(state => state.activeUser);
+  const sessionId = activeUser.sessionId;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = ()=> {
-    logoutFromStorage();
-    dispatch(logoutUser(sessionId));
-    dispatch(logout());
-    logoutFromStorage();//ще приема юзер когато вече трябва да знае на кой данните да върне в общия масиви и ще стане първо
+    console.log(sessionId)
+    dispatch(logOutUser(sessionId));
+    userManager.logoutFromStorage()
+
     navigate('/login');
+
+    
+    
+    
   }
     return (
         <Navbar key="lg" bg="light" expand="lg" className="mb-3">
@@ -58,7 +64,7 @@ export default function Navigation() {
                 </NavDropdown.Item>
               </NavDropdown>
               </Nav>
-                <Button onClick={handleLogout} className="exit" variant="outline-dark">EXIT</Button>
+                <Button onClick={handleLogout} className="exit" variant="outline-dark">Logout</Button>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>

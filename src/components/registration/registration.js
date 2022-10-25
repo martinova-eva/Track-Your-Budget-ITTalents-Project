@@ -64,7 +64,6 @@ export default function RegistrationForm() {
 
                <PasswordFields
                   helperText={helperText}
-
                   error={passDontMatch}
                   placeholder={"Enter a password"}
                   labels={"Password"}
