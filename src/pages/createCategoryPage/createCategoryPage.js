@@ -13,8 +13,8 @@ export default function CreateCategoryPage() {
 
     const handleCreateNewCategory = () => {
         if (nameOfCategory && typeOfCategory && iconTitle) {
-            console.log(nameOfCategory, typeOfCategory, getTheIcon(iconTitle));
-
+            console.log(nameOfCategory, typeOfCategory,iconTitle);
+                
            // accountManager.addCustomCategory(owner, nameOfCategory, typeOfCategory, iconTitle);
             setNameOfCategory('');
             setTypeOfCategory('');
@@ -26,7 +26,7 @@ export default function CreateCategoryPage() {
 
     return (
         <Grid className="fieldStyle">
-            <Box sx={{ border: 1, borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column', m: '2rem', mx: '10rem' }}>
+            <Box sx={{ borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column', m: '2rem', mx: '10rem' }}>
 
                 <Avatar className="fieldStyle" sx={{ m: '2rem' }} alt="logo" src="..\assets\10491-logo-wallet.png" size="lg" />
                 <h3>Create new category</h3>
@@ -53,7 +53,7 @@ export default function CreateCategoryPage() {
                             </SelectElement>
                         </Box>
                     </Grid>
-                    <Box className="icons-container" sx={{ border: 0.5, borderColor: 'paper', boxShadow: 2, display: "flex", flexDirection: 'column' }}>
+                    <Box className="icons-container" sx={{  borderColor: 'paper', boxShadow: 2, display: "flex", flexDirection: 'column' }}>
                         <h3>Choose icon</h3>
                         <RadioGroup required
                             value={iconTitle}

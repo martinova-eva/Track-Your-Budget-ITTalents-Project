@@ -1,4 +1,5 @@
-import { v4 as uuidV4 } from 'uuid'
+import { v4 as uuidV4 } from 'uuid';
+
 export let accountManager = (function(){
     class Account{
         constructor(owner,name, currency, balance, transactions = []){

@@ -2,41 +2,19 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { userManager } from '../server/userManager/userManager';
 
+
+const activeUser = JSON.parse(localStorage.getItem('activeUser')) || "";
+
 const initialState = {
-    username: '',
-    sessionId: '',
-    wrongCredentials: false
+    username: activeUser.username,
+    sessionId: activeUser.sessionId,
+    wrongCredentials: false,
   }
 
 export const loginUser = createAsyncThunk(
   'activeUser/login',
   async ({username, password}, thunkAPI) => {
-    // return fetch(`https://itt-voting-api.herokuapp.com/login`, {
-    //   method: 'POST',
-    //   body: JSON.stringify({username, password}),
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // }).then(res => res.json())
-    // .then(data => {
-      
-    //     console.log(data);
-      
-      
-    //   userManager.loginUser()
-
-
-    //   // const activeUser = JSON.parse(localStorage.getItem('activeUser'));
-    //   // activeUser.sessionId = data.sessionId;
-    //   // localStorage.setItem('activeUser', JSON.stringify(activeUser));
-    //   // const allUsers = JSON.parse(localStorage.getItem('users'));
-    //   // allUsers.map(u => {
-    //   //   if(u.username === activeUser.username){
-    //   //     u.sessionId = data.sessionId;
-    //   //   }
-    //   // })
-    //   // localStorage.setItem('users', JSON.stringify(allUsers))
-    // });   
+     
     try {
       const response = await fetch(`https://itt-voting-api.herokuapp.com/login`, {
         method: 'POST',
@@ -54,10 +32,10 @@ export const loginUser = createAsyncThunk(
           return thunkAPI.rejectWithValue('GRESHNI KREDENCII')
         } else {
 
-          thunkAPI.dispatch(login({username}))
+          // thunkAPI.dispatch(login({username}))
           userManager.setActiveLocal(username, data.sessionId)
 
-          return data
+          return {...data, username}
         }
     } catch (error) {
       console.log('CATCH BLOCK')
@@ -82,6 +60,7 @@ export const logoutUser = createAsyncThunk(
 )
 
 export const activeUserSlice = createSlice({
+  
   name: 'activeUser',
   initialState,
   reducers: {
@@ -98,13 +77,13 @@ export const activeUserSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(loginUser.fulfilled, (state, { payload }) => {   
-      console.log('TUK SYM!', payload)
+      console.log('TUK SYM!', payload);
         state.sessionId = payload.sessionId;
+        state.username = payload.username;
         state.wrongCredentials = false;
         state.userLoading = false;
     })
     builder.addCase(loginUser.rejected, (state, action) => {
-      console.log('qiwueiqw')
       state.userLoading = false;
       state.wrongCredentials = true;
     })

@@ -56,7 +56,7 @@ export default function TransactionPage() {
   }
   return (
     <div className='wrapper-select-elements'>
-      <Box sx={{ border: 1, borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column' }}>
+      <Box sx={{ borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column' }}>
 
         <Avatar className="fieldStyle" alt="logo" src="..\assets\10491-logo-wallet.png" size="lg" />
         <h2>Add a transaction</h2>

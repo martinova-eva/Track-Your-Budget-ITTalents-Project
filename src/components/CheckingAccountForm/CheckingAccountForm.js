@@ -24,7 +24,8 @@ export default function CreateCheckingAccount({ handleClose }) {
    const navigate = useNavigate();
    const dispatch = useDispatch();
 
-   const user = userManager.getActiveUser();
+   const user = useSelector(state => state.activeUser);
+   console.log('BAHUR', user);
    const owner = user.username;
    
    const handleDispatch = ()=> {

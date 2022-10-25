@@ -2,13 +2,15 @@ import {React, useState} from "react";
 import { ListGroup } from "react-bootstrap";
 import "./transactionsList.css";
 import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
-import { Typography, Box, MenuItem, Button } from "@mui/material";
+import { Typography, Box, MenuItem, Button, IconButton} from "@mui/material";
+
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 import { Doughnut, Pie } from "react-chartjs-2";
 import {Chart, ArcElement} from 'chart.js';
 import SelectElement from "../selectElementForCategories/selectElement";
 import { accountManager } from "../../server/accountManager/accountManager";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 Chart.register(ArcElement);
 
@@ -41,7 +43,9 @@ export default function TransactionsList() {
           hoverOffset: 4
         }]
       };
-
+    //   deleteTransaction = (transactionId) => {
+    //     accountManager.removeTransaction( transactionId, accountsId);
+    //   }
     
     return (
 
@@ -87,9 +91,12 @@ export default function TransactionsList() {
                     <Typography className="transactionAmmountOutcome" variant="subtitle2">
                         -$50.00
                     </Typography>
+                    <IconButton aria-label="delete" size="small">
+                             <DeleteIcon fontSize="inherit"/>       
+                    </IconButton>
                 </ListGroup.Item>
 
-                <ListGroup.Item className="transactionList">
+                {/* <ListGroup.Item className="transactionList">
                     <div className="category">
                         <MonetizationOnIcon className="categoryIcon" />
                         <Typography variant="subtitle2">
@@ -105,7 +112,7 @@ export default function TransactionsList() {
                     <Typography className="transactionAmmountIncome" variant="subtitle2">
                         +$1000.00
                     </Typography>
-                </ListGroup.Item>
+                </ListGroup.Item> */}
             </ListGroup>
            <div className="pieChart">
           <Pie data={data}></Pie>
