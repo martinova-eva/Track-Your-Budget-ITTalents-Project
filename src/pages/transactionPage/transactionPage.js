@@ -20,6 +20,7 @@ export default function TransactionPage() {
 
   const owner = useSelector(state => state.activeUser);
   const accounts = accountManager.getAllUserAccounts(owner.username); 
+  
   let customCategories = accountManager.checkForUserCustomCategories(owner.username);
   customCategories.map(c => {
     if (c.type === "income") {
