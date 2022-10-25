@@ -110,9 +110,9 @@ export let accountManager = (function(){
             })
             localStorage.setItem('accounts', JSON.stringify(accounts));
         }
-        addTransaction(name, date, type, amount, description, accountsId, owner){
+        addTransaction(name, date, type, amount, description, title, accountsId, owner){
             let accounts = this.getAllAccounts();
-            let transaction = new Transaction(name, date, type, amount, description, accountsId);
+            let transaction = new Transaction(name, date, type, amount, description, title, accountsId);
             console.log(transaction);
             accounts.map(a => {
                 if(a.id === accountsId){
