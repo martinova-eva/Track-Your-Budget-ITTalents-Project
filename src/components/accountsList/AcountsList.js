@@ -12,6 +12,7 @@ import Modal from '@mui/material/Modal';
 import CreateCheckingAccount from '../CheckingAccountForm/CheckingAccountForm';
 import { accountManager } from '../../server/accountManager/accountManager';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const style = {
   position: 'absolute',
@@ -25,10 +26,13 @@ export default function AccountsList() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const accounts = accountManager.accounts;
-  const savingsAccounts = accountManager.savingsAccounts;
+  
+  const owner = useSelector(state => state.activeUser);
+  const accounts = accountManager.getAllUserAccounts(owner.username);
+
+  const savingsAccounts = accountManager.getAllSavingsAccounts(owner.username);
+
 const goToAccountPage = () => { 
- 
   navigate('/transactions')
 }
 

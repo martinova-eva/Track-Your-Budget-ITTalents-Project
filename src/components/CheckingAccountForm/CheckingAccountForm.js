@@ -25,7 +25,6 @@ export default function CreateCheckingAccount({ handleClose }) {
    const dispatch = useDispatch();
 
    const user = useSelector(state => state.activeUser);
-   console.log('BAHUR', user);
    const owner = user.username;
    
    const handleDispatch = ()=> {
@@ -39,7 +38,7 @@ export default function CreateCheckingAccount({ handleClose }) {
 
       }
       if(type === "savings"){
-         dispatch(createSavingsAccount({owner, accountName, currency, accountStartAmount,target , percentage, icon}))
+         dispatch(createSavingsAccount({owner, accountName, currency, target , accountStartAmount, percentage, icon}))
          navigate('/home');
          
          setAccountName('');

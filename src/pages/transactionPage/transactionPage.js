@@ -18,38 +18,49 @@ export default function TransactionPage() {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState(0);
 
-  //const owner = useSelector(state => state.username);
- // const accounts = accountManager.getAllUserAccounts(owner); //като вземем успешно името!
-//  let customCategories = accountManager.checkForUserCustomCategories(owner);
-//  customCategories.map(c => {
-//   if(c.type === "income"){
-//     possibleIncomeArr.push(c);
-//   }else{
-//     possibleOutcomeArr.push(c);
-//   }
-//  })
+  const owner = useSelector(state => state.activeUser);
+  const accounts = accountManager.getAllUserAccounts(owner.username); 
+  let customCategories = accountManager.checkForUserCustomCategories(owner.username);
+  customCategories.map(c => {
+    if (c.type === "income") {
+      possibleIncomeArr.push(c);
+    } else {
+      possibleOutcomeArr.push(c);
+    }
+  })
 
   const handleCreateNewTransaction = () => {
-    if (selectedAccount && typeOfTransaction && categoryName && date &&  amount ) {
+    if (selectedAccount && typeOfTransaction && categoryName && date && amount) {
       console.log(selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, amount, description);
 
-      //let accountBalance = accountManager.checkAccountBalance(selectedAccount);
-      //console.log(accountBalance);
-      //if(accountBalance >= amount){
-       
-       // accountManager.addTransaction( date, typeOfTransaction, amount, description, selectedAccount, owner);
-        // {selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, description, amount}
-      // navigate('/transactions');
-      //   setSelectedAccount('');
-      //   setTypeOfTransaction('');
-      //   setCategoryName('');
-      //   setDate(new Date());
-      //   setDescription('');
-      //   setAmount('');
-      // }else{
-      //   alert('ooooppsss you don`t have enough money in this account');
-      // }
+      let accountBalance = accountManager.checkAccountBalance(selectedAccount, owner.username);
       
+          if (accountBalance >= Number(amount) && typeOfTransaction === 'outcome') {
+            console.log('zashto ne pazaruvash mecho')
+            accountManager.addTransaction(categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, typeOfTransaction, amount, description, selectedAccount, owner.username);
+            //  `${date.$D}.${date.$M + 1}.${date.$y}`
+            navigate('/transactions');
+            setSelectedAccount('');
+            setTypeOfTransaction('');
+            setCategoryName('');
+            setDate(new Date());
+            setDescription('');
+            setAmount('');
+
+          }else if(typeOfTransaction === 'income'){
+            accountManager.addTransaction(categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, typeOfTransaction, amount, description, selectedAccount, owner.username);
+            //  `${date.$D}.${date.$M + 1}.${date.$y}`
+            navigate('/transactions');
+            setSelectedAccount('');
+            setTypeOfTransaction('');
+            setCategoryName('');
+            setDate(new Date());
+            setDescription('');
+            setAmount('');
+          } else {
+            alert('ooooppsss you don`t have enough money in this account');
+          }
+
     } else {
       alert('ooooppsss we can`t create new transactions');
     }
@@ -61,42 +72,42 @@ export default function TransactionPage() {
         <Avatar className="fieldStyle" alt="logo" src="..\assets\10491-logo-wallet.png" size="lg" />
         <h2>Add a transaction</h2>
         <form className="transactionsInputs">
-        <SelectElement className="select-element" title={"Choose account:"}
-          value={selectedAccount}
-          onChange={value => setSelectedAccount(value)}
-        >
-          {/* тези опции трябва да са динамични, според това колко сметки има юзера, value-то ще е account's id */}          
-          {/* {accounts.map((account, i) => ( <MenuItem key={account.id} value={account.id}>
+          <SelectElement className="select-element" title={"Choose account:"}
+            value={selectedAccount}
+            onChange={value => setSelectedAccount(value)}
+          >
+            {/* тези опции трябва да са динамични, според това колко сметки има юзера, value-то ще е account's id */}
+            {accounts.map((account, i) => (<MenuItem key={account.id} value={account.id}>
               {account.name}
-            </MenuItem>))} */}
-        </SelectElement>
-
-        <SelectElement className="select-element" title={"Transaction type:"}
-          value={typeOfTransaction}
-          onChange={value => setTypeOfTransaction(value)}
-        >
-          {<MenuItem key={'income'} value={'income'}>{'Income'}</MenuItem>}
-          {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
-        </SelectElement>
-
-        {typeOfTransaction === "income" ? <SelectElement className="select-element" title={"Choose from income category:"}
-          value={categoryName}
-          onChange={value => setCategoryName(value)}
-        >
-          {possibleIncomeArr.map((option, i) => ( <MenuItem key={i} value={option.title}>
-              {option.title}
             </MenuItem>))}
-        </SelectElement> :
-          <SelectElement className="select-element" title={"Choose from outcome category:"}
+          </SelectElement>
+
+          <SelectElement className="select-element" title={"Transaction type:"}
+            value={typeOfTransaction}
+            onChange={value => setTypeOfTransaction(value)}
+          >
+            {<MenuItem key={'income'} value={'income'}>{'Income'}</MenuItem>}
+            {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
+          </SelectElement>
+
+          {typeOfTransaction === "income" ? <SelectElement className="select-element" title={"Choose from income category:"}
             value={categoryName}
             onChange={value => setCategoryName(value)}
           >
-              {possibleOutcomeArr.map((option, i) => ( <MenuItem key={i} value={option.title}>
+            {possibleIncomeArr.map((option, i) => (<MenuItem key={i} value={option.title}>
               {option.title}
             </MenuItem>))}
-          </SelectElement>}
-        
-          <BasicDatePicker 
+          </SelectElement> :
+            <SelectElement className="select-element" title={"Choose from outcome category:"}
+              value={categoryName}
+              onChange={value => setCategoryName(value)}
+            >
+              {possibleOutcomeArr.map((option, i) => (<MenuItem key={i} value={option.title}>
+                {option.title}
+              </MenuItem>))}
+            </SelectElement>}
+
+          <BasicDatePicker
             format="MM-dd-yyyy"
             value={date}
             onChange={value => setDate(value)}
