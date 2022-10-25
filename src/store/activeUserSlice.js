@@ -3,18 +3,15 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { userManager } from '../server/userManager/userManager';
 
 
-const activeUser = JSON.parse(localStorage.getItem('activeUser')) || "";
-
 const initialState = {
-    username: activeUser.username,
-    sessionId: activeUser.sessionId,
+    username: JSON.parse(localStorage.getItem('activeUser')),
+    sessionId: JSON.parse(localStorage.getItem('activeUser')),
     wrongCredentials: false,
   }
 
 export const loginUser = createAsyncThunk(
   'activeUser/login',
   async ({username, password}, thunkAPI) => {
-     
     try {
       const response = await fetch(`https://itt-voting-api.herokuapp.com/login`, {
         method: 'POST',
@@ -84,6 +81,7 @@ export const activeUserSlice = createSlice({
         state.userLoading = false;
     })
     builder.addCase(loginUser.rejected, (state, action) => {
+      console.log('qiwueiqw')
       state.userLoading = false;
       state.wrongCredentials = true;
     })
