@@ -27,6 +27,7 @@ export default function CreateCheckingAccount({ handleClose }) {
    const user = useSelector(state => state.activeUser);
    const owner = user.username;
    
+   
    const handleDispatch = ()=> {
       if(type === "checking"){
          dispatch(create({owner, accountName, currency, accountStartAmount}))
