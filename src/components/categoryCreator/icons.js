@@ -60,7 +60,7 @@ export const iconsArrOfObjects = [
     { title: 'kids', tag: <BabyChangingStationIcon color="success"/>},
 ]
 
-export function getTheIcon(titleOfIcon){
+export default function getTheIcon(titleOfIcon){
     iconsArrOfObjects.map(icon => {
         if(icon.title === titleOfIcon){
             return icon.tag;
