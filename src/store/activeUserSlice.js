@@ -6,8 +6,8 @@ import { userManager } from '../server/userManager/userManager';
 const activeUser = JSON.parse(localStorage.getItem('activeUser'));
 
 const initialState = {
-    username: activeUser.username,
-    sessionId: activeUser,
+    username: activeUser?.username,
+    sessionId: activeUser?.sessionId,
     wrongCredentials: false,
   }
 
