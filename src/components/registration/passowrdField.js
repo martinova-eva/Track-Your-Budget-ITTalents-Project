@@ -7,7 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import "./registration.css";
-import { PropaneSharp } from "@mui/icons-material";
+
 
 
 export default function PasswordFields({ helperText, labels, placeholder, onChange, error }){

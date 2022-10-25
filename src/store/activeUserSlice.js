@@ -2,13 +2,12 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { userManager } from '../server/userManager/userManager';
 
-
 const activeUser = JSON.parse(localStorage.getItem('activeUser'));
 
 const initialState = {
-    username: activeUser.username,
-    sessionId: activeUser,
-    wrongCredentials: false,
+    username: activeUser?.username,
+    sessionId: activeUser?.sessionId,
+    wrongCredentials: false,   
   }
 
 export const loginUser = createAsyncThunk(
@@ -23,41 +22,51 @@ export const loginUser = createAsyncThunk(
         }
         })
         const data = await response.json()
-
         console.log('data', data)
-
-        if (!response.ok) {
-  
+        if (!response.ok){
           return thunkAPI.rejectWithValue('GRESHNI KREDENCII')
         } else {
-
           // thunkAPI.dispatch(login({username}))
           userManager.setActiveLocal(username, data.sessionId)
-          
-
           return {...data, username}
         }
     } catch (error) {
-      console.log('CATCH BLOCK')
-      console.error('error', error)
-
+     
       return thunkAPI.rejectWithValue('GRESHNO')
     }
   }
 )
-export const logoutUser = createAsyncThunk(
+export const logOutUser = createAsyncThunk(
   'activeUser/logout',
-  // Declare the type your function argument here:
-  ({sessionId}) => {
-    return fetch(`https://itt-voting-api.herokuapp.com/logout`, {
-      method: 'POST',
-      body: JSON.stringify({sessionId}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json());   
+  async (sessionId, thunkAPI) => {
+    try {
+      const response = await fetch(`https://itt-voting-api.herokuapp.com/logout`, {
+        method: 'POST',
+        body: JSON.stringify(sessionId),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+        })
+        const data = await response.json()
+        console.log('data', data)
+    } catch (error) {
+      return thunkAPI.rejectWithValue('GRESHNO')
+    }
   }
 )
+// export const logoutUser = createAsyncThunk(
+//   'activeUser/logout',
+//   // Declare the type your function argument here:
+//   ({sessionId}) => {
+//     return fetch(`https://itt-voting-api.herokuapp.com/logout`, {
+//       method: 'POST',
+//       body: JSON.stringify({sessionId}),
+//       headers: {
+//         'Content-Type': 'application/json'
+//       }
+//     }).then(res => res.json());   
+//   }
+// )
 
 export const activeUserSlice = createSlice({
   
@@ -81,15 +90,25 @@ export const activeUserSlice = createSlice({
         state.sessionId = payload.sessionId;
         state.username = payload.username;
         state.wrongCredentials = false;
-        state.userLoading = false;
     })
     builder.addCase(loginUser.rejected, (state, action) => {
       console.log('qiwueiqw')
-      state.userLoading = false;
       state.wrongCredentials = true;
+      console.log(state.wrongCredentials)
     })
     builder.addCase(loginUser.pending, (state, action) => {
-      state.userLoading = true;
+      state.wrongCredentials = false;
+    })
+    builder.addCase(logOutUser.fulfilled,(state, action) => {
+      console.log('successful exit')
+    
+    })
+    builder.addCase(logOutUser.rejected, (state, action) => {
+      console.log('cant exit')
+     
+    })
+    builder.addCase(logOutUser.pending, (state, action) => {
+
     })
   },
 })
