@@ -11,31 +11,38 @@ import {login} from "../../store/activeUserSlice";
 
 
 export default function LoginForm() {
-   //const user = useSelector(state => state.activeUser);
+  
    const navigate = useNavigate();
    const dispatch = useDispatch();
 
    const [username, setUsername] = useState(''); 
    const [password, setPassword] = useState(''); 
 
-   const handleLogin = () => {
-      if(loginUser(username, password)){
-         dispatch(loginUser({ username, password }));
-         dispatch(login({ username, password }));
-         navigate('/home');
-         setUsername('');
-         setPassword('');
-      }else{
-         //message 
-      }
+//    const handleLogin = () => {
+//       if(userManager.loginUser(username, password)){
+//          dispatch(loginUser({ username, password }));
+//          dispatch(login({ username, password }));
+//          navigate('/home');
+//          setUsername('');
+//          setPassword('');
+//       }else{
+//          //message 
+//       }
       
-  }
+//   }
+ const handleLogin = () => {
+   dispatch(loginUser({username, password}))
+ }
+
 
    return (
       <Grid className="wrapper" >
          <Paper elevation={20} className="loginPaperStyle">
             <Avatar className="fieldStyle" src='../assets/10491-logo-wallet.png'/>
-            <h2>Sign in</h2>
+            <Typography className="formHeader"  variant="h4" >
+            Sign in
+                  </Typography>
+            
             <FormControl  className="formStyle" fullWidth variant="outlined">
             {/* <form className="formStyle"> */}
             
@@ -58,9 +65,11 @@ export default function LoginForm() {
                 You don't have an account? Click here to create one.
                   </Typography>
                </Link>
-               <Link className="loginRegisterLinks" to="/"> <Typography  variant="caption" display="block" >
+               <Link className="loginRegisterLinks" to="/"> 
+               <Typography  variant="caption" display="block" >
                      Click here for more information
-                  </Typography></Link>
+                  </Typography>
+                  </Link>
             </Grid>
          </Paper>
       </Grid>

@@ -1,37 +1,70 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { json } from 'react-router-dom';
+import { userManager } from '../server/userManager/userManager';
 
 const initialState = {
     username: '',
-    password: '',
     sessionId: '',
-    userLoading: false
+    wrongCredentials: false
   }
 
 export const loginUser = createAsyncThunk(
   'activeUser/login',
-  // Declare the type your function argument here:
-  ({username, password}) => {
-    return fetch(`https://itt-voting-api.herokuapp.com/login`, {
-      method: 'POST',
-      body: JSON.stringify({username, password}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
-    .then(data => {
-      const activeUser = JSON.parse(localStorage.getItem('activeUser'));
-      activeUser.sessionId = data.sessionId;
-      localStorage.setItem('activeUser', JSON.stringify(activeUser));
-      const allUsers = JSON.parse(localStorage.getItem('users'));
-      allUsers.map(u => {
-        if(u.username === activeUser.username){
-          u.sessionId = data.sessionId;
+  async ({username, password}, thunkAPI) => {
+    // return fetch(`https://itt-voting-api.herokuapp.com/login`, {
+    //   method: 'POST',
+    //   body: JSON.stringify({username, password}),
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // }).then(res => res.json())
+    // .then(data => {
+      
+    //     console.log(data);
+      
+      
+    //   userManager.loginUser()
+
+
+    //   // const activeUser = JSON.parse(localStorage.getItem('activeUser'));
+    //   // activeUser.sessionId = data.sessionId;
+    //   // localStorage.setItem('activeUser', JSON.stringify(activeUser));
+    //   // const allUsers = JSON.parse(localStorage.getItem('users'));
+    //   // allUsers.map(u => {
+    //   //   if(u.username === activeUser.username){
+    //   //     u.sessionId = data.sessionId;
+    //   //   }
+    //   // })
+    //   // localStorage.setItem('users', JSON.stringify(allUsers))
+    // });   
+    try {
+      const response = await fetch(`https://itt-voting-api.herokuapp.com/login`, {
+        method: 'POST',
+        body: JSON.stringify({username, password}),
+        headers: {
+          'Content-Type': 'application/json'
         }
-      })
-      localStorage.setItem('users', JSON.stringify(allUsers))
-    });   
+        })
+        const data = await response.json()
+
+        console.log('data', data)
+
+        if (!response.ok) {
+  
+          return thunkAPI.rejectWithValue('GRESHNI KREDENCII')
+        } else {
+
+          thunkAPI.dispatch(login({username}))
+          userManager.setActiveLocal(username, data.sessionId)
+
+          return data
+        }
+    } catch (error) {
+      console.log('CATCH BLOCK')
+      console.error('error', error)
+
+      return thunkAPI.rejectWithValue('GRESHNO')
+    }
   }
 )
 export const logoutUser = createAsyncThunk(
@@ -53,8 +86,8 @@ export const activeUserSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
+      console.log('login', action)
       state.username = action.payload.username;
-      state.password = action.payload.password;
     }, 
     logout: (state) => {
         state.username = initialState.username;
@@ -64,21 +97,21 @@ export const activeUserSlice = createSlice({
 
   },
   extraReducers: (builder) => {
-    builder.addCase(loginUser.fulfilled, (state, { payload }) => {    
+    builder.addCase(loginUser.fulfilled, (state, { payload }) => {   
+      console.log('TUK SYM!', payload)
         state.sessionId = payload.sessionId;
+        state.wrongCredentials = false;
         state.userLoading = false;
     })
     builder.addCase(loginUser.rejected, (state, action) => {
+      console.log('qiwueiqw')
       state.userLoading = false;
+      state.wrongCredentials = true;
     })
     builder.addCase(loginUser.pending, (state, action) => {
       state.userLoading = true;
     })
   },
-  extraReducers: (builder) => {
-    builder.addCase(logoutUser.fulfilled, (state, { payload }) => {    
-    })
-  }
 })
 
 // Action creators are generated for each case reducer function

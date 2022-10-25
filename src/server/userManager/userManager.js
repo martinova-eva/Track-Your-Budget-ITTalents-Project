@@ -1,9 +1,8 @@
 
 export let userManager = (function () {
     class User {
-        constructor(username, password, sessionId) {
+        constructor(username, sessionId) {
             this.usename = username;
-            this.password = password;
             this.sessionId = sessionId;
         }
     }
@@ -11,13 +10,13 @@ export let userManager = (function () {
     class UserManager {
         constructor() {
             this.users = [];
-            this.activeUser = {};
-            if (localStorage.getItem('users')) {
-                this.users = JSON.parse(localStorage.getItem('users'));
-            }
-            if(localStorage.getItem('activeUser')){
-                this.activeUser = JSON.parse(localStorage.getItem('activeUser'));
-            }
+            // this.activeUser = {};
+            // if (localStorage.getItem('users')) {
+            //     this.users = JSON.parse(localStorage.getItem('users'));
+            // }
+            // if(localStorage.getItem('activeUser')){
+            //     this.activeUser = JSON.parse(localStorage.getItem('activeUser'));
+            // }
         }
         getAllUsers() {
             return JSON.parse(localStorage.getItem('users')) || [];
@@ -29,27 +28,27 @@ export let userManager = (function () {
             if (isUserTaken ) {
                 return false;
             }
-            if(password.trim() === confirmPass.trim()){
+            if(password === confirmPass){
                 users.push( new User(username, password) );
                 localStorage.setItem('users', JSON.stringify(users));
                 return true;
             }
         }
 
-        loginUser(username, password) {
-            let users = this.getAllUsers();
-            const user = users.find(
-                user => user.username === username && user.password === password
-            );
-
-            if (user) {
-                localStorage.setItem('activeUser', JSON.stringify(new User(username, password)));
-                return true;
-            }
-        
-            return user;
-            
+        // loginUser(username) {
+        //     let users = this.getAllUsers();
+        //     const user = users.find(
+        //         user => user.username === username);
+        //     if (user) {
+        //         localStorage.setItem('activeUser', JSON.stringify(new User(username)))
+        //         return true;
+        //     }
+        //     return user; 
+        // }
+        setActiveLocal(username,sessionId){
+            localStorage.setItem('activeUser', JSON.stringify(new User(username,sessionId)))
         }
+    
 
         getActiveUser() {
             return JSON.parse(localStorage.getItem('activeUser'));
@@ -59,8 +58,8 @@ export let userManager = (function () {
             ///ще трябва да прехвърли всичко в общия масив
             localStorage.removeItem('activeUser');
         }
-
+        
     }
     return new UserManager();
-})();
+})()
 

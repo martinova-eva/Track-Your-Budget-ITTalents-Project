@@ -21,7 +21,7 @@ export default function RegistrationForm() {
    const dispatch = useDispatch();
 
    if (password && confirmPass) {
-      if (password.trim() !== confirmPass.trim()) {
+      if (password !== confirmPass) {
          passDontMatch = true;
          helperText = "Passwords do not match";
       }
@@ -46,7 +46,10 @@ export default function RegistrationForm() {
       <Grid className="wrapper">
          <Paper elevation={20} className="registerPaperStyle">
             <Avatar className="fieldStyle" src='../assets/10491-logo-wallet.png' />
-            <h2>Sign up</h2>
+            <Typography className="formHeader"  variant="h4" >
+            Sign up
+                  </Typography>
+            
 
             <form className="formStyle">
                <TextField

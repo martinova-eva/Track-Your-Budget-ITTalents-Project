@@ -11,7 +11,7 @@ const initialState = {
 
 export const registerUser = createAsyncThunk(
   'register',
-  ({username, password}) => {
+  ({username, password}, thunkAPi) => {
     return fetch(`https://itt-voting-api.herokuapp.com/users`, {
       method: 'POST',
       body: JSON.stringify({username, password}),
@@ -19,7 +19,10 @@ export const registerUser = createAsyncThunk(
         'Content-Type': 'application/json'
       }
     }).then(res => res.json())
-    
+    .catch((error)=>{
+return thunkAPi.rejectWithValue(error.response.message)
+    })
+
   }
 )
 
@@ -35,10 +38,13 @@ export const registerUserSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(registerUser.fulfilled, (state, action) => {
+      console.log("yes")
         state.userLoading = false;
         
     })
     builder.addCase(registerUser.rejected, (state, action) => {
+      console.log("x")
+      
       state.userLoading = false;
       state.isWrongName = true;
       
