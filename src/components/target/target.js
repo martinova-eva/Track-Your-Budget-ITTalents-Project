@@ -12,19 +12,18 @@ import { iconsArrOfObjects } from "../categoryCreator/icons";
 
 export default function Target() {
     const activeUser = useSelector(state => state.activeUser);
-    const savingsAccount = JSON.parse(localStorage.getItem("savings"))
-    const now = (savingsAccount[0].balance/savingsAccount[0].target)*100;
-    const icon = savingsAccount[0].icon;
-    console.log(icon)
-    const iconDisplay = iconsArrOfObjects.map(icon => {
-        if(icon.title === icon){
-            return (icon.tag);
-        }
-    })
+    const savingsAccount = accountManager.checkForSavingsAccount(activeUser.username);
+  
+ 
+   
     console.log();
     let targetDisplay;
   
     if(savingsAccount){
+
+        const now = ((savingsAccount.balance/savingsAccount.target)*100)
+        const icon = savingsAccount.icon;
+        const iconDisplay = getTheIcon(icon);
         targetDisplay =   
         <div className="targetWrapper">
             <Typography variant="h5" gutterBottom>
