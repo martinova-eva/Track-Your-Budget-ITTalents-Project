@@ -14,6 +14,7 @@ export default function TransactionPage() {
   const [selectedAccount, setSelectedAccount] = useState('');
   const [typeOfTransaction, setTypeOfTransaction] = useState('');
   const [categoryName, setCategoryName] = useState('');
+  const [iconTitle, setIconTitle] = useState('');
   const [date, setDate] = useState(new Date());
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState(0);
@@ -38,7 +39,7 @@ export default function TransactionPage() {
       
           if (accountBalance >= Number(amount) && typeOfTransaction === 'outcome') {
             console.log('zashto ne pazaruvash mecho')
-            accountManager.addTransaction(categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, typeOfTransaction, amount, description, selectedAccount, owner.username);
+            accountManager.addTransaction(categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
             //  `${date.$D}.${date.$M + 1}.${date.$y}`
             navigate('/transactions');
             setSelectedAccount('');
@@ -46,10 +47,11 @@ export default function TransactionPage() {
             setCategoryName('');
             setDate(new Date());
             setDescription('');
+            setIconTitle('');
             setAmount('');
 
           }else if(typeOfTransaction === 'income'){
-            accountManager.addTransaction(categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, typeOfTransaction, amount, description, selectedAccount, owner.username);
+            accountManager.addTransaction(categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
             //  `${date.$D}.${date.$M + 1}.${date.$y}`
             navigate('/transactions');
             setSelectedAccount('');
@@ -57,6 +59,7 @@ export default function TransactionPage() {
             setCategoryName('');
             setDate(new Date());
             setDescription('');
+            setIconTitle('');
             setAmount('');
           } else {
             alert('ooooppsss you don`t have enough money in this account');
@@ -96,15 +99,20 @@ export default function TransactionPage() {
             onChange={value => setCategoryName(value)}
           >
             {possibleIncomeArr.map((option, i) => (<MenuItem key={i} value={option.title}>
-              {option.title}
+              {option.tag}{option.title}
             </MenuItem>))}
+            {/* {possibleIncomeArr.map((option, i) => {
+              return (<MenuItem key={i} value={option.title}>
+                <AutoAwesomeIcon color="success"/>{option.title}
+            </MenuItem>)
+            })} */}
           </SelectElement> :
             <SelectElement className="select-element" title={"Choose from outcome category:"}
               value={categoryName}
               onChange={value => setCategoryName(value)}
             >
               {possibleOutcomeArr.map((option, i) => (<MenuItem key={i} value={option.title}>
-                {option.title}
+                {option.tag} {option.title}
               </MenuItem>))}
             </SelectElement>}
 
