@@ -8,6 +8,7 @@ import BasicDatePicker from '../../components/CheckingAccountForm/datePicker';
 import { useNavigate } from 'react-router-dom';
 import { accountManager } from '../../server/accountManager/accountManager';
 import { useSelector } from 'react-redux';
+import getTheIcon from '../../components/categoryCreator/icons';
 
 export default function TransactionPage() {
   const navigate = useNavigate();
@@ -25,9 +26,14 @@ export default function TransactionPage() {
   let customCategories = accountManager.checkForUserCustomCategories(owner.username);
   customCategories.map(c => {
     if (c.type === "income") {
+      // let tag = getTheIcon(c.tag);
+      // c.tag = tag;
       possibleIncomeArr.push(c);
     } else {
+      // let tag = getTheIcon(c.tag);
+      // c.tag = tag;
       possibleOutcomeArr.push(c);
+      
     }
   })
 
@@ -39,7 +45,7 @@ export default function TransactionPage() {
       
           if (accountBalance >= Number(amount) && typeOfTransaction === 'outcome') {
             console.log('zashto ne pazaruvash mecho')
-            accountManager.addTransaction(categoryName, date, typeOfTransaction, amount, description, iconTitle="", selectedAccount, owner.username);
+            accountManager.addTransaction(categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
             //  `${date.$D}.${date.$M + 1}.${date.$y}`
             navigate('/transactions');
             setSelectedAccount('');
@@ -51,7 +57,7 @@ export default function TransactionPage() {
             setAmount('');
 
           }else if(typeOfTransaction === 'income'){
-            accountManager.addTransaction(categoryName, date, typeOfTransaction, amount, description, iconTitle="", selectedAccount, owner.username);
+            accountManager.addTransaction(categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
             //  `${date.$D}.${date.$M + 1}.${date.$y}`
             navigate('/transactions');
             setSelectedAccount('');
