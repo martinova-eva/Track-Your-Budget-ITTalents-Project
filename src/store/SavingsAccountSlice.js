@@ -28,7 +28,7 @@ export const savingsAccountSlice = createSlice({
       state.icon = action.payload.icon;
       if (state.accountName && state.currency && state.accountStartAmount && state.accountStartAmount && state.percentage) {
         accountManager.createSavingsAccount(
-          state.owner, state.accountName, state.currency, state.accountStartAmount, state.target , state.percentage, state.icon)
+          state.owner, state.accountName, state.currency,  state.target , state.accountStartAmount, state.percentage, state.icon)
       }
     }
   },

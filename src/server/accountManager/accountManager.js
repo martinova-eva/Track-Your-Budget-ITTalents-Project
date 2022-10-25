@@ -116,29 +116,27 @@ export let accountManager = (function(){
             accounts.map(a => {
                 if(a.id === accountsId){
                     if(transaction.type === "outcome" && Number(a.balance) >= Number(transaction.amount)){
-                        a.balance -=  Number(transaction.amount);
+                        a.balance = Number(a.balance) -  Number(transaction.amount);
                         a.transactions.push(transaction);
 
                     }else if(transaction.type === "income"){
                         //ако този клиент има спестовна сметка със заложен процент , премести % в спестовната сметка
                         let savingsAccount = this.checkForSavingsAccount(owner);
                         if(savingsAccount){
-                            let savingsIncome = Number(transaction.amount) * Number(savingsAccount.percentage)
-                            savingsAccount.balance += savingsIncome;
+                            let savingsIncome = (Number(transaction.amount) * Number(savingsAccount.percentage)/100);
+                           // savingsAccount.balance = Number(savingsAccount.balance)  + Number(savingsIncome);
     
                                 let allSavingsAccounts = this.getAllSavingsAccounts();
                                  allSavingsAccounts.map(s => {
                                         if(s.owner === owner){
-                                            s.balance = savingsAccount.balance;
+                                            s.balance =  Number(savingsAccount.balance)  + Number(savingsIncome);
                                         }
                                     })
                             localStorage.setItem('savings', JSON.stringify(allSavingsAccounts));
-                            a.balance += (Number(transaction.amount) - Number(savingsIncome));
+                            a.balance = (Number(a.balance) + ((Number(transaction.amount) - Number(savingsIncome))));
                             a.transactions.push(transaction);
                         }else{
-                            a.transactions.push(transaction);
-
-                            a.balance += Number(transaction.amount);
+                            a.balance = Number(a.balance) + Number(transaction.amount);
                             a.transactions.push(transaction);
                         }
                         

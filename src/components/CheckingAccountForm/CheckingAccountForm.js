@@ -38,7 +38,7 @@ export default function CreateCheckingAccount({ handleClose }) {
 
       }
       if(type === "savings"){
-         dispatch(createSavingsAccount({owner, accountName, currency, accountStartAmount,target , percentage, icon}))
+         dispatch(createSavingsAccount({owner, accountName, currency, target , accountStartAmount, percentage, icon}))
          navigate('/home');
          
          setAccountName('');
