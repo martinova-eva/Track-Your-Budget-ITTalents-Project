@@ -4,18 +4,20 @@ import SelectElement from '../../components/selectElementForCategories/selectEle
 import { FormControl, TextField, Input, Button, Box, Avatar, RadioGroup, FormControlLabel, Radio, Grid, MenuItem } from '@mui/material';
 import { iconsArrOfObjects, getTheIcon } from '../../components/categoryCreator/icons';
 import { accountManager } from '../../server/accountManager/accountManager';
+import { useSelector } from 'react-redux';
 
 export default function CreateCategoryPage() {
 
     const [nameOfCategory, setNameOfCategory] = useState('');
     const [typeOfCategory, setTypeOfCategory] = useState('');
     const [iconTitle, setIconTitle] = useState('');
+    const owner = useSelector(state => state.activeUser);
 
     const handleCreateNewCategory = () => {
         if (nameOfCategory && typeOfCategory && iconTitle) {
             console.log(nameOfCategory, typeOfCategory,iconTitle);
                 
-           // accountManager.addCustomCategory(owner, nameOfCategory, typeOfCategory, iconTitle);
+           accountManager.addCustomCategory(owner.username, nameOfCategory, typeOfCategory, iconTitle);
             setNameOfCategory('');
             setTypeOfCategory('');
             setIconTitle('');

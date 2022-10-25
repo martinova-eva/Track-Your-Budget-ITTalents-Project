@@ -18,6 +18,7 @@ Chart.register(ArcElement);
 export default function TransactionsList() {
     const [typeOfTransaction, setTypeOfTransaction] = useState('');
     //взимайки Id на сметката, ще вземем всички нейни транзакции => обикаляме масива долу на всяка нов ListItem
+    //иконките ще ги извикваме от заглавието на категориите, за тези които на се custom
     //const allTransactionForThisAccount = accountManager.showAllTransactionForThisAccount(accountId);
     
     const data = {
