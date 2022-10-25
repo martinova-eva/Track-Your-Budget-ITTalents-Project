@@ -22,12 +22,8 @@ export default function Navigation() {
     console.log(sessionId)
     dispatch(logOutUser(sessionId));
     userManager.logoutFromStorage()
-
     navigate('/login');
 
-    
-    
-    
   }
     return (
         <Navbar key="lg" bg="light" expand="lg" className="mb-3">
