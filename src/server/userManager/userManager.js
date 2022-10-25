@@ -2,7 +2,7 @@
 export let userManager = (function () {
     class User {
         constructor(username, sessionId) {
-            this.usename = username;
+            this.username = username;
             this.sessionId = sessionId;
         }
     }

@@ -3,11 +3,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { userManager } from '../server/userManager/userManager';
 
 
-const activeUser = JSON.parse(localStorage.getItem('activeUser')) || "";
+const activeUser = JSON.parse(localStorage.getItem('activeUser'));
 
 const initialState = {
     username: activeUser.username,
-    sessionId: activeUser.sessionId,
+    sessionId: activeUser,
     wrongCredentials: false,
   }
 
@@ -34,6 +34,7 @@ export const loginUser = createAsyncThunk(
 
           // thunkAPI.dispatch(login({username}))
           userManager.setActiveLocal(username, data.sessionId)
+          
 
           return {...data, username}
         }
@@ -66,7 +67,7 @@ export const activeUserSlice = createSlice({
   reducers: {
     login: (state, action) => {
       console.log('login', action)
-      state.username = action.payload.username;
+      //state.username = action.payload.username;
     }, 
     logout: (state) => {
         state.username = initialState.username;
