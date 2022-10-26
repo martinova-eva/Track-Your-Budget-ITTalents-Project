@@ -21,13 +21,13 @@ export default function Target() {
   
     if(savingsAccount){
 
-        const now = ((savingsAccount.balance/savingsAccount.target)*100)
+        const now = Math.round(((savingsAccount.balance/savingsAccount.target)*100))
         const icon = savingsAccount.icon;
         const iconDisplay = getTheIcon(icon);
         targetDisplay =   
         <div className="targetWrapper">
             <Typography variant="h5" gutterBottom>
-            Hello, {activeUser.username} you have {now}% left to reach your savings goal
+            Hello, {activeUser.username} you have {100- now}% left to reach your savings goal
       </Typography>
             <div className="target">
                 <div className="progressBarContainer">

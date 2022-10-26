@@ -41,7 +41,7 @@ export default function App() {
         <AccountsList/>
         </>} />
 
-        <Route path="/transactions" element={<>
+        <Route path="/transactions/:id" element={<>
           <Navigation/>
           <TransactionsList/>
         </>} />

@@ -11,6 +11,8 @@ import {Chart, ArcElement} from 'chart.js';
 import SelectElement from "../selectElementForCategories/selectElement";
 import { accountManager } from "../../server/accountManager/accountManager";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useParams } from "react-router-dom";
+
 
 Chart.register(ArcElement);
 
@@ -20,7 +22,24 @@ export default function TransactionsList() {
     //взимайки Id на сметката, ще вземем всички нейни транзакции => обикаляме масива долу на всяка нов ListItem
     //иконките ще ги извикваме от заглавието на категориите, за тези които на се custom
     //const allTransactionForThisAccount = accountManager.showAllTransactionForThisAccount(accountId);
-    
+    const params = useParams()
+    const AccountId = params.id
+    //console.log(AccountId)
+    const accounts = accountManager.getAllAccounts()
+    let accountName =''
+    let transactions = []
+    accounts.map(a => {
+        if(a.id === AccountId){
+           return transactions = [...a.transactions];
+        }
+    })
+    accounts.map(a => {
+        if(a.id === AccountId){
+           return accountName = a.name;
+        }
+    })
+    console.log(transactions)
+  
     const data = {
         labels: [
             'income',
@@ -51,6 +70,7 @@ export default function TransactionsList() {
     return (
 
         <div className="transactionsListWrapper">
+
             <Box className="sortWrapper"
                 component="form"
                 sx={{
@@ -72,48 +92,32 @@ export default function TransactionsList() {
             </Box>
 
             <div className="listandChart">
+            
             <ListGroup>
             <Typography className="transactionsHeader" variant="h6">
-                List of transactions for Checkings account
+                List of transactions for {accountName}
             </Typography>
-                <ListGroup.Item className="transactionList">
+            {transactions.map(transaction => (
+            <ListGroup.Item key = {transaction.id} className="transactionList">
                     <div className="category">
                         <TimeToLeaveIcon className="categoryIcon" />
                         <Typography variant="subtitle2">
-                            Auto
+                           {transaction.type}
                         </Typography>
                     </div>
                     <Typography variant="subtitle2">
-                        Fuel
+                    {transaction.name}
                     </Typography>
                     <Typography variant="subtitle2">
-                        20.10.2022
+                    {transaction.date}
                     </Typography>
                     <Typography className="transactionAmmountOutcome" variant="subtitle2">
-                        -$50.00
+                    {transaction.amount}
                     </Typography>
                     <IconButton aria-label="delete" size="small">
                              <DeleteIcon fontSize="inherit"/>       
                     </IconButton>
-                </ListGroup.Item>
-
-                {/* <ListGroup.Item className="transactionList">
-                    <div className="category">
-                        <MonetizationOnIcon className="categoryIcon" />
-                        <Typography variant="subtitle2">
-                            Income
-                        </Typography>
-                    </div>
-                    <Typography variant="subtitle2">
-                        Salary
-                    </Typography>
-                    <Typography variant="subtitle2">
-                        20.10.2022
-                    </Typography>
-                    <Typography className="transactionAmmountIncome" variant="subtitle2">
-                        +$1000.00
-                    </Typography>
-                </ListGroup.Item> */}
+                </ListGroup.Item>))}
             </ListGroup>
            <div className="pieChart">
           <Pie data={data}></Pie>
