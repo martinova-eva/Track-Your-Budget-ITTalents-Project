@@ -9,7 +9,7 @@ import { accountManager } from "../../server/accountManager/accountManager";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import PieChart from "./pieChart";
 Chart.register(ArcElement);
 
 
@@ -59,10 +59,33 @@ export default function TransactionsList() {
         console.log(transactions)
         return transactions;
     }
+     const allTransactionForAccount = accountManager.showStatistics(AccountId);
+    // const [data, setData] = useState({
+    //         labels: allTransactionForAccount.map(data => data.name),
+    //         datasets: [{
+    //           label: 'By',
+    //           data: allTransactionForAccount.map(data => data.amount),
+    //           backgroundColor: [
+    //             'rgb(19,185,119)',
+    //             'rgb(255, 99, 132)',
+    //             'rgb(255,44,87)',
+    //             'rgb(255,205,0)',
+    //             'rgb(183,101,201)',
+    //             'rgb(91,224,255)',
+    //             'rgb(43,174,246)',
+    //             'rgb(255,161,1)',
+    //             'rgb(66,205,0)',
+                
+    //           ],
+    //           hoverOffset: 4
+    //         }]
+    //       });   
+
     const data = {
         labels: [
             'income',
-            'expenses'
+            'expenses', 
+            'others'
         ],
         datasets: [{
           label: 'My First Dataset',
@@ -141,8 +164,7 @@ export default function TransactionsList() {
             </ListGroup>
 
            <div className="pieChart">
-          <Pie data={data}></Pie>
-            
+          <PieChart data={data}></PieChart>  
             </div>
             </div>
         </div>

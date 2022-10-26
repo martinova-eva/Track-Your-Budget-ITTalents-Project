@@ -1,3 +1,4 @@
+import { ConstructionRounded } from '@mui/icons-material';
 import { v4 as uuidV4 } from 'uuid';
 
 export let accountManager = (function(){
@@ -42,6 +43,12 @@ export let accountManager = (function(){
             this.type = type;
             this.tag = tag;
             this.owner = owner;
+        }
+    }
+    class StatisticObject{
+        constructor(name, value){
+            this.name = name;
+            this.value = value;
         }
     }
     
@@ -103,6 +110,24 @@ export let accountManager = (function(){
                 }
             })
             return transaction;
+        }
+        showStatistics(accountId){
+            let allAccounts = this.getAllAccounts();
+            let statisticData = [];
+            allAccounts.map(a => {
+                if(a.id === accountId){
+                    a.transactions.map(tr => {
+                        statisticData.map(o => {
+                            if(o.name === tr.name){
+                                o.value += tr.amount;
+                            }else{
+                                statisticData.push(new StatisticObject(tr.name, tr.amount))
+                            }
+                        })
+                    })
+                }
+            })
+            return statisticData;
         }
         addAccount(id, nameOfAccount, owner, transactions, currency, balance) {
             let accounts = this.getAllAccounts();
