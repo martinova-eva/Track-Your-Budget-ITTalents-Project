@@ -8,6 +8,7 @@ import SelectElement from "../selectElementForCategories/selectElement";
 import { accountManager } from "../../server/accountManager/accountManager";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 Chart.register(ArcElement);
 
@@ -16,7 +17,9 @@ export default function TransactionsList() {
     const [typeOfTransaction, setTypeOfTransaction] = useState('');
     const params = useParams();
     const AccountId = params.id;
+    const owner = useSelector(state => state.activeUser);
     //console.log(AccountId)
+   // const accountBalance = accountManager.checkAccountBalance(AccountId, owner.username);
     const accounts = accountManager.getAllAccounts();
     let accountName ='';
     let transactions = [];
@@ -108,7 +111,7 @@ export default function TransactionsList() {
             
             <ListGroup>
             <Typography className="transactionsHeader" variant="h6">
-                List of transactions for {accountName}
+                List of transactions for {accountName}. Balance: {accountManager.checkAccountBalance(AccountId, owner.username)}{accountCurrency}
             </Typography>
 
             {transactions.map(transaction => (
@@ -127,7 +130,6 @@ export default function TransactionsList() {
                     {transaction.amount}{accountCurrency}
                     </Typography>
                     <IconButton aria-label="delete" size="small" onClick={()=> {
-                        console.log("You clickedd me"+ transaction.id)
                         accountManager.removeTransaction( transaction.id, AccountId);
                         }}>
                              <DeleteIcon fontSize="inherit"/>       

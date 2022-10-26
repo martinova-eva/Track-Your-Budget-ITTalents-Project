@@ -42,7 +42,6 @@ export default function TransactionPage() {
 
       let accountBalance = accountManager.checkAccountBalance(selectedAccount, owner.username);
           if (accountBalance >= Number(amount) && typeOfTransaction === 'outcome') {
-            console.log('zashto ne pazaruvash mecho')
             accountManager.addTransaction(categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
             navigate('/home');
             setSelectedAccount('');

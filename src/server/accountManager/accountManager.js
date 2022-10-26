@@ -83,7 +83,6 @@ export let accountManager = (function(){
                     balance = a.balance;
                 }
             })
-            console.log(balance)
             return balance;
         }
         showAllTransactionForThisAccount(accountId){
@@ -144,7 +143,11 @@ export let accountManager = (function(){
                         
                     }                   
                 }
-            })
+                //логика за сортиране на транзакциите, за да държи винаги сортиран масива
+                a.transactions.sort(function(a, b){
+                    return new Date(b.date) - new Date(a.date);
+                });
+            });
             localStorage.setItem('accounts', JSON.stringify(accounts));
         }
         removeTransaction( transactionId, accountsId){
