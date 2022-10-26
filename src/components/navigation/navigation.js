@@ -46,7 +46,7 @@ export default function Navigation() {
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3">
                <Link to="/home" className="nav-link active text-dark">Home page</Link>
-               <Link to="/transactions" className="nav-link active text-dark">Accounts</Link>
+               {/* <Link to="/transactions" className="nav-link active text-dark">Accounts</Link> */}
                <Link to="/add-account" className="nav-link active text-dark">Add new account</Link>
                 <NavDropdown
                   title="Transactions"

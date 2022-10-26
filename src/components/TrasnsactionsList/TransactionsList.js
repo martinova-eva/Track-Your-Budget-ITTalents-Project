@@ -3,6 +3,8 @@ import { ListGroup } from "react-bootstrap";
 import "./transactionsList.css";
 import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
 import { Typography, Box, MenuItem, Button, IconButton} from "@mui/material";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
@@ -12,7 +14,6 @@ import SelectElement from "../selectElementForCategories/selectElement";
 import { accountManager } from "../../server/accountManager/accountManager";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useParams } from "react-router-dom";
-
 
 Chart.register(ArcElement);
 
@@ -38,7 +39,6 @@ export default function TransactionsList() {
            return accountName = a.name;
         }
     })
-    console.log(transactions)
   
     const data = {
         labels: [
@@ -97,10 +97,12 @@ export default function TransactionsList() {
             <Typography className="transactionsHeader" variant="h6">
                 List of transactions for {accountName}
             </Typography>
+
             {transactions.map(transaction => (
             <ListGroup.Item key = {transaction.id} className="transactionList">
                     <div className="category">
-                        <TimeToLeaveIcon className="categoryIcon" />
+                        {transaction.type === 'income' ? <AddCircleOutlineIcon className="categoryIcon" /> : 
+                                                        <RemoveCircleOutlineIcon className="categoryIcon" color="secondary"/>}
                         <Typography variant="subtitle2">
                            {transaction.type}
                         </Typography>
@@ -119,6 +121,7 @@ export default function TransactionsList() {
                     </IconButton>
                 </ListGroup.Item>))}
             </ListGroup>
+
            <div className="pieChart">
           <Pie data={data}></Pie>
             
