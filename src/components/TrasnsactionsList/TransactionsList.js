@@ -1,14 +1,7 @@
 import {React, useState} from "react";
 import { ListGroup } from "react-bootstrap";
 import "./transactionsList.css";
-import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
 import { Typography, Box, MenuItem, Button, IconButton} from "@mui/material";
-import NorthIcon from '@mui/icons-material/North';
-import SouthIcon from '@mui/icons-material/South';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-
 import { Doughnut, Pie } from "react-chartjs-2";
 import {Chart, ArcElement} from 'chart.js';
 import SelectElement from "../selectElementForCategories/selectElement";
@@ -21,9 +14,6 @@ Chart.register(ArcElement);
 
 export default function TransactionsList() {
     const [typeOfTransaction, setTypeOfTransaction] = useState('');
-    //взимайки Id на сметката, ще вземем всички нейни транзакции => обикаляме масива долу на всяка нов ListItem
-    //иконките ще ги извикваме от заглавието на категориите, за тези които на се custom
-    //const allTransactionForThisAccount = accountManager.showAllTransactionForThisAccount(accountId);
     const params = useParams();
     const AccountId = params.id;
     //console.log(AccountId)
@@ -88,16 +78,9 @@ export default function TransactionsList() {
           ],
           hoverOffset: 4
         }]
-      };
-
-    //   deleteTransaction = (transactionId) => {
-    //     accountManager.removeTransaction( transactionId, accountsId);
-    //   }
-    
+      };   
     return (
-
-        <div className="transactionsListWrapper">
-
+        <div >
             <Box className="sortWrapper"
                 component="form"
                 sx={{
@@ -129,11 +112,12 @@ export default function TransactionsList() {
             </Typography>
 
             {transactions.map(transaction => (
-            <ListGroup.Item key = {transaction.id} className="transactionList">
+            <ListGroup.Item key = {transaction.id} className="transactionListWrapper">
                     
-                    <Typography variant="subtitle2">
+                    <Typography variant="subtitle2" className="transactionListTitles">
                     {transaction.name}
                     </Typography>
+                    <div className="transactionList">
                     <Typography variant="subtitle2">
                     {transaction.date}
                     </Typography>
@@ -148,7 +132,10 @@ export default function TransactionsList() {
                         }}>
                              <DeleteIcon fontSize="inherit"/>       
                     </IconButton>
-                </ListGroup.Item>))}
+                    </div>
+                    {/* {transaction.description !== "" ?  <Typography>{transaction.description}</Typography> : null} */}
+                </ListGroup.Item>
+               ))}
             </ListGroup>
 
            <div className="pieChart">

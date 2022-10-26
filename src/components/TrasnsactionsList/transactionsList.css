@@ -1,16 +1,23 @@
-.transactionsListWrapper{
-    margin: 3rem auto;
-    width: 90rem;
-
+.wrapperForColumns{
+    display: flex;
+    flex-direction: row;
+}
+.transactionListWrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
 }
 .transactionList{
     display: flex;
-    justify-content:flex-start;
+    justify-content:space-between;
     gap: 5rem;
     align-items: center;
-    width: 40rem;
+    width: 40vw;
 }
-
+.transactionListTitles{
+    width: 15vw;
+}
 .category{
     display: flex;
     gap: 0.6rem;
