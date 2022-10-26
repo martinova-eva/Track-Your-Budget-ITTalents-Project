@@ -10,17 +10,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PieChart from "./pieChart";
-import TextField from '@mui/material/TextField';
-import { LocalizationProvider } from '@mui/x-date-pickers-pro';
-import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
-import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 Chart.register(ArcElement);
 
 
 export default function TransactionsList() {
     const [typeOfTransaction, setTypeOfTransaction] = useState('');
-    const [value, setValue] = React.useState([null, null]);
-
     const params = useParams();
     const AccountId = params.id;
     const owner = useSelector(state => state.activeUser);
@@ -132,26 +126,7 @@ export default function TransactionsList() {
                     {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
                 </SelectElement>
             
-            {/* <Button type="submit" variant="contained" size="large" id="date-btn">Filter by date</Button> */}
-            <LocalizationProvider
-                    dateAdapter={AdapterDayjs}
-                    localeText={{ start: 'Check-in', end: 'Check-out' }}
-                    >
-                    <DateRangePicker
-                        value={value}
-                        onChange={(newValue) => {
-                        setValue(newValue);
-                        }}
-                        renderInput={(startProps, endProps) => (
-                        <React.Fragment>
-                            <TextField {...startProps} />
-                            <Box sx={{ mx: 2 }}> to </Box>
-                            <TextField {...endProps} />
-                        </React.Fragment>
-                        )}
-                    />
-                    </LocalizationProvider>
-
+            <Button type="submit" variant="contained" size="large" id="date-btn">Filter by date</Button>
             <Button type="submit" variant="contained" size="large" id="incomes-btn">Clear filters</Button>
             </Box>
 
