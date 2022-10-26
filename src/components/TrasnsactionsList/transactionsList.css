@@ -1,12 +1,14 @@
 .transactionsListWrapper{
     margin: 3rem auto;
-    width: 70rem;
+    width: 90rem;
 
 }
 .transactionList{
     display: flex;
-    justify-content: space-between;
-    align-items: center
+    justify-content:flex-start;
+    gap: 5rem;
+    align-items: center;
+    width: 40rem;
 }
 .categoryIcon{
     color: #13b977;;

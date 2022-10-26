@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import CreateCheckingAccount from '../CheckingAccountForm/CheckingAccountForm';
 import { accountManager } from '../../server/accountManager/accountManager';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const style = {
@@ -22,19 +22,17 @@ const style = {
 };
 
 export default function AccountsList() {
+  
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
+
   const owner = useSelector(state => state.activeUser);
   const accounts = accountManager.getAllUserAccounts(owner.username);
 
   const savingsAccounts = accountManager.getAllSavingsAccounts(owner.username);
 
-const goToAccountPage = () => { 
-  navigate('/transactions')
-}
 
   return (
     <div className="accountsWrapper" >
@@ -45,14 +43,17 @@ const goToAccountPage = () => {
       </div>
 
       {accounts.map(account => (
-        <Accordion
+        <Accordion 
           key={account.id}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography onClick={goToAccountPage}>{account.name}</Typography>
+            <Typography onClick={(e)=>{
+              navigate(`/transactions/${account.id}`)
+            }}
+            >{account.name}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <ShortTransactionsList />
@@ -67,7 +68,9 @@ const goToAccountPage = () => {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography onClick={goToAccountPage}>{account.name}</Typography>
+            <Typography onClick={(e)=>{
+              navigate(`/transactions/${account.id}`)
+            }}>{account.name}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <ShortTransactionsList />
