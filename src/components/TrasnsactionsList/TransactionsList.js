@@ -111,7 +111,7 @@ export default function TransactionsList() {
             
             <ListGroup>
             <Typography className="transactionsHeader" variant="h6">
-                List of transactions for {accountName}. Balance: {accountManager.checkAccountBalance(AccountId, owner.username)}{accountCurrency}
+                List of transactions for {accountName}. Balance: {(accountManager.checkAccountBalance(AccountId, owner.username)).toFixed(2)}{accountCurrency}
             </Typography>
 
             {transactions.map(transaction => (

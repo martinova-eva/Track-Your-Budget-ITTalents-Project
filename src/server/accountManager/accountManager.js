@@ -94,6 +94,16 @@ export let accountManager = (function(){
                 }
             })
         }
+        showLastFiveTransactionsForAccount(accountId){
+            let allAccounts = this.getAllAccounts();
+            let transaction = [];
+            allAccounts.map(a => {
+                if(a.id === accountId){
+                    transaction = a.transactions.slice(0,5);
+                }
+            })
+            return transaction;
+        }
         addAccount(id, nameOfAccount, owner, transactions, currency, balance) {
             let accounts = this.getAllAccounts();
             let newAccount = new Account(id, nameOfAccount, owner, transactions, currency, balance)
