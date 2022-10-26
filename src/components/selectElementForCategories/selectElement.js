@@ -21,6 +21,7 @@ export default function SelectElement(props) {
           className="select-element"
           id="outlined-select-currency"
           select
+          required
           label={props.title}
           value={option}
           onChange={(e)=>handleChange(e)}

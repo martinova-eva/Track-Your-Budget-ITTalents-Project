@@ -30,10 +30,9 @@ export default function TransactionPage() {
       // c.tag = tag;
       possibleIncomeArr.push(c);
     } else {
-      // let tag = getTheIcon(c.tag);
+      let tag = getTheIcon(c.tag);
       // c.tag = tag;
-      possibleOutcomeArr.push(c);
-      
+      // possibleOutcomeArr.push(c);
     }
   })
 
@@ -86,7 +85,6 @@ export default function TransactionPage() {
             value={selectedAccount}
             onChange={value => setSelectedAccount(value)}
           >
-            {/* тези опции трябва да са динамични, според това колко сметки има юзера, value-то ще е account's id */}
             {accounts.map((account, i) => (<MenuItem key={account.id} value={account.id}>
               {account.name}
             </MenuItem>))}
@@ -123,7 +121,7 @@ export default function TransactionPage() {
             </SelectElement>}
 
           <BasicDatePicker
-            format="MM-dd-yyyy"
+            defaultValue={new Date().getDate()+"-"+(new Date().getMonth()+1)+"-"+new Date().getFullYear()}
             value={date}
             onChange={value => setDate(value)}
           />
