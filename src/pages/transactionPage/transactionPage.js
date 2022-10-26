@@ -44,7 +44,7 @@ export default function TransactionPage() {
           if (accountBalance >= Number(amount) && typeOfTransaction === 'outcome') {
             console.log('zashto ne pazaruvash mecho')
             accountManager.addTransaction(categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
-            navigate('/transactions');
+            navigate('/home');
             setSelectedAccount('');
             setTypeOfTransaction('');
             setCategoryName('');
@@ -55,7 +55,7 @@ export default function TransactionPage() {
 
           }else if(typeOfTransaction === 'income'){
             accountManager.addTransaction(categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
-            navigate('/transactions');
+            navigate('/home');
             setSelectedAccount('');
             setTypeOfTransaction('');
             setCategoryName('');
