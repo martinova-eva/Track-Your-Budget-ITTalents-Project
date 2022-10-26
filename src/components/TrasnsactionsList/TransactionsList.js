@@ -3,9 +3,10 @@ import { ListGroup } from "react-bootstrap";
 import "./transactionsList.css";
 import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
 import { Typography, Box, MenuItem, Button, IconButton} from "@mui/material";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-
+import NorthIcon from '@mui/icons-material/North';
+import SouthIcon from '@mui/icons-material/South';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 import { Doughnut, Pie } from "react-chartjs-2";
@@ -23,23 +24,48 @@ export default function TransactionsList() {
     //взимайки Id на сметката, ще вземем всички нейни транзакции => обикаляме масива долу на всяка нов ListItem
     //иконките ще ги извикваме от заглавието на категориите, за тези които на се custom
     //const allTransactionForThisAccount = accountManager.showAllTransactionForThisAccount(accountId);
-    const params = useParams()
-    const AccountId = params.id
+    const params = useParams();
+    const AccountId = params.id;
     //console.log(AccountId)
-    const accounts = accountManager.getAllAccounts()
-    let accountName =''
-    let transactions = []
+    const accounts = accountManager.getAllAccounts();
+    let accountName ='';
+    let transactions = [];
+    let accountCurrency = "";
     accounts.map(a => {
         if(a.id === AccountId){
+            accountCurrency = " " + a.currency;
            return transactions = [...a.transactions];
         }
-    })
+    });
     accounts.map(a => {
         if(a.id === AccountId){
            return accountName = a.name;
         }
-    })
-  
+    });
+     //тази функция сортира, но не ги принтира на ново!
+    const showByCategories = (category) => {
+        transactions = [];
+        accounts.map(a => {
+            if(a.id === AccountId){
+                if(category === "income"){
+                    a.transactions.map(tr => {
+                        if(tr.type === "income"){
+                            transactions.push(tr);
+                        }
+                    })
+                }else if(category === "outcome"){
+                    a.transactions.map(tr => {
+                        if(tr.type === "outcome"){
+                            transactions.push(tr);
+                        }
+                    })
+                }
+               
+            }
+        });
+        console.log(transactions)
+        return transactions;
+    }
     const data = {
         labels: [
             'income',
@@ -63,6 +89,7 @@ export default function TransactionsList() {
           hoverOffset: 4
         }]
       };
+
     //   deleteTransaction = (transactionId) => {
     //     accountManager.removeTransaction( transactionId, accountsId);
     //   }
@@ -81,7 +108,10 @@ export default function TransactionsList() {
             >
                 <SelectElement title={"Transaction type:"}
                     value={typeOfTransaction}
-                    onChange={value => setTypeOfTransaction(value)}
+                    onChange={value => {
+                        setTypeOfTransaction(value);
+                        showByCategories(value);
+                        }}
                 >
                     {<MenuItem key={'income'} value={'income'} >{'Income'}</MenuItem>}
                     {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
@@ -100,23 +130,22 @@ export default function TransactionsList() {
 
             {transactions.map(transaction => (
             <ListGroup.Item key = {transaction.id} className="transactionList">
-                    <div className="category">
-                        {transaction.type === 'income' ? <AddCircleOutlineIcon className="categoryIcon" /> : 
-                                                        <RemoveCircleOutlineIcon className="categoryIcon" color="secondary"/>}
-                        <Typography variant="subtitle2">
-                           {transaction.type}
-                        </Typography>
-                    </div>
+                    
                     <Typography variant="subtitle2">
                     {transaction.name}
                     </Typography>
                     <Typography variant="subtitle2">
                     {transaction.date}
                     </Typography>
-                    <Typography className="transactionAmmountOutcome" variant="subtitle2">
-                    {transaction.amount}
+                    <Typography className={transaction.type === "outcome" ? "transactionAmmountOutcome" : 
+                    "transactionAmmountIncome"} variant="subtitle2">
+                    {transaction.type === 'income' ? "+ " : "- " }
+                    {transaction.amount}{accountCurrency}
                     </Typography>
-                    <IconButton aria-label="delete" size="small">
+                    <IconButton aria-label="delete" size="small" onClick={()=> {
+                        console.log("You clickedd me"+ transaction.id)
+                        accountManager.removeTransaction( transaction.id, AccountId);
+                        }}>
                              <DeleteIcon fontSize="inherit"/>       
                     </IconButton>
                 </ListGroup.Item>))}

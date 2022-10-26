@@ -122,10 +122,11 @@ export let accountManager = (function(){
 
                     }else if(transaction.type === "income"){
                         //ако този клиент има спестовна сметка със заложен процент , премести % в спестовната сметка
+                        //да добавя и преизчисление за превалутирането
                         let savingsAccount = this.checkForSavingsAccount(owner);
                         if(savingsAccount){
                             let savingsIncome = (Number(transaction.amount) * Number(savingsAccount.percentage)/100);
-                           // savingsAccount.balance = Number(savingsAccount.balance)  + Number(savingsIncome);
+                           
     
                                 let allSavingsAccounts = this.getAllSavingsAccounts();
                                  allSavingsAccounts.map(s => {
@@ -148,19 +149,23 @@ export let accountManager = (function(){
         }
         removeTransaction( transactionId, accountsId){
             let accounts = this.getAllAccounts();
-            accounts = accounts.map(a => {
+            accounts.map(a => {
+                
                 if(a.id === accountsId){
-                    a.transactions = a.transactions.map(tr => {
+                    let indexOfTransaction;
+                    a.transactions.map((tr, i) => {
+                        
                         if(tr.id === transactionId){
+                            indexOfTransaction = i;
                             if(tr.type === "outcome"){
-                                a.balance += tr.amount;
+                                a.balance = Number(a.balance) + Number(tr.amount);
                             }else{
-                                a.balance -= tr.amount; 
+                                //тук ще има логика и с превалутирането и преизчисление в спестовния акаунт
+                                a.balance = Number(a.balance) - Number(tr.amount);
                             }
                         }
                     })
-                }else{
-                    return a;
+                    a.transactions.splice(indexOfTransaction, 1);
                 }
             })
             localStorage.setItem('accounts', JSON.stringify(accounts));

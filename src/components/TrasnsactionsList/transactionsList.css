@@ -10,9 +10,7 @@
     align-items: center;
     width: 40rem;
 }
-.categoryIcon{
-    color: #13b977;;
-}
+
 .category{
     display: flex;
     gap: 0.6rem;
