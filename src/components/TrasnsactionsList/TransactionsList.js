@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { ListGroup } from "react-bootstrap";
 import "./transactionsList.css";
 import { Typography, Box, MenuItem, Button, IconButton } from "@mui/material";
@@ -14,6 +14,7 @@ import { Modal } from 'react-bootstrap';
 import { DateRangePicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css'
 
+import BarChart from "./barChart";
 
 Chart.register(ArcElement);
 
@@ -124,9 +125,12 @@ export default function TransactionsList() {
             }
         });
         //setTransactions(arrOfTr);
+        console.log(transactions);
         return transactions;
     }
-
+    useEffect(()=>{
+        
+     },transactions)
 
     return (
         <div >
@@ -196,7 +200,9 @@ export default function TransactionsList() {
                 </ListGroup>
 
                 <div className="pieChart">
-                    <PieChart data={data}></PieChart>
+                  <PieChart data={data}></PieChart>
+                {/* пазим за друга статистика този*/}
+                  {/* {<BarChart data={data}></BarChart>} */}
                 </div>
             </div>
         </div>
