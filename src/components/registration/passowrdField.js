@@ -27,7 +27,6 @@ export default function PasswordFields({ helperText, labels, placeholder, onChan
          showPassword: !values.showPassword,
       });
    };
-
    const handleMouseDownPassword = (event) => {
       event.preventDefault();
    };
@@ -37,7 +36,6 @@ export default function PasswordFields({ helperText, labels, placeholder, onChan
          <OutlinedInput
          fullWidth
             required
-           
             placeholder={placeholder}
             type={values.showPassword ? 'text' : 'password'}
             value={values.password.trim()}

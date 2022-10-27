@@ -2,28 +2,38 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import Button from 'react-bootstrap/Button';
+//import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './navigation.css'
-import { Typography } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {logOutUser} from '../../store/activeUserSlice';
 import { userManager } from '../../server/userManager/userManager';
-//import { logoutFromStorage } from '../../server/users';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
 
 export default function Navigation() {
   const activeUser = useSelector(state => state.activeUser);
   const sessionId = activeUser.sessionId;
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const handleLogout = ()=> {
-    console.log(sessionId)
-    dispatch(logOutUser(sessionId));
-    userManager.logoutFromStorage()
-    navigate('/login');
+const navigate = useNavigate()
+const isOut = activeUser.username;
 
+useEffect(()=>{
+  if(!isOut){
+     navigate('/login');     
+  }
+},[isOut])
+
+
+
+  const handleLogout = ()=> {
+    userManager.logoutFromStorage();
+    dispatch(logOutUser(sessionId));
+     
   }
     return (
         <Navbar key="lg" bg="light" expand="lg" className="mb-3">
@@ -60,10 +70,18 @@ export default function Navigation() {
                 </NavDropdown.Item>
               </NavDropdown>
               </Nav>
-                <Button onClick={handleLogout} className="exit" variant="outline-dark">Logout</Button>
+              <Button
+                  type="button"
+                  variant="contained"
+                  size="large"
+                  id="submitButton"
+                  onClick={handleLogout}
+               >Logout</Button>
+                
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>
       </Navbar>
     );
   }
+  //<Button onClick={handleLogout} className="exit" variant="outline-dark">Logout</Button>

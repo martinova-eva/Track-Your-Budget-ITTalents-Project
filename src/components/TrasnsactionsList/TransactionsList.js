@@ -38,7 +38,7 @@ export default function TransactionsList() {
            return accountName = a.name;
         }
     })
-    console.log(transactions)
+  
   
     const data = {
         labels: [

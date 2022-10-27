@@ -22,7 +22,6 @@ export const loginUser = createAsyncThunk(
         }
       })
       const data = await response.json()
-      console.log('data', data)
       if (!response.ok) {
         return thunkAPI.rejectWithValue('GRESHNI KREDENCII')
       } else {
@@ -69,16 +68,7 @@ export const activeUserSlice = createSlice({
   name: 'activeUser',
   initialState,
   reducers: {
-    login: (state, action) => {
-      console.log('login', action)
-      //state.username = action.payload.username;
-    },
-    logout: (state) => {
-      state.username = initialState.username;
-      state.password = initialState.password;
-      //state.sessionId = initialState.sessionId;
-    }
-
+    
   },
   extraReducers: (builder) => {
     builder.addCase(loginUser.fulfilled, (state, { payload }) => {
@@ -96,6 +86,8 @@ export const activeUserSlice = createSlice({
       state.wrongCredentials = false;
     })
     builder.addCase(logOutUser.fulfilled, (state, action) => {
+      state.sessionId = initialState.sessionId
+      state.username = initialState.username
       console.log('successful exit')
 
     })
@@ -110,6 +102,6 @@ export const activeUserSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { login, logout } = activeUserSlice.actions
+export const { } = activeUserSlice.actions
 
 export default activeUserSlice.reducer
