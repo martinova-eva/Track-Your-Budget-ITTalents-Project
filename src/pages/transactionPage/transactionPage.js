@@ -1,7 +1,7 @@
 import './transactionPage.css';
 import React, { useState } from "react";
 import SelectElement from '../../components/selectElementForCategories/selectElement';
-import { Input, Button, Box, Avatar, TextField, MenuItem } from '@mui/material';
+import { Button, Box, Avatar, TextField, MenuItem } from '@mui/material';
 import { possibleIncomeArr } from '../../components/categoryCreator/listOfAllIncomes';
 import { possibleOutcomeArr } from '../../components/categoryCreator/listOfAllOutcomes'
 import BasicDatePicker from '../../components/CheckingAccountForm/datePicker';
@@ -41,12 +41,9 @@ export default function TransactionPage() {
       console.log(selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, amount, description);
 
       let accountBalance = accountManager.checkAccountBalance(selectedAccount, owner.username);
-      
           if (accountBalance >= Number(amount) && typeOfTransaction === 'outcome') {
-            console.log('zashto ne pazaruvash mecho')
             accountManager.addTransaction(categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
-            //  `${date.$D}.${date.$M + 1}.${date.$y}`
-            navigate('/transactions');
+            navigate('/home');
             setSelectedAccount('');
             setTypeOfTransaction('');
             setCategoryName('');
@@ -57,8 +54,7 @@ export default function TransactionPage() {
 
           }else if(typeOfTransaction === 'income'){
             accountManager.addTransaction(categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
-            //  `${date.$D}.${date.$M + 1}.${date.$y}`
-            navigate('/transactions');
+            navigate('/home');
             setSelectedAccount('');
             setTypeOfTransaction('');
             setCategoryName('');
@@ -105,11 +101,6 @@ export default function TransactionPage() {
             {possibleIncomeArr.map((option, i) => (<MenuItem key={i} value={option.title}>
               {option.tag}{option.title}
             </MenuItem>))}
-            {/* {possibleIncomeArr.map((option, i) => {
-              return (<MenuItem key={i} value={option.title}>
-                <AutoAwesomeIcon color="success"/>{option.title}
-            </MenuItem>)
-            })} */}
           </SelectElement> :
             <SelectElement className="select-element" title={"Choose from outcome category:"}
               value={categoryName}
@@ -121,7 +112,6 @@ export default function TransactionPage() {
             </SelectElement>}
 
           <BasicDatePicker
-            defaultValue={new Date().getDate()+"-"+(new Date().getMonth()+1)+"-"+new Date().getFullYear()}
             value={date}
             onChange={value => setDate(value)}
           />
@@ -146,8 +136,6 @@ export default function TransactionPage() {
             onChange={e => setDescription(e.target.value)}
           />
           <Button type="button" onClick={handleCreateNewTransaction}>Add transaction</Button>
-          {/* {при АДД винаги трябва да сравнява дали има сума равна или по- голяма на посочената, 
-          ако не - да извести и да не приема транзакзията/действия} */}
         </form>
       </Box>
     </div>

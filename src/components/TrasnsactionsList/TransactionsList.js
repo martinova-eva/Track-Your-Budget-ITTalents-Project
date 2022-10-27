@@ -1,49 +1,91 @@
 import {React, useState} from "react";
 import { ListGroup } from "react-bootstrap";
 import "./transactionsList.css";
-import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
 import { Typography, Box, MenuItem, Button, IconButton} from "@mui/material";
-
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-
 import { Doughnut, Pie } from "react-chartjs-2";
 import {Chart, ArcElement} from 'chart.js';
 import SelectElement from "../selectElementForCategories/selectElement";
 import { accountManager } from "../../server/accountManager/accountManager";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useParams } from "react-router-dom";
-
-
+import { useSelector } from "react-redux";
+import PieChart from "./pieChart";
 Chart.register(ArcElement);
 
 
 export default function TransactionsList() {
     const [typeOfTransaction, setTypeOfTransaction] = useState('');
-    //взимайки Id на сметката, ще вземем всички нейни транзакции => обикаляме масива долу на всяка нов ListItem
-    //иконките ще ги извикваме от заглавието на категориите, за тези които на се custom
-    //const allTransactionForThisAccount = accountManager.showAllTransactionForThisAccount(accountId);
-    const params = useParams()
-    const AccountId = params.id
+    const params = useParams();
+    const AccountId = params.id;
+    const owner = useSelector(state => state.activeUser);
     //console.log(AccountId)
-    const accounts = accountManager.getAllAccounts()
-    let accountName =''
-    let transactions = []
+   // const accountBalance = accountManager.checkAccountBalance(AccountId, owner.username);
+    const accounts = accountManager.getAllAccounts();
+    let accountName ='';
+    let transactions = [];
+    let accountCurrency = "";
     accounts.map(a => {
         if(a.id === AccountId){
+            accountCurrency = " " + a.currency;
            return transactions = [...a.transactions];
         }
-    })
+    });
     accounts.map(a => {
         if(a.id === AccountId){
            return accountName = a.name;
         }
-    })
-  
-  
+    });
+     //тази функция сортира, но не ги принтира на ново!
+    const showByCategories = (category) => {
+        transactions = [];
+        accounts.map(a => {
+            if(a.id === AccountId){
+                if(category === "income"){
+                    a.transactions.map(tr => {
+                        if(tr.type === "income"){
+                            transactions.push(tr);
+                        }
+                    })
+                }else if(category === "outcome"){
+                    a.transactions.map(tr => {
+                        if(tr.type === "outcome"){
+                            transactions.push(tr);
+                        }
+                    })
+                }
+               
+            }
+        });
+        console.log(transactions)
+        return transactions;
+    }
+     const allTransactionForAccount = accountManager.showStatistics(AccountId);
+    // const [data, setData] = useState({
+    //         labels: allTransactionForAccount.map(data => data.name),
+    //         datasets: [{
+    //           label: 'By',
+    //           data: allTransactionForAccount.map(data => data.amount),
+    //           backgroundColor: [
+    //             'rgb(19,185,119)',
+    //             'rgb(255, 99, 132)',
+    //             'rgb(255,44,87)',
+    //             'rgb(255,205,0)',
+    //             'rgb(183,101,201)',
+    //             'rgb(91,224,255)',
+    //             'rgb(43,174,246)',
+    //             'rgb(255,161,1)',
+    //             'rgb(66,205,0)',
+                
+    //           ],
+    //           hoverOffset: 4
+    //         }]
+    //       });   
+
     const data = {
         labels: [
             'income',
-            'expenses'
+            'expenses', 
+            'others'
         ],
         datasets: [{
           label: 'My First Dataset',
@@ -62,15 +104,9 @@ export default function TransactionsList() {
           ],
           hoverOffset: 4
         }]
-      };
-    //   deleteTransaction = (transactionId) => {
-    //     accountManager.removeTransaction( transactionId, accountsId);
-    //   }
-    
+      };   
     return (
-
-        <div className="transactionsListWrapper">
-
+        <div >
             <Box className="sortWrapper"
                 component="form"
                 sx={{
@@ -81,7 +117,10 @@ export default function TransactionsList() {
             >
                 <SelectElement title={"Transaction type:"}
                     value={typeOfTransaction}
-                    onChange={value => setTypeOfTransaction(value)}
+                    onChange={value => {
+                        setTypeOfTransaction(value);
+                        showByCategories(value);
+                        }}
                 >
                     {<MenuItem key={'income'} value={'income'} >{'Income'}</MenuItem>}
                     {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
@@ -95,33 +134,37 @@ export default function TransactionsList() {
             
             <ListGroup>
             <Typography className="transactionsHeader" variant="h6">
-                List of transactions for {accountName}
+                List of transactions for {accountName}. Balance: {(accountManager.checkAccountBalance(AccountId, owner.username)).toFixed(2)}{accountCurrency}
             </Typography>
+
             {transactions.map(transaction => (
-            <ListGroup.Item key = {transaction.id} className="transactionList">
-                    <div className="category">
-                        <TimeToLeaveIcon className="categoryIcon" />
-                        <Typography variant="subtitle2">
-                           {transaction.type}
-                        </Typography>
-                    </div>
-                    <Typography variant="subtitle2">
+            <ListGroup.Item key = {transaction.id} className="transactionListWrapper">
+                    
+                    <Typography variant="subtitle2" className="transactionListTitles">
                     {transaction.name}
                     </Typography>
+                    <div className="transactionList">
                     <Typography variant="subtitle2">
                     {transaction.date}
                     </Typography>
-                    <Typography className="transactionAmmountOutcome" variant="subtitle2">
-                    {transaction.amount}
+                    <Typography className={transaction.type === "outcome" ? "transactionAmmountOutcome" : 
+                    "transactionAmmountIncome"} variant="subtitle2">
+                    {transaction.type === 'income' ? "+ " : "- " }
+                    {transaction.amount}{accountCurrency}
                     </Typography>
-                    <IconButton aria-label="delete" size="small">
+                    <IconButton aria-label="delete" size="small" onClick={()=> {
+                        accountManager.removeTransaction( transaction.id, AccountId);
+                        }}>
                              <DeleteIcon fontSize="inherit"/>       
                     </IconButton>
-                </ListGroup.Item>))}
+                    </div>
+                    {/* {transaction.description !== "" ?  <Typography>{transaction.description}</Typography> : null} */}
+                </ListGroup.Item>
+               ))}
             </ListGroup>
+
            <div className="pieChart">
-          <Pie data={data}></Pie>
-            
+          <PieChart data={data}></PieChart>  
             </div>
             </div>
         </div>

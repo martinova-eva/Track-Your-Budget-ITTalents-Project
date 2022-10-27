@@ -13,7 +13,7 @@ export default function BasicDatePicker(props) {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
         label="Choose Date"
-        inputFormat="DD-MM-YYYY"
+         inputFormat="DD/MM/YYYY"
         value={value}
         onChange={(newValue) => {
           setValue(newValue);

@@ -1,3 +1,4 @@
+import { ConstructionRounded } from '@mui/icons-material';
 import { v4 as uuidV4 } from 'uuid';
 
 export let accountManager = (function(){
@@ -44,6 +45,12 @@ export let accountManager = (function(){
             this.owner = owner;
         }
     }
+    class StatisticObject{
+        constructor(name, value){
+            this.name = name;
+            this.value = value;
+        }
+    }
     
     class AccountManager {
             
@@ -83,7 +90,6 @@ export let accountManager = (function(){
                     balance = a.balance;
                 }
             })
-            console.log(balance)
             return balance;
         }
         showAllTransactionForThisAccount(accountId){
@@ -94,6 +100,34 @@ export let accountManager = (function(){
                    return transaction = [...a.transaction];
                 }
             })
+        }
+        showLastFiveTransactionsForAccount(accountId){
+            let allAccounts = this.getAllAccounts();
+            let transaction = [];
+            allAccounts.map(a => {
+                if(a.id === accountId){
+                    transaction = a.transactions.slice(0,5);
+                }
+            })
+            return transaction;
+        }
+        showStatistics(accountId){
+            let allAccounts = this.getAllAccounts();
+            let statisticData = [];
+            allAccounts.map(a => {
+                if(a.id === accountId){
+                    a.transactions.map(tr => {
+                        statisticData.map(o => {
+                            if(o.name === tr.name){
+                                o.value += tr.amount;
+                            }else{
+                                statisticData.push(new StatisticObject(tr.name, tr.amount))
+                            }
+                        })
+                    })
+                }
+            })
+            return statisticData;
         }
         addAccount(id, nameOfAccount, owner, transactions, currency, balance) {
             let accounts = this.getAllAccounts();
@@ -122,10 +156,11 @@ export let accountManager = (function(){
 
                     }else if(transaction.type === "income"){
                         //ако този клиент има спестовна сметка със заложен процент , премести % в спестовната сметка
+                        //да добавя и преизчисление за превалутирането
                         let savingsAccount = this.checkForSavingsAccount(owner);
                         if(savingsAccount){
                             let savingsIncome = (Number(transaction.amount) * Number(savingsAccount.percentage)/100);
-                           // savingsAccount.balance = Number(savingsAccount.balance)  + Number(savingsIncome);
+                           
     
                                 let allSavingsAccounts = this.getAllSavingsAccounts();
                                  allSavingsAccounts.map(s => {
@@ -143,24 +178,32 @@ export let accountManager = (function(){
                         
                     }                   
                 }
-            })
+                //логика за сортиране на транзакциите, за да държи винаги сортиран масива
+                a.transactions.sort(function(a, b){
+                    return new Date(b.date) - new Date(a.date);
+                });
+            });
             localStorage.setItem('accounts', JSON.stringify(accounts));
         }
         removeTransaction( transactionId, accountsId){
             let accounts = this.getAllAccounts();
-            accounts = accounts.map(a => {
+            accounts.map(a => {
+                
                 if(a.id === accountsId){
-                    a.transactions = a.transactions.map(tr => {
+                    let indexOfTransaction;
+                    a.transactions.map((tr, i) => {
+                        
                         if(tr.id === transactionId){
+                            indexOfTransaction = i;
                             if(tr.type === "outcome"){
-                                a.balance += tr.amount;
+                                a.balance = Number(a.balance) + Number(tr.amount);
                             }else{
-                                a.balance -= tr.amount; 
+                                //тук ще има логика и с превалутирането и преизчисление в спестовния акаунт
+                                a.balance = Number(a.balance) - Number(tr.amount);
                             }
                         }
                     })
-                }else{
-                    return a;
+                    a.transactions.splice(indexOfTransaction, 1);
                 }
             })
             localStorage.setItem('accounts', JSON.stringify(accounts));
