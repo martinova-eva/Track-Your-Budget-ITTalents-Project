@@ -97,9 +97,10 @@ export let accountManager = (function(){
             let transaction = [];
             allAccounts.map(a => {
                 if(a.id === accountId){
-                   return transaction = [...a.transaction];
+                   transaction = [...a.transaction];
                 }
             })
+            return transaction;
         }
         showLastFiveTransactionsForAccount(accountId){
             let allAccounts = this.getAllAccounts();
@@ -121,7 +122,7 @@ export let accountManager = (function(){
                         const transactionType = statisticData.find(item => item.name === tr.name);
 
                         if(transactionType){
-                            transactionType.value += tr.amount;
+                            transactionType.value =Number(transactionType.value) + Number(tr.amount);
                         }else{
                             statisticData.push(new StatisticObject(tr.name, tr.amount))
                         }

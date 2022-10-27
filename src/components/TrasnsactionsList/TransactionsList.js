@@ -19,7 +19,6 @@ export default function TransactionsList() {
     const AccountId = params.id;
     const owner = useSelector(state => state.activeUser);
     //console.log(AccountId)
-   // const accountBalance = accountManager.checkAccountBalance(AccountId, owner.username);
     const accounts = accountManager.getAllAccounts();
     let accountName ='';
     let transactions = [];
