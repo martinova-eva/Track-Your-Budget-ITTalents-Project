@@ -117,13 +117,14 @@ export let accountManager = (function(){
             allAccounts.map(a => {
                 if(a.id === accountId){
                     a.transactions.map(tr => {
-                        statisticData.map(o => {
-                            if(o.name === tr.name){
-                                o.value += tr.amount;
-                            }else{
-                                statisticData.push(new StatisticObject(tr.name, tr.amount))
-                            }
-                        })
+            
+                        const transactionType = statisticData.find(item => item.name === tr.name);
+
+                        if(transactionType){
+                            transactionType.value += tr.amount;
+                        }else{
+                            statisticData.push(new StatisticObject(tr.name, tr.amount))
+                        }
                     })
                 }
             })
@@ -155,7 +156,6 @@ export let accountManager = (function(){
                         a.transactions.push(transaction);
 
                     }else if(transaction.type === "income"){
-                        //ако този клиент има спестовна сметка със заложен процент , премести % в спестовната сметка
                         //да добавя и преизчисление за превалутирането
                         let savingsAccount = this.checkForSavingsAccount(owner);
                         if(savingsAccount){
