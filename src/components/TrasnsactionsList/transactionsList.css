@@ -67,3 +67,25 @@
 .pieChart{
     width: 20rem;
 }
+.shortListIcon{
+    height: 2rem;
+}
+.expensesShortList{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    text-align: left;
+    height: 3rem;
+    background-color: rgba(250,160,160, 0.15)
+    
+
+}
+.incomesShortList{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    text-align: left;
+    height: 3rem;
+    background-color: rgb(178,224,184,0.15) 
+
+}

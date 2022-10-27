@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { ListGroup } from "react-bootstrap";
 import "./transactionsList.css";
-import { Typography, Box, MenuItem, Button, IconButton } from "@mui/material";
+import { Typography, Box, MenuItem, Button, IconButton, Icon } from "@mui/material";
 import { Doughnut, Pie } from "react-chartjs-2";
 import { Chart, ArcElement } from 'chart.js';
 import SelectElement from "../selectElementForCategories/selectElement";
@@ -12,9 +12,11 @@ import { useSelector } from "react-redux";
 import PieChart from "./pieChart";
 import { Modal } from 'react-bootstrap';
 import { DateRangePicker } from 'rsuite';
-import 'rsuite/dist/rsuite.min.css'
+import 'rsuite/dist/rsuite.min.css';
+import { v4 as uuidV4 } from 'uuid';
 
 import BarChart from "./barChart";
+import getTheIcon, { iconsArrOfObjects } from "../categoryCreator/icons";
 
 Chart.register(ArcElement);
 
@@ -27,15 +29,14 @@ export default function TransactionsList() {
     const [show, setShow] = useState(false);  //modal functions
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-  
-  
+
     const accounts = accountManager.getAllAccounts();
-    let accountName ='';
+    let accountName = '';
     let accountBalance = 0;
     let transactions = [];
     const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
     //let balance = (accountManager.checkAccountBalance(AccountId, owner.username)).toFixed(2);
-    console.log('balance:' , (accountManager.checkAccountBalance(AccountId, owner.username)))
+    // console.log('balance:' , (accountManager.checkAccountBalance(AccountId, owner.username)))
     //const [transactions, setTransactions] = useState([]);
     let accountCurrency = "";
     accounts.map(a => {
@@ -128,9 +129,9 @@ export default function TransactionsList() {
         console.log(transactions);
         return transactions;
     }
-    useEffect(()=>{
-        
-     },[transactions])
+    useEffect(() => {
+
+    }, [transactions])
 
     return (
         <div >
@@ -153,20 +154,20 @@ export default function TransactionsList() {
                     {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
                 </SelectElement>
 
-                <DateRangePicker size="lg"  style={stylesDatePicker}/>
+                {/* <DateRangePicker size="lg"  style={stylesDatePicker}/> */}
                 <Button type="submit" variant="contained" size="large" id="incomes-btn">Clear filters</Button>
             </Box>
-           
-           
+
+
             <Modal show={show} onHide={handleClose}>
-          <Box sx={{ borderColor: 'paper', boxShadow: 20, display: "flex", flexDirection: 'column'}}>
-        <Modal.Header closeButton>    
-        </Modal.Header>
-        <Modal.Body>   </Modal.Body>
-        </Box>
-      </Modal>
+                <Box sx={{ borderColor: 'paper', boxShadow: 20, display: "flex", flexDirection: 'column' }}>
+                    <Modal.Header closeButton>
+                    </Modal.Header>
+                    <Modal.Body>   </Modal.Body>
+                </Box>
+            </Modal>
             <div className="listandChart">
-          
+
                 <ListGroup>
                     <Typography className="transactionsHeader" variant="h6">
                         List of transactions for {accountName}.
@@ -176,7 +177,11 @@ export default function TransactionsList() {
                     </Typography>
                     {transactions.map(transaction => (
                         <ListGroup.Item key={transaction.id} className="transactionListWrapper">
-
+                            {/* <Icon className="shortListIcon" key={uuidV4()}>{iconsArrOfObjects.map(i => {
+                                if (transaction.name.toLowerCase() === i.title) {
+                                    return i.tag;
+                                }
+                            })} </Icon> */}
                             <Typography variant="subtitle2" className="transactionListTitles">
                                 {transaction.name}
                             </Typography>
@@ -200,9 +205,9 @@ export default function TransactionsList() {
                 </ListGroup>
 
                 <div className="pieChart">
-                  <PieChart data={data}></PieChart>
-                {/* пазим за друга статистика този*/}
-                  {/* {<BarChart data={data}></BarChart>} */}
+                    <PieChart data={data}></PieChart>
+                    {/* пазим за друга статистика този*/}
+                    {/* {<BarChart data={data}></BarChart>} */}
                 </div>
             </div>
         </div>
