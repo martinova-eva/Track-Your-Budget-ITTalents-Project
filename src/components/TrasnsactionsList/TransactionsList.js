@@ -34,12 +34,56 @@ export default function TransactionsList() {
            return accountName = a.name;
         }
     });
+    const allTransactionForAccount = accountManager.showStatistics(AccountId);
+    const [data, setData] = useState({
+            labels: allTransactionForAccount.map(data => data.name),
+            datasets: [{
+              label: '',
+              data: allTransactionForAccount.map(data => data.value),
+              backgroundColor: [
+                'rgb(19,185,119)',
+                'rgb(255, 99, 132)',
+                'rgb(255,44,87)',
+                'rgb(255,205,0)',
+                'rgb(183,101,201)',
+                'rgb(91,224,255)',
+                'rgb(43,174,246)',
+                'rgb(255,161,1)',
+                'rgb(66,205,0)',
+                
+              ],
+              hoverOffset: 4
+            }]
+          });   
+
      //тази функция сортира, но не ги принтира на ново!
     const showByCategories = (category) => {
         transactions = [];
+        const allTransactionsByType = accountManager.showStatisticsByTransactionType(AccountId, category);
+        setData({
+            labels: allTransactionsByType.map(data => data.name),
+            datasets: [{
+              label: '',
+              data: allTransactionsByType.map(data => data.value),
+              backgroundColor: [
+                'rgb(19,185,119)',
+                'rgb(255, 99, 132)',
+                'rgb(255,44,87)',
+                'rgb(255,205,0)',
+                'rgb(183,101,201)',
+                'rgb(91,224,255)',
+                'rgb(43,174,246)',
+                'rgb(255,161,1)',
+                'rgb(66,205,0)',
+                
+              ],
+              hoverOffset: 4
+            }]
+        })
         accounts.map(a => {
             if(a.id === AccountId){
                 if(category === "income"){
+                    
                     a.transactions.map(tr => {
                         if(tr.type === "income"){
                             transactions.push(tr);
@@ -58,52 +102,8 @@ export default function TransactionsList() {
         console.log(transactions)
         return transactions;
     }
-     const allTransactionForAccount = accountManager.showStatistics(AccountId);
-    const [data, setData] = useState({
-            labels: allTransactionForAccount.map(data => data.name),
-            datasets: [{
-              label: 'By',
-              data: allTransactionForAccount.map(data => data.value),
-              backgroundColor: [
-                'rgb(19,185,119)',
-                'rgb(255, 99, 132)',
-                'rgb(255,44,87)',
-                'rgb(255,205,0)',
-                'rgb(183,101,201)',
-                'rgb(91,224,255)',
-                'rgb(43,174,246)',
-                'rgb(255,161,1)',
-                'rgb(66,205,0)',
-                
-              ],
-              hoverOffset: 4
-            }]
-          });   
-
-    // const data = {
-    //     labels: [
-    //         'income',
-    //         'expenses', 
-    //         'others'
-    //     ],
-    //     datasets: [{
-    //       label: 'My First Dataset',
-    //       data: [30,30,30,50,70,20,50,70],
-    //       backgroundColor: [
-    //         'rgb(19,185,119)',
-    //         'rgb(255, 99, 132)',
-    //         'rgb(255,44,87)',
-    //         'rgb(255,205,0)',
-    //         'rgb(183,101,201)',
-    //         'rgb(91,224,255)',
-    //         'rgb(43,174,246)',
-    //         'rgb(255,161,1)',
-    //         'rgb(66,205,0)',
-            
-    //       ],
-    //       hoverOffset: 4
-    //     }]
-    //   };   
+     
+    
     return (
         <div >
             <Box className="sortWrapper"

@@ -131,6 +131,27 @@ export let accountManager = (function(){
             })
             return statisticData;
         }
+        showStatisticsByTransactionType(accountId, type){
+            let allAccounts = this.getAllAccounts();
+            let statisticData = [];
+            allAccounts.map(a => {
+                if(a.id === accountId){
+                    a.transactions.map(tr => {
+                        if(tr.type === type){
+                            const transactionType = statisticData.find(item => item.name === tr.name);
+
+                            if(transactionType){
+                                transactionType.value =Number(transactionType.value) + Number(tr.amount);
+                            }else{
+                                statisticData.push(new StatisticObject(tr.name, tr.amount))
+                            }
+                        }
+                        
+                    })
+                }
+            })
+            return statisticData;
+        }
         addAccount(id, nameOfAccount, owner, transactions, currency, balance) {
             let accounts = this.getAllAccounts();
             let newAccount = new Account(id, nameOfAccount, owner, transactions, currency, balance)
