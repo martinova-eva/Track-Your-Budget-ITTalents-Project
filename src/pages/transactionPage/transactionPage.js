@@ -32,7 +32,7 @@ export default function TransactionPage() {
     } else {
       let tag = getTheIcon(c.tag);
       // c.tag = tag;
-      // possibleOutcomeArr.push(c);
+       possibleOutcomeArr.push(c);
     }
   })
 
