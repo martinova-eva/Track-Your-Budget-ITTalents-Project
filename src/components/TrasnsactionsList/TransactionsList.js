@@ -26,6 +26,12 @@ export default function TransactionsList() {
     accounts.map(a => {
         if(a.id === AccountId){
             accountCurrency = " " + a.currency;
+            a.transactions.map(tr =>{
+                let date;
+                let arrOfDate = tr.date.split('.');
+                date = arrOfDate[1]+"."+arrOfDate[0] + '.'+arrOfDate[2];
+                tr.date = date;
+            })
            return transactions = [...a.transactions];
         }
     });
@@ -99,7 +105,6 @@ export default function TransactionsList() {
                
             }
         });
-        console.log(transactions)
         return transactions;
     }
      

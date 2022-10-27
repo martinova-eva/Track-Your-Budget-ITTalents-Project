@@ -97,7 +97,7 @@ export let accountManager = (function(){
             let transaction = [];
             allAccounts.map(a => {
                 if(a.id === accountId){
-                   transaction = [...a.transaction];
+                   transaction = [...a.transactions];
                 }
             })
             return transaction;
