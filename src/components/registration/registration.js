@@ -13,12 +13,24 @@ export default function RegistrationForm() {
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
    const [confirmPass, setConfirmPass] = useState('');
-   const user = useSelector(state => state.activeUser);
+   const user = useSelector(state => state.registerUser);
+   const usernameTaken = user.usernameTaken;
+  
 
    let passDontMatch = false;
-   let helperText = "";
+   let userNameTakenError = false;
+   let helperText = "Password must be at least 6 letters";
+   let helperTextUsername = "Username must be 3-16 letters";
    const navigate = useNavigate();
    const dispatch = useDispatch();
+
+
+      ///^(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[!@#$%]).{6,16}$/
+const regex = '^[A-Za-z0-9]{3,16}$';
+const regexPass = '^[A-Za-z0-9]{6,16}$' ;
+ const validUsername = username.match(regex);
+ const validPassword = password.match(regexPass);
+
 
    if (password && confirmPass) {
       if (password !== confirmPass) {
@@ -26,21 +38,35 @@ export default function RegistrationForm() {
          helperText = "Passwords do not match";
       }
    }
+   if(usernameTaken){
+      userNameTakenError = true;
+      helperTextUsername = "This username is taken";
+   }
+  
+
+   if(!validUsername){
+      userNameTakenError = true;
+   }
+ 
+   if(!validPassword){
+      passDontMatch = true;
+   }
+ 
 
    const handleRegister = () => {
-      if (userManager.registerUser(username, password, confirmPass)) {
+      if(validUsername && validPassword){
          dispatch(registerNewUser({ username, password }));
-         navigate('/login');
+        // navigate('/login');
          setUsername('');
          setPassword('');
          setConfirmPass('');
       }
-
-      else {
-
-         console.log('Error'); //покажи съобщение
+      if(!usernameTaken){
+          navigate('/login');
       }
    }
+
+ 
 
    return (
       <Grid className="wrapper">
@@ -49,11 +75,11 @@ export default function RegistrationForm() {
             <Typography className="formHeader"  variant="h4" >
             Sign up
                   </Typography>
-            
-
             <form className="formStyle">
                <TextField
                   required
+                  error={userNameTakenError}
+                  helperText={ helperTextUsername}
                   fullWidth
                   id="outlined-required"
                   label="Name"

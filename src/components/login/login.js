@@ -20,22 +20,33 @@ export default function LoginForm() {
    let helperText = "";
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
-
-   useEffect(() => {
-      if (isLogged) {
-         navigate('/home');
+   
+   useEffect(()=>{
+      if(isLogged){
+         navigate('/home');     
       }
-   }, [isLogged]);
+   },[isLogged])
 
    const handleLogin = () => {
+   if(password !== "" && username !== ""){
       dispatch(loginUser({ username, password }));
-   }
+      setUsername('');
+      setPassword('');
 
-   if (wrongCredentials && password !== "" && username !== "") {
+   }
+   else 
+      helperText = "Required field";
+      error = true
+   
+  
+   }
+   
+   if (wrongCredentials) {
       helperText = "Wrong Credentials";
       error = true
-
    }
+
+ 
    else {
       error = false
       helperText = "";
@@ -53,7 +64,7 @@ export default function LoginForm() {
                {/* <form className="formStyle"> */}
 
                <TextField
-                  required
+                  required 
                   fullWidth
                   helperText={helperText}
                   error={error}
