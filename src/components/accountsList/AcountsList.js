@@ -28,11 +28,7 @@ const style = {
 export default function AccountsList() {
   
   const navigate = useNavigate();
-  // const [open, setOpen] = React.useState(false);   //mui
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
-
-  const [show, setShow] = useState(false);  //bt
+  const [show, setShow] = useState(false);  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -92,29 +88,11 @@ export default function AccountsList() {
           </Typography>
           <Modal show={show} onHide={handleClose}>
           <Box sx={{ borderColor: 'paper', boxShadow: 20, display: "flex", flexDirection: 'column'}}>
-          {/* <Paper elevation={20} className="paperStyle"> */}
-        <Modal.Header closeButton>
-          
+        <Modal.Header closeButton>    
         </Modal.Header>
         <Modal.Body><CreateCheckingAccount onClose={handleClose} /></Modal.Body>
-       
-        {/* </Paper> */}
         </Box>
       </Modal>
-          {/* <div>
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <CreateCheckingAccount onClose={handleClose} onClick={handleClose} />
-              </Box>
-            </Modal>
-          </div> */}
-
-
         </AccordionSummary>
       </Accordion>
     </div>

@@ -14,13 +14,49 @@
     align-items: center;
 }
 .targetWrapper{
-    margin: 1.2rem auto;
-  
-    
+    margin: 1.2rem auto;    
+}
+.targetWrapper>img{
+  height: 17rem;
+  margin: 1rem 1rem;
+
+}
+.noTragetMessage{
+  display: flex;
+
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+   
+}
+.noTragetMessage>img{
+height: 10rem;
+margin: 1rem 1rem;
+
+}
+.createTargetBtn{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+
 }
 .progress-bar {  
-    background-color: #6C63FF;
+    background-color: #13b977;
   }
   .avatarTarget{
     background-color: white;
   }
+  .wellDoneTarget{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+  }
+  .wellDoneTarget>img{
+    height: 17rem;
+    margin: 1rem 1rem;
+  }
+ 
