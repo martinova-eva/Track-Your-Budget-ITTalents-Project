@@ -8,11 +8,15 @@ import ShortTransactionsList from './ShortTransactionsList';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import "./accountList.css"
 import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
+//import Modal from '@mui/material/Modal';
 import CreateCheckingAccount from '../CheckingAccountForm/CheckingAccountForm';
 import { accountManager } from '../../server/accountManager/accountManager';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Button, Paper } from '@mui/material';
+import { Modal } from 'react-bootstrap';
+import { useState } from 'react';
+import { OpenInFullOutlined } from '@mui/icons-material';
 
 const style = {
   position: 'absolute',
@@ -24,14 +28,19 @@ const style = {
 export default function AccountsList() {
   
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const [open, setOpen] = React.useState(false);   //mui
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
+
+  const [show, setShow] = useState(false);  //bt
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
 
   const owner = useSelector(state => state.activeUser);
   const accounts = accountManager.getAllUserAccounts(owner.username);
-
   const savingsAccounts = accountManager.getAllSavingsAccounts(owner.username);
+
 
 
   return (
@@ -53,10 +62,10 @@ export default function AccountsList() {
             <Typography onClick={(e)=>{
               navigate(`/transactions/${account.id}`)
             }}
-            >{account.name}</Typography>
+            >{`Checking account: ${account.name}`}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <ShortTransactionsList />
+            <ShortTransactionsList id={account.id} />
           </AccordionDetails>
         </Accordion>))}
 
@@ -68,22 +77,31 @@ export default function AccountsList() {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography onClick={(e)=>{
-              navigate(`/transactions/${account.id}`)
-            }}>{account.name}</Typography>
+            <Typography>{`Savings account: ${account.name}`}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <ShortTransactionsList />
+           
           </AccordionDetails>
         </Accordion>))}
 
       <Accordion expanded={true}>
         <AccordionSummary >
-          <Typography onClick={handleOpen}>
+          <Typography onClick={handleShow}>
             <AddCircleOutlineIcon className="addNewIcon" />
             Add new account
           </Typography>
-          <div>
+          <Modal show={show} onHide={handleClose}>
+          <Box sx={{ borderColor: 'paper', boxShadow: 20, display: "flex", flexDirection: 'column'}}>
+          {/* <Paper elevation={20} className="paperStyle"> */}
+        <Modal.Header closeButton>
+          
+        </Modal.Header>
+        <Modal.Body><CreateCheckingAccount onClose={handleClose} /></Modal.Body>
+       
+        {/* </Paper> */}
+        </Box>
+      </Modal>
+          {/* <div>
             <Modal
               open={open}
               onClose={handleClose}
@@ -91,10 +109,10 @@ export default function AccountsList() {
               aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
-                <CreateCheckingAccount onClose={handleClose} />
+                <CreateCheckingAccount onClose={handleClose} onClick={handleClose} />
               </Box>
             </Modal>
-          </div>
+          </div> */}
 
 
         </AccordionSummary>

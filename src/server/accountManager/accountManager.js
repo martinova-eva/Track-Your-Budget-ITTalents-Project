@@ -274,6 +274,17 @@ export let accountManager = (function(){
             })
             return customCategories;
         }
+        getAccountCurrency(accountId){
+            let accounts = this.getAllAccounts()
+            accounts.map(ac => {
+                if(ac.id === accountId){
+                    return ac.currency;
+                }
+            })
+
+
+
+        }
     }
     return new AccountManager()
 

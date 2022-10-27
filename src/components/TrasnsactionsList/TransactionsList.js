@@ -22,8 +22,11 @@ export default function TransactionsList() {
     const owner = useSelector(state => state.activeUser);
     //console.log(AccountId)
     const accounts = accountManager.getAllAccounts();
-    let accountName = '';
+    let accountName ='';
+    let accountBalance = 0;
     let transactions = [];
+    //let balance = (accountManager.checkAccountBalance(AccountId, owner.username)).toFixed(2);
+    console.log('balance:' , (accountManager.checkAccountBalance(AccountId, owner.username)))
     //const [transactions, setTransactions] = useState([]);
     let accountCurrency = "";
     accounts.map(a => {
