@@ -97,9 +97,10 @@ export let accountManager = (function(){
             let transaction = [];
             allAccounts.map(a => {
                 if(a.id === accountId){
-                   return transaction = [...a.transaction];
+                   transaction = [...a.transactions];
                 }
             })
+            return transaction;
         }
         showLastFiveTransactionsForAccount(accountId){
             let allAccounts = this.getAllAccounts();
@@ -117,13 +118,35 @@ export let accountManager = (function(){
             allAccounts.map(a => {
                 if(a.id === accountId){
                     a.transactions.map(tr => {
-                        statisticData.map(o => {
-                            if(o.name === tr.name){
-                                o.value += tr.amount;
+            
+                        const transactionType = statisticData.find(item => item.name === tr.name);
+
+                        if(transactionType){
+                            transactionType.value =Number(transactionType.value) + Number(tr.amount);
+                        }else{
+                            statisticData.push(new StatisticObject(tr.name, tr.amount))
+                        }
+                    })
+                }
+            })
+            return statisticData;
+        }
+        showStatisticsByTransactionType(accountId, type){
+            let allAccounts = this.getAllAccounts();
+            let statisticData = [];
+            allAccounts.map(a => {
+                if(a.id === accountId){
+                    a.transactions.map(tr => {
+                        if(tr.type === type){
+                            const transactionType = statisticData.find(item => item.name === tr.name);
+
+                            if(transactionType){
+                                transactionType.value =Number(transactionType.value) + Number(tr.amount);
                             }else{
                                 statisticData.push(new StatisticObject(tr.name, tr.amount))
                             }
-                        })
+                        }
+                        
                     })
                 }
             })
@@ -155,7 +178,6 @@ export let accountManager = (function(){
                         a.transactions.push(transaction);
 
                     }else if(transaction.type === "income"){
-                        //ако този клиент има спестовна сметка със заложен процент , премести % в спестовната сметка
                         //да добавя и преизчисление за превалутирането
                         let savingsAccount = this.checkForSavingsAccount(owner);
                         if(savingsAccount){
@@ -170,6 +192,7 @@ export let accountManager = (function(){
                                     })
                             localStorage.setItem('savings', JSON.stringify(allSavingsAccounts));
                             a.balance = (Number(a.balance) + ((Number(transaction.amount) - Number(savingsIncome))));
+                            transaction.amount = (Number(transaction.amount) - Number(savingsIncome));
                             a.transactions.push(transaction);
                         }else{
                             a.balance = Number(a.balance) + Number(transaction.amount);

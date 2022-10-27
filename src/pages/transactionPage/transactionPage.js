@@ -32,7 +32,7 @@ export default function TransactionPage() {
     } else {
       let tag = getTheIcon(c.tag);
       // c.tag = tag;
-      // possibleOutcomeArr.push(c);
+       possibleOutcomeArr.push(c);
     }
   })
 
@@ -42,7 +42,7 @@ export default function TransactionPage() {
 
       let accountBalance = accountManager.checkAccountBalance(selectedAccount, owner.username);
           if (accountBalance >= Number(amount) && typeOfTransaction === 'outcome') {
-            accountManager.addTransaction(categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
+            accountManager.addTransaction(categoryName, `${date.$M + 1}.${date.$D}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
             navigate('/home');
             setSelectedAccount('');
             setTypeOfTransaction('');
@@ -53,7 +53,7 @@ export default function TransactionPage() {
             setAmount('');
 
           }else if(typeOfTransaction === 'income'){
-            accountManager.addTransaction(categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
+            accountManager.addTransaction(categoryName, `${date.$M + 1}.${date.$D}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
             navigate('/home');
             setSelectedAccount('');
             setTypeOfTransaction('');
