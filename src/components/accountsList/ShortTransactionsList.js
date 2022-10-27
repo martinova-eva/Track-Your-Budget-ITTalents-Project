@@ -107,12 +107,14 @@ export default function ShortTransactionsList({ id }) {
                             {transaction.type === 'income' ? "+ " : "- "}
                             {transaction.amount}{accountCurrency}
                         </Typography>
+                        <div className="transactionDescription">
                         <Typography variant="subtitle2">
                             {transaction.description}
                         </Typography>
+                        </div>
 
                     </div>
-                    {/* {transaction.description !== "" ?  <Typography>{transaction.description}</Typography> : null} */}
+                   
                 </ListGroup.Item>
             ))}
         </ListGroup>

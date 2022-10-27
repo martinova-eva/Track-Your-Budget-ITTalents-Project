@@ -10,6 +10,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PieChart from "./pieChart";
+import { Modal } from 'react-bootstrap';
+import { DateRangePicker } from 'rsuite';
+import 'rsuite/dist/rsuite.min.css'
+
+
 Chart.register(ArcElement);
 
 
@@ -18,11 +23,16 @@ export default function TransactionsList() {
     const params = useParams();
     const AccountId = params.id;
     const owner = useSelector(state => state.activeUser);
-    //console.log(AccountId)
+    const [show, setShow] = useState(false);  //modal functions
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+  
+  
     const accounts = accountManager.getAllAccounts();
     let accountName ='';
     let accountBalance = 0;
     let transactions = [];
+    const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
     //let balance = (accountManager.checkAccountBalance(AccountId, owner.username)).toFixed(2);
     console.log('balance:' , (accountManager.checkAccountBalance(AccountId, owner.username)))
     //const [transactions, setTransactions] = useState([]);
@@ -139,12 +149,20 @@ export default function TransactionsList() {
                     {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
                 </SelectElement>
 
-                <Button type="submit" variant="contained" size="large" id="date-btn">Filter by date</Button>
+                <DateRangePicker size="lg"  style={stylesDatePicker}/>
                 <Button type="submit" variant="contained" size="large" id="incomes-btn">Clear filters</Button>
             </Box>
-
+           
+           
+            <Modal show={show} onHide={handleClose}>
+          <Box sx={{ borderColor: 'paper', boxShadow: 20, display: "flex", flexDirection: 'column'}}>
+        <Modal.Header closeButton>    
+        </Modal.Header>
+        <Modal.Body>   </Modal.Body>
+        </Box>
+      </Modal>
             <div className="listandChart">
-
+          
                 <ListGroup>
                     <Typography className="transactionsHeader" variant="h6">
                         List of transactions for {accountName}.
@@ -173,7 +191,6 @@ export default function TransactionsList() {
                                     <DeleteIcon fontSize="inherit" />
                                 </IconButton>
                             </div>
-                            {/* {transaction.description !== "" ?  <Typography>{transaction.description}</Typography> : null} */}
                         </ListGroup.Item>
                     ))}
                 </ListGroup>

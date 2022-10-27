@@ -28,23 +28,20 @@
 .expensesShortList{
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items:center;
     text-align: left;
     height: 3rem;
-    background-color: rgba(250,160,160, 0.3)
+    background-color: rgba(250,160,160, 0.15)
     
 
-}
-.shortListIcon{
-    height: 3rem;
 }
 .incomesShortList{
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items:center;
     text-align: left;
     height: 3rem;
-    background-color: rgb(178,224,184,0.3) 
+    background-color: rgb(178,224,184,0.15) 
 
 }
 .shortListCategoryWrapper{
@@ -53,5 +50,13 @@
     justify-content: center;
     align-items: center;
     gap: 1rem;
+    text-align: left;
     height: 3rem;
+}
+.shortListIcon{
+    height: 3rem;
+}
+.transactionDescription{
+    width: 6rem;
+    text-align: left;
 }
