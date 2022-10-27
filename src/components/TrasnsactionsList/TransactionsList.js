@@ -121,7 +121,7 @@ export default function TransactionsList() {
     }
     useEffect(()=>{
         
-     },transactions)
+     },[transactions])
 
     return (
         <div >
