@@ -14,6 +14,7 @@ import { Modal } from 'react-bootstrap';
 import { DateRangePicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import { v4 as uuidV4 } from 'uuid';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import BarChart from "./barChart";
 import getTheIcon, { iconsArrOfObjects } from "../categoryCreator/icons";
@@ -160,14 +161,14 @@ export default function TransactionsList() {
 
 
             <Modal show={show} onHide={handleClose}>
-                <Box sx={{ borderColor: 'paper', boxShadow: 20, display: "flex", flexDirection: 'column' }}>
+                {/* <Box sx={{ borderColor: 'paper', boxShadow: 20, display: "flex", flexDirection: 'column' }}>
                     <Modal.Header closeButton>
                     </Modal.Header>
                     <Modal.Body>   </Modal.Body>
-                </Box>
+                </Box> */}
             </Modal>
             <div className="listandChart">
-
+            <Box sx={{ borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column' }}>
                 <ListGroup>
                     <Typography className="transactionsHeader" variant="h6">
                         List of transactions for {accountName}.
@@ -176,6 +177,7 @@ export default function TransactionsList() {
                         Balance: {(accountManager.checkAccountBalance(AccountId, owner.username)).toFixed(2)}{accountCurrency}
                     </Typography>
                     {transactions.map(transaction => (
+                        
                         <ListGroup.Item key={transaction.id} className="transactionListWrapper">
                             {/* <Icon className="shortListIcon" key={uuidV4()}>{iconsArrOfObjects.map(i => {
                                 if (transaction.name.toLowerCase() === i.title) {
@@ -203,7 +205,7 @@ export default function TransactionsList() {
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
-
+                </Box>
                 <div className="pieChart">
                     <PieChart data={data}></PieChart>
                     {/* пазим за друга статистика този*/}

@@ -11,7 +11,8 @@ export const theme = createTheme({
             contrastText: '#13b977',
           },
         success:{
-            main: '#13b977'
+            main: '#13b977',
+            dark: '#13b977',
         }, 
         info: {
             main: '#13b977',
