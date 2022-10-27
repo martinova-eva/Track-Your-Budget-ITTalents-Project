@@ -170,6 +170,7 @@ export let accountManager = (function(){
                                     })
                             localStorage.setItem('savings', JSON.stringify(allSavingsAccounts));
                             a.balance = (Number(a.balance) + ((Number(transaction.amount) - Number(savingsIncome))));
+                            transaction.amount = (Number(transaction.amount) - Number(savingsIncome));
                             a.transactions.push(transaction);
                         }else{
                             a.balance = Number(a.balance) + Number(transaction.amount);
