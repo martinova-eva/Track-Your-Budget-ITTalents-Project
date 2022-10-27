@@ -182,8 +182,7 @@ export default function CreateCheckingAccount({ handleClose }) {
 
    return (
       <Grid className="wrapper">
-         <Paper elevation={20} className="paperStyle">
-            <div className="closeIconContainer"><CloseIcon className="closeIcon" onClose={handleClose} /></div>
+         <div className="paperStyle">
             <Avatar className="fieldStyle" src='../assets/10491-logo-wallet.png' />
             <div id="formHeading">
                <Typography variant="h5" gutterBottom>
@@ -210,7 +209,8 @@ export default function CreateCheckingAccount({ handleClose }) {
                   Create new account
                   </Button>
             </form>
-         </Paper>
+         
+         </div>
       </Grid>
    )
 }

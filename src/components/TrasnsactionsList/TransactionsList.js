@@ -22,7 +22,10 @@ export default function TransactionsList() {
    // const accountBalance = accountManager.checkAccountBalance(AccountId, owner.username);
     const accounts = accountManager.getAllAccounts();
     let accountName ='';
+    let accountBalance = 0;
     let transactions = [];
+    //let balance = (accountManager.checkAccountBalance(AccountId, owner.username)).toFixed(2);
+    console.log('balance:' , (accountManager.checkAccountBalance(AccountId, owner.username)))
     let accountCurrency = "";
     accounts.map(a => {
         if(a.id === AccountId){
@@ -33,6 +36,11 @@ export default function TransactionsList() {
     accounts.map(a => {
         if(a.id === AccountId){
            return accountName = a.name;
+        }
+    });
+    accounts.map(a => {
+        if(a.id === AccountId){
+           return accountBalance = a.balance;
         }
     });
      //тази функция сортира, но не ги принтира на ново!
@@ -134,7 +142,7 @@ export default function TransactionsList() {
             
             <ListGroup>
             <Typography className="transactionsHeader" variant="h6">
-                List of transactions for {accountName}. Balance: {(accountManager.checkAccountBalance(AccountId, owner.username)).toFixed(2)}{accountCurrency}
+                List of transactions for {accountName}. Balance: {accountBalance}{accountCurrency}
             </Typography>
 
             {transactions.map(transaction => (
