@@ -155,6 +155,22 @@ export let accountManager = (function(){
             })
             return statisticData;
         }
+        showStatisticsByDateRange(accountId, range){
+            let allAccounts = this.getAllAccounts();
+            let statisticData = [];
+            allAccounts.map(a => {
+                if(a.id === accountId){
+                    a.transactions.map(tr => {
+                        console.log(range)
+                        // if(tr.date === range[0] || tr.date === range[1]){
+                        //         statisticData.push(tr)
+                        // }
+                        
+                    })
+                }
+            })
+            return statisticData;
+        }
         addAccount(id, nameOfAccount, owner, transactions, currency, balance) {
             let accounts = this.getAllAccounts();
             let newAccount = new Account(id, nameOfAccount, owner, transactions, currency, balance)

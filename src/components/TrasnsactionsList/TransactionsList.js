@@ -24,6 +24,7 @@ Chart.register(ArcElement);
 
 export default function TransactionsList() {
     const [typeOfTransaction, setTypeOfTransaction] = useState('');
+    const [range, setRange] = useState();
     const params = useParams();
     const AccountId = params.id;
     const owner = useSelector(state => state.activeUser);
@@ -155,7 +156,15 @@ export default function TransactionsList() {
                     {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
                 </SelectElement>
 
-                <DateRangePicker size="lg"  style={stylesDatePicker}/>
+                <DateRangePicker size="lg"  style={stylesDatePicker}
+                    value= {range}
+                    onChange={(e) => {
+                        //тук ще налее сортирани по дата
+                        transactions = [...accountManager.showStatisticsByDateRange(AccountId, e)];
+                    }}
+                    placeholder="Select Date Range"
+                    format="dd-MM-yyyy"
+                />
                 <Button type="button" variant="contained" size="large" id="incomes-btn">Clear filters</Button>
             </Box>
 
