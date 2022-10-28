@@ -78,7 +78,6 @@ export default function ShortTransactionsList({ id }) {
         }
     })
 
-    console.log(accountCurrency);
     return (
         <ListGroup className="shortList" id={id}>
             {transactions.map(transaction => (

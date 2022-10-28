@@ -4,11 +4,12 @@ import "./accountForm.css";
 import DropDownOptions from "./dropDownOptions";
 import CloseIcon from '@mui/icons-material/Close';
 import { iconsArrOfObjects } from '../../components/categoryCreator/icons';
-import { useState } from "react";
-import { create } from "../../store/checkingAccountSlice";
+import { useState, useEffect } from "react";
+import { create, udateAccountCreationStatus } from "../../store/checkingAccountSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createSavingsAccount } from "../../store/SavingsAccountSlice";
+
 import { userManager } from "../../server/userManager/userManager";
 import { accountManager } from "../../server/accountManager/accountManager";
 
@@ -25,14 +26,26 @@ export default function CreateCheckingAccount({ handleClose }) {
    const dispatch = useDispatch();
 
    const user = useSelector(state => state.activeUser);
+   const checkingAccount = useSelector(state => state.createCheckingAccount)
    const owner = user.username;
+   const accountCreated = checkingAccount.accountCreated;
+   console.log(accountCreated);
+
+   useEffect(()=>{
+
+      return () => {
+         dispatch(udateAccountCreationStatus())
+      }
+   },[])
    
+   // if(accountCreated){
+   //    setCreatedMessage('You created new account'); 
+   //  }
    
    const handleDispatch = ()=> {
       if(type === "checking"){
          dispatch(create({owner, accountName, currency, accountStartAmount}))
-         navigate('/home');
-            
+        // navigate('/home');
          setAccountName('');
          setCurrency('');
          setAccountStartAmount('');
@@ -87,6 +100,7 @@ export default function CreateCheckingAccount({ handleClose }) {
             id="outlined-required"
             label="Account Name"
             placeholder="Enter name for your account"
+            value={accountName}
             onChange={(e)=> setAccountName(e.target.value)}
             />
          <DropDownOptions
@@ -187,7 +201,8 @@ export default function CreateCheckingAccount({ handleClose }) {
             <div id="formHeading">
                <Typography variant="h5" gutterBottom>
                   Create new money account
-               </Typography></div>
+               </Typography> 
+            </div>
             <form className="formStyle">
                <DropDownOptions
                   required
@@ -208,6 +223,11 @@ export default function CreateCheckingAccount({ handleClose }) {
                  >
                   Create new account
                   </Button>
+                 
+                <Typography className="accountMessage" variant="h5" gutterBottom>
+              {accountCreated ? 'You created new account' : null}
+                </Typography>  
+
             </form>
          
          </div>
