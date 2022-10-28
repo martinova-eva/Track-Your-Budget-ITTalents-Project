@@ -156,7 +156,7 @@ export default function TransactionsList() {
                 </SelectElement>
 
                 {/* <DateRangePicker size="lg"  style={stylesDatePicker}/> */}
-                <Button type="submit" variant="contained" size="large" id="incomes-btn">Clear filters</Button>
+                <Button type="button" variant="contained" size="large" id="incomes-btn">Clear filters</Button>
             </Box>
 
 
@@ -176,6 +176,7 @@ export default function TransactionsList() {
                     <Typography className="transactionsHeader" variant="h8">
                         Balance: {(accountManager.checkAccountBalance(AccountId, owner.username)).toFixed(2)}{accountCurrency}
                     </Typography>
+                    <Box className="listWrapper">
                     {transactions.map(transaction => (
                         
                         <ListGroup.Item key={transaction.id} className="transactionListWrapper">
@@ -204,6 +205,7 @@ export default function TransactionsList() {
                             </div>
                         </ListGroup.Item>
                     ))}
+                    </Box>
                 </ListGroup>
                 </Box>
                 <div className="pieChart">

@@ -282,14 +282,32 @@ export let accountManager = (function(){
                       c.tag = i.tag;
                     }
                   });
+                  let isExist = false;
+                  possibleIncomeArr.map(e => {
+                    if(e.id === c.id){
+                        isExist = true;
+                    }
+                  })
+                  if(!isExist){
                     possibleIncomeArr.push(c);
+                  }
+                    
                 } else {
                    iconsArrOfObjects.map(i => {
                     if(i.title === c.tag){
                       c.tag = i.tag;
                     }
                   });
+                  let isExist = false;
+                  possibleOutcomeArr.map(e => {
+                    if(e.id === c.id){
+                        isExist = true;
+                    }
+                  })
+                  if(!isExist){
                     possibleOutcomeArr.push(c);
+                  }
+                    
                 }
               })
         }
