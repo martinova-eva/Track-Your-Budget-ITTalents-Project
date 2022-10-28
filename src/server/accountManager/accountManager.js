@@ -1,5 +1,8 @@
 import { ConstructionRounded } from '@mui/icons-material';
 import { v4 as uuidV4 } from 'uuid';
+import { iconsArrOfObjects } from '../../components/categoryCreator/icons';
+import { possibleIncomeArr } from '../../components/categoryCreator/listOfAllIncomes';
+import { possibleOutcomeArr } from '../../components/categoryCreator/listOfAllOutcomes';
 
 export let accountManager = (function(){
     class Account{
@@ -272,7 +275,23 @@ export let accountManager = (function(){
                     customCategories.push(c);
                 }
             })
-            return customCategories;
+            customCategories.map(c => {
+                if (c.type === "income") {
+                  iconsArrOfObjects.map(i => {
+                    if(i.title === c.tag){
+                      c.tag = i.tag;
+                    }
+                  });
+                    possibleIncomeArr.push(c);
+                } else {
+                   iconsArrOfObjects.map(i => {
+                    if(i.title === c.tag){
+                      c.tag = i.tag;
+                    }
+                  });
+                    possibleOutcomeArr.push(c);
+                }
+              })
         }
         getAccountCurrency(accountId){
             let accounts = this.getAllAccounts()
