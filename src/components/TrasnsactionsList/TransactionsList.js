@@ -155,10 +155,6 @@ export default function TransactionsList() {
                     {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
                 </SelectElement>
 
-<<<<<<< HEAD
-                <DateRangePicker size="lg"  style={stylesDatePicker}/>
-                <Button variant="contained" size="large" id="incomes-btn">Clear filters</Button>
-=======
                 <DateRangePicker size="lg"  style={stylesDatePicker}/>
                 <Button type="button" variant="contained" size="large" id="incomes-btn">Clear filters</Button>
             </Box>
@@ -201,6 +197,9 @@ export default function TransactionsList() {
                                     {transaction.type === 'income' ? "+ " : "- "}
                                     {transaction.amount}{accountCurrency}
                                 </Typography>
+                                <Typography variant="subtitle2">
+                            {transaction.description}
+                        </Typography>
                                 <IconButton aria-label="delete" size="small" onClick={() => {
                                     accountManager.removeTransaction(transaction.id, AccountId);
                                 }}>

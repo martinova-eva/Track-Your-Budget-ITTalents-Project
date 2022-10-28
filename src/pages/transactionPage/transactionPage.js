@@ -28,7 +28,7 @@ export default function TransactionPage() {
   accountManager.checkForUserCustomCategories(owner.username);
 
   const handleCreateNewTransaction = () => {
-    if (selectedAccount && typeOfTransaction && categoryName && date && amount) {
+    if (selectedAccount && typeOfTransaction && categoryName && date && (amount > 0)) {
       console.log(selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, amount, description);
       
       let accountBalance = accountManager.checkAccountBalance(selectedAccount, owner.username);
