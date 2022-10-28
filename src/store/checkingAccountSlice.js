@@ -8,6 +8,7 @@ const initialState = {
   currency: '',
   accountStartAmount: '',
   transactions: [],
+  accountCreated: false,
 }
 
 
@@ -22,14 +23,17 @@ export const checkingAccountSlice = createSlice({
       state.currency = action.payload.currency;
       state.accountStartAmount = action.payload.accountStartAmount;
       if (state.accountName && state.currency && state.accountStartAmount) {
-        accountManager.addAccount(state.owner, state.accountName, state.currency, state.accountStartAmount)
+        accountManager.addAccount(state.owner, state.accountName, state.currency, state.accountStartAmount);
+        state.accountCreated = true;
       }
+    },
+    udateAccountCreationStatus: (state) => {
+      state.accountCreated = false;
     }
   },
-
 })
 
 // Action creators are generated for each case reducer function
-export const { create } = checkingAccountSlice.actions
+export const { create, udateAccountCreationStatus } = checkingAccountSlice.actions
 
 export default checkingAccountSlice.reducer

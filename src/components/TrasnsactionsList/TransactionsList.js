@@ -155,6 +155,10 @@ export default function TransactionsList() {
                     {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
                 </SelectElement>
 
+<<<<<<< HEAD
+                <DateRangePicker size="lg"  style={stylesDatePicker}/>
+                <Button variant="contained" size="large" id="incomes-btn">Clear filters</Button>
+=======
                 <DateRangePicker size="lg"  style={stylesDatePicker}/>
                 <Button type="button" variant="contained" size="large" id="incomes-btn">Clear filters</Button>
             </Box>
