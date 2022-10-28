@@ -67,17 +67,28 @@ export default function CreateCheckingAccount({ handleClose }) {
       },
 
    ];
-   const accountTypes = [
-      {
-         value: 'checking',
-         label: 'checking',
-      },
-      {
-         value: 'savings',
-         label: 'savings',
-      },
-   ];
-  
+   let accountTypes;
+   const isExistSavingsAccount = accountManager.checkForSavingsAccount(owner);
+   if(!isExistSavingsAccount){
+      accountTypes = [
+         {
+            value: 'checking',
+            label: 'checking',
+         },
+         {
+            value: 'savings',
+            label: 'savings',
+         },
+      ];
+   }else{
+      accountTypes = [
+         {
+            value: 'checking',
+            label: 'checking',
+         },
+      ];
+   }
+   
    let form;
    if (type === "savings") {
       form = <div className="formStyle">

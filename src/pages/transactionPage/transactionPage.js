@@ -19,6 +19,8 @@ export default function TransactionPage() {
   const [date, setDate] = useState(new Date());
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState(0);
+  let helperText = "";
+  let error = false;
 
   const owner = useSelector(state => state.activeUser);
   const accounts = accountManager.getAllUserAccounts(owner.username); 
@@ -28,9 +30,11 @@ export default function TransactionPage() {
   const handleCreateNewTransaction = () => {
     if (selectedAccount && typeOfTransaction && categoryName && date && amount) {
       console.log(selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, amount, description);
-
+      
       let accountBalance = accountManager.checkAccountBalance(selectedAccount, owner.username);
           if (accountBalance >= Number(amount) && typeOfTransaction === 'outcome') {
+            helperText = "";
+            error = false;
             accountManager.addTransaction(categoryName, `${date.$M + 1}.${date.$D}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
             navigate('/home');
             setSelectedAccount('');
@@ -42,6 +46,8 @@ export default function TransactionPage() {
             setAmount('');
 
           }else if(typeOfTransaction === 'income'){
+            helperText = "";
+            error = false;
             accountManager.addTransaction(categoryName, `${date.$M + 1}.${date.$D}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
             navigate('/home');
             setSelectedAccount('');
@@ -52,10 +58,14 @@ export default function TransactionPage() {
             setIconTitle('');
             setAmount('');
           } else {
+            helperText = "ooooppsss you don`t have enough money in this account";
+            error = true;
             alert('ooooppsss you don`t have enough money in this account');
           }
 
     } else {
+      helperText = "ooooppsss we can`t create new transactions";
+      error = true;
       alert('ooooppsss we can`t create new transactions');
     }
   }
@@ -111,6 +121,8 @@ export default function TransactionPage() {
             required
             fullWidth
             label="enter amount"
+            error={error}
+            helperText={helperText}
             value={amount}
             onChange={e => {
               setAmount(e.target.value)

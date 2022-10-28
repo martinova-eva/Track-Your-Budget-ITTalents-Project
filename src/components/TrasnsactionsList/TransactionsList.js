@@ -155,7 +155,7 @@ export default function TransactionsList() {
                     {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
                 </SelectElement>
 
-                {/* <DateRangePicker size="lg"  style={stylesDatePicker}/> */}
+                <DateRangePicker size="lg"  style={stylesDatePicker}/>
                 <Button type="button" variant="contained" size="large" id="incomes-btn">Clear filters</Button>
             </Box>
 
@@ -174,7 +174,7 @@ export default function TransactionsList() {
                         List of transactions for {accountName}.
                     </Typography>
                     <Typography className="transactionsHeader" variant="h8">
-                        Balance: {(accountManager.checkAccountBalance(AccountId, owner.username)).toFixed(2)}{accountCurrency}
+                        Balance: {(accountManager.checkAccountBalance(AccountId, owner.username))}{accountCurrency}
                     </Typography>
                     <Box className="listWrapper">
                     {transactions.map(transaction => (
