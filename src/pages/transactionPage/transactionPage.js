@@ -8,7 +8,7 @@ import BasicDatePicker from '../../components/CheckingAccountForm/datePicker';
 import { useNavigate } from 'react-router-dom';
 import { accountManager } from '../../server/accountManager/accountManager';
 import { useSelector } from 'react-redux';
-import getTheIcon from '../../components/categoryCreator/icons';
+import getTheIcon, { iconsArrOfObjects } from '../../components/categoryCreator/icons';
 
 export default function TransactionPage() {
   const navigate = useNavigate();
@@ -23,18 +23,7 @@ export default function TransactionPage() {
   const owner = useSelector(state => state.activeUser);
   const accounts = accountManager.getAllUserAccounts(owner.username); 
   
-  let customCategories = accountManager.checkForUserCustomCategories(owner.username);
-  customCategories.map(c => {
-    if (c.type === "income") {
-      // let tag = getTheIcon(c.tag);
-      // c.tag = tag;
-      possibleIncomeArr.push(c);
-    } else {
-      let tag = getTheIcon(c.tag);
-      // c.tag = tag;
-       possibleOutcomeArr.push(c);
-    }
-  })
+  accountManager.checkForUserCustomCategories(owner.username);
 
   const handleCreateNewTransaction = () => {
     if (selectedAccount && typeOfTransaction && categoryName && date && amount) {

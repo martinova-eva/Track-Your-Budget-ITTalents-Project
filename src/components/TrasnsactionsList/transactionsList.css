@@ -6,7 +6,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    
+    margin:  0 2vw;
 }
 .transactionList{
     display: flex;
@@ -17,6 +17,9 @@
 }
 .transactionListTitles{
     width: 15vw;
+}
+.listWrapper{
+    margin:  2vh 0;
 }
 .category{
     display: flex;
@@ -65,5 +68,27 @@
     
 }
 .pieChart{
-    width: 20rem;
+    height: 25rem;
+}
+.shortListIcon{
+    height: 2rem;
+}
+.expensesShortList{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    text-align: left;
+    height: 3rem;
+    background-color: rgba(250,160,160, 0.15)
+    
+
+}
+.incomesShortList{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    text-align: left;
+    height: 3rem;
+    background-color: rgb(178,224,184,0.15) 
+
 }

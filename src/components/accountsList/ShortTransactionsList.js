@@ -77,7 +77,13 @@ export default function ShortTransactionsList({ id }) {
             return a.currency
         }
     })
-
+    transactions.map(tr => {
+        let date;
+        let arrOfDate = tr.date.split('.');
+        date = arrOfDate[1] + "." + arrOfDate[0] + '.' + arrOfDate[2];
+        tr.date = date;
+    })
+    console.log(accountCurrency);
     return (
         <ListGroup className="shortList" id={id}>
             {transactions.map(transaction => (
