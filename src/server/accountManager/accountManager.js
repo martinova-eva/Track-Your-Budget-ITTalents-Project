@@ -1,4 +1,5 @@
 import { ConstructionRounded } from '@mui/icons-material';
+import moment from 'moment/moment';
 import { v4 as uuidV4 } from 'uuid';
 import { iconsArrOfObjects } from '../../components/categoryCreator/icons';
 import { possibleIncomeArr } from '../../components/categoryCreator/listOfAllIncomes';
@@ -161,15 +162,15 @@ export let accountManager = (function(){
             allAccounts.map(a => {
                 if(a.id === accountId){
                     a.transactions.map(tr => {
-                        //console.log(range)
-                       // console.log(range[0])
-                        // if(tr.date === range[0] || tr.date === range[1]){
-                        //         statisticData.push(tr)
-                        // }
-                        
+                        let isBetween = moment(tr.date).isBetween(new Date(range[0]), new Date(range[1]),  'days', "[]");
+                        if(isBetween){
+                            statisticData.push(tr);
+                            console.log(tr);
+                        }
                     })
                 }
             })
+            console.log(statisticData);
             return statisticData;
         }
         addAccount(id, nameOfAccount, owner, transactions, currency, balance) {
