@@ -161,7 +161,8 @@ export let accountManager = (function(){
             allAccounts.map(a => {
                 if(a.id === accountId){
                     a.transactions.map(tr => {
-                        console.log(range)
+                        //console.log(range)
+                       // console.log(range[0])
                         // if(tr.date === range[0] || tr.date === range[1]){
                         //         statisticData.push(tr)
                         // }

@@ -1,7 +1,7 @@
 import './transactionPage.css';
 import React, { useState } from "react";
 import SelectElement from '../../components/selectElementForCategories/selectElement';
-import { Button, Box, Avatar, TextField, MenuItem } from '@mui/material';
+import { Button, Box, Avatar, TextField, MenuItem, Alert, AlertTitle } from '@mui/material';
 import { possibleIncomeArr } from '../../components/categoryCreator/listOfAllIncomes';
 import { possibleOutcomeArr } from '../../components/categoryCreator/listOfAllOutcomes'
 import BasicDatePicker from '../../components/CheckingAccountForm/datePicker';
@@ -19,8 +19,8 @@ export default function TransactionPage() {
   const [date, setDate] = useState(new Date());
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState(0);
-  let helperText = "";
-  let error = false;
+  const [missingData, setMissingData] = useState(false);
+  const [balance, setBalance] = useState(false);
 
   const owner = useSelector(state => state.activeUser);
   const accounts = accountManager.getAllUserAccounts(owner.username); 
@@ -29,12 +29,12 @@ export default function TransactionPage() {
 
   const handleCreateNewTransaction = () => {
     if (selectedAccount && typeOfTransaction && categoryName && date && (amount > 0)) {
-      console.log(selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, amount, description);
+     // console.log(selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, amount, description);
       
       let accountBalance = accountManager.checkAccountBalance(selectedAccount, owner.username);
           if (accountBalance >= Number(amount) && typeOfTransaction === 'outcome') {
-            helperText = "";
-            error = false;
+            setMissingData(false)
+            setBalance(false);
             accountManager.addTransaction(categoryName, `${date.$M + 1}.${date.$D}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
             navigate('/home');
             setSelectedAccount('');
@@ -46,8 +46,8 @@ export default function TransactionPage() {
             setAmount('');
 
           }else if(typeOfTransaction === 'income'){
-            helperText = "";
-            error = false;
+            setMissingData(false)
+            setBalance(false);
             accountManager.addTransaction(categoryName, `${date.$M + 1}.${date.$D}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
             navigate('/home');
             setSelectedAccount('');
@@ -58,20 +58,23 @@ export default function TransactionPage() {
             setIconTitle('');
             setAmount('');
           } else {
-            helperText = "ooooppsss you don`t have enough money in this account";
-            error = true;
-            alert('ooooppsss you don`t have enough money in this account');
+            setMissingData(false)
+            setBalance(true);
+           // alert('ooooppsss you don`t have enough money in this account');
           }
 
     } else {
-      helperText = "ooooppsss we can`t create new transactions";
-      error = true;
-      alert('ooooppsss we can`t create new transactions');
+      setMissingData(true)
+      setBalance(false);
+     // alert('ooooppsss we can`t create new transactions');
     }
   }
   return (
     <div className='wrapper-select-elements'>
       <Box sx={{ borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column' }}>
+
+      {missingData ? <Alert variant="outlined" severity="warning"> Missing data!</Alert> : null}
+      {balance ? <Alert variant="outlined" severity="warning"> You don`t have enough money in this account!</Alert> : null}
 
         <Avatar className="fieldStyle" alt="logo" src="..\assets\10491-logo-wallet.png" size="lg" />
         <h2>Add a transaction</h2>
@@ -121,8 +124,6 @@ export default function TransactionPage() {
             required
             fullWidth
             label="enter amount"
-            error={error}
-            helperText={helperText}
             value={amount}
             onChange={e => {
               setAmount(e.target.value)
@@ -136,6 +137,7 @@ export default function TransactionPage() {
             value={description}
             onChange={e => setDescription(e.target.value)}
           />
+          
           <Button type="button" onClick={handleCreateNewTransaction}>Add transaction</Button>
         </form>
       </Box>

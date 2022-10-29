@@ -159,7 +159,8 @@ export default function TransactionsList() {
                 <DateRangePicker size="lg"  style={stylesDatePicker}
                     value= {range}
                     onChange={(e) => {
-                        //тук ще налее сортирани по дата
+                        //тук ще налее сортирани по дата //`${date.$M + 1}.${date.$D}.${date.$y}`
+                       // console.log(e[0])
                         transactions = [...accountManager.showStatisticsByDateRange(AccountId, e)];
                     }}
                     placeholder="Select Date Range"
@@ -170,11 +171,6 @@ export default function TransactionsList() {
 
 
             <Modal show={show} onHide={handleClose}>
-                {/* <Box sx={{ borderColor: 'paper', boxShadow: 20, display: "flex", flexDirection: 'column' }}>
-                    <Modal.Header closeButton>
-                    </Modal.Header>
-                    <Modal.Body>   </Modal.Body>
-                </Box> */}
             </Modal>
             <div className="listandChart">
             <Box sx={{ borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column' }}>
@@ -189,11 +185,11 @@ export default function TransactionsList() {
                     {transactions.map(transaction => (
                         
                         <ListGroup.Item key={transaction.id} className="transactionListWrapper">
-                            {/* <Icon className="shortListIcon" key={uuidV4()}>{iconsArrOfObjects.map(i => {
+                            <Icon className="shortListIcon" key={uuidV4()}>{iconsArrOfObjects.map(i => {
                                 if (transaction.name.toLowerCase() === i.title) {
                                     return i.tag;
                                 }
-                            })} </Icon> */}
+                            })} </Icon>
                             <Typography variant="subtitle2" className="transactionListTitles">
                                 {transaction.name}
                             </Typography>

@@ -8,6 +8,7 @@
     align-items: center;
     margin:  0 2vw;
 }
+
 .transactionList{
     display: flex;
     justify-content:space-between;
@@ -73,6 +74,7 @@
 .shortListIcon{
     height: 2rem;
 }
+
 .expensesShortList{
     display: flex;
     flex-direction: row;
@@ -92,3 +94,4 @@
     background-color: rgb(178,224,184,0.15) 
 
 }
+
