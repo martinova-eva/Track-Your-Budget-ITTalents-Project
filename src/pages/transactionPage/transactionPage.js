@@ -30,8 +30,6 @@ export default function TransactionPage() {
 
   const handleCreateNewTransaction = () => {
     if (selectedAccount && typeOfTransaction && categoryName && date && (amount > 0)) {
-      // console.log(selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, amount, description);
-
       let accountBalance = accountManager.checkAccountBalance(selectedAccount, owner.username);
       if (accountBalance >= Number(amount) && typeOfTransaction === 'outcome') {
         setMissingData(false)
@@ -61,15 +59,11 @@ export default function TransactionPage() {
       } else {
         setMissingData(false)
         setBalance(true);
-        // alert('ooooppsss you don`t have enough money in this account');
       }
-
     } else {
-      setMissingData(true)
+      setMissingData(true);
       setBalance(false);
-      // alert('ooooppsss we can`t create new transactions');
     }
-
   }
   return (
     <div className='wrapper-select-elements'>
