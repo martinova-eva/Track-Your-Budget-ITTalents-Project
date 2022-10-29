@@ -8,6 +8,7 @@
     align-items: center;
     margin:  0 2vw;
 }
+
 .transactionList{
     display: flex;
     justify-content:space-between;
@@ -70,6 +71,18 @@
 }
 .pieChart{
     height: 25rem;
+}
+.shortListIcon{
+    height: 2rem;
+}
+
+.expensesShortList{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    text-align: left;
+    height: 3rem;
+    background-color: rgba(250,160,160, 0.15)
 }
 
 .incomesShortList{

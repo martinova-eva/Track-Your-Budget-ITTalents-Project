@@ -1,7 +1,7 @@
 import './transactionPage.css';
 import React, { useState } from "react";
 import SelectElement from '../../components/selectElementForCategories/selectElement';
-import { Button, Box, Avatar, TextField, MenuItem } from '@mui/material';
+import { Button, Box, Avatar, TextField, MenuItem, Alert, IconButton } from '@mui/material';
 import { possibleIncomeArr } from '../../components/categoryCreator/listOfAllIncomes';
 import { possibleOutcomeArr } from '../../components/categoryCreator/listOfAllOutcomes'
 import BasicDatePicker from '../../components/CheckingAccountForm/datePicker';
@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { accountManager } from '../../server/accountManager/accountManager';
 import { useSelector } from 'react-redux';
 import getTheIcon, { iconsArrOfObjects } from '../../components/categoryCreator/icons';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 
@@ -21,60 +22,56 @@ export default function TransactionPage() {
   const [date, setDate] = useState(new Date());
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState(0);
-  let helperText = "";
-  let error = false;
+  const [missingData, setMissingData] = useState(false);
+  const [balance, setBalance] = useState(false);
 
   const owner = useSelector(state => state.activeUser);
-  const accounts = accountManager.getAllUserAccounts(owner.username); 
-  
+  const accounts = accountManager.getAllUserAccounts(owner.username);
+
   accountManager.checkForUserCustomCategories(owner.username);
 
   const handleCreateNewTransaction = () => {
-    if (selectedAccount && typeOfTransaction && categoryName && date && amount) {
-      console.log(selectedAccount, typeOfTransaction, categoryName, `${date.$D}.${date.$M + 1}.${date.$y}`, amount, description);
-      
+    if (selectedAccount && typeOfTransaction && categoryName && date && (amount > 0)) {
       let accountBalance = accountManager.checkAccountBalance(selectedAccount, owner.username);
-          if (accountBalance >= Number(amount) && typeOfTransaction === 'outcome') {
-            helperText = "";
-            error = false;
-            accountManager.addTransaction(categoryName, `${date.$M + 1}.${date.$D}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
-            navigate('/home');
-            setSelectedAccount('');
-            setTypeOfTransaction('');
-            setCategoryName('');
-            setDate(new Date());
-            setDescription('');
-            setIconTitle('');
-            setAmount('');
+      if (accountBalance >= Number(amount) && typeOfTransaction === 'outcome') {
+        setMissingData(false)
+        setBalance(false);
+        accountManager.addTransaction(categoryName, `${date.$M + 1}.${date.$D}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
+        navigate('/add-transaction');
+        setSelectedAccount('');
+        setTypeOfTransaction('');
+        setCategoryName('');
+        setDate(new Date());
+        setDescription('');
+        setIconTitle('');
+        setAmount('');
 
-          }else if(typeOfTransaction === 'income'){
-            helperText = "";
-            error = false;
-            accountManager.addTransaction(categoryName, `${date.$M + 1}.${date.$D}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
-            navigate('/home');
-            setSelectedAccount('');
-            setTypeOfTransaction('');
-            setCategoryName('');
-            setDate(new Date());
-            setDescription('');
-            setIconTitle('');
-            setAmount('');
-          } else {
-            helperText = "ooooppsss you don`t have enough money in this account";
-            error = true;
-            alert('ooooppsss you don`t have enough money in this account');
-          }
-
+      } else if (typeOfTransaction === 'income') {
+        setMissingData(false)
+        setBalance(false);
+        accountManager.addTransaction(categoryName, `${date.$M + 1}.${date.$D}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
+        navigate('/add-transaction');
+        setSelectedAccount('');
+        setTypeOfTransaction('');
+        setCategoryName('');
+        setDate(new Date());
+        setDescription('');
+        setIconTitle('');
+        setAmount('');
+      } else {
+        setMissingData(false)
+        setBalance(true);
+      }
     } else {
-      helperText = "ooooppsss we can`t create new transactions";
-      error = true;
-      alert('ooooppsss we can`t create new transactions');
+      setMissingData(true);
+      setBalance(false);
     }
   }
   return (
     <div className='wrapper-select-elements'>
-      <Box sx={{ borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column' }}>
 
+      <Box sx={{ borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column' }}>
+       
         <Avatar className="fieldStyle" alt="logo" src="..\assets\10491-logo-wallet.png" size="lg" />
         <h2>Add a transaction</h2>
         <form className="transactionsInputs">
@@ -123,8 +120,6 @@ export default function TransactionPage() {
             required
             fullWidth
             label="enter amount"
-            error={error}
-            helperText={helperText}
             value={amount}
             onChange={e => {
               setAmount(e.target.value)
@@ -138,9 +133,48 @@ export default function TransactionPage() {
             value={description}
             onChange={e => setDescription(e.target.value)}
           />
+              {missingData ? <Alert
+                      variant="outlined" severity="error"
+                      action={
+                        <IconButton
+                          aria-label="close"
+                          color="inherit"
+                          size="small"
+                          onClick={() => {
+                            setMissingData(false);
+                          }}
+                        >
+                          <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                      }
+                      sx={{ mb: 2 }}
+                    >
+                      Missing data!
+                    </Alert>
+                      : null}
+              {balance ? <Alert
+                variant="outlined" severity="error"
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setBalance(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                sx={{ mb: 2 }}
+              >
+                You don`t have enough money in this account!!
+              </Alert> : null}
           <Button type="button" onClick={handleCreateNewTransaction}>Add transaction</Button>
+          
         </form>
       </Box>
+     
     </div>
   )
 }

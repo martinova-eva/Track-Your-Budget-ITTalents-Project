@@ -12,6 +12,7 @@ import AccountsList from './components/accountsList/AcountsList';
 import DemoPage from './pages/demoPage/demoPage';
 import { useSelector } from 'react-redux';
 import { render } from '@testing-library/react';
+import ErrorPage from './pages/errorPage/errorPage';
 
 export default function App() {
 
@@ -67,7 +68,7 @@ export default function App() {
         </>} />
         
         <Route path="*" element={<>
-        <h1>ooooopppppsss 404!</h1>
+        <ErrorPage></ErrorPage>
         </>} />
       </Routes>
     </div>
