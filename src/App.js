@@ -38,7 +38,6 @@ export default function App() {
         <Route path="/home" element={<>
         
           <Navigation/>
-        <Target/>
         <AccountsList/>
         </>} />
 
