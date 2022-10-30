@@ -213,7 +213,7 @@ export let accountManager = (function(){
             accounts.splice(index,1)
             localStorage.setItem('accounts', JSON.stringify(accounts));
         }
-        transferFunds(transferId, recipientId){
+        transferAllFunds(transferId, recipientId){
             let accounts = this.getAllAccounts();
             if(transferId !== recipientId){
                 let nameOfTransferAccount;
@@ -242,6 +242,53 @@ export let accountManager = (function(){
                             }
 
                         a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, new Date(), transferAmount), "", recipientId)
+                        }
+                    })
+                }
+            }
+           localStorage.setItem('accounts', JSON.stringify(accounts)); 
+        }
+        ordinaryTransfer(transferId, recipientId, amount){
+            let accounts = this.getAllAccounts();
+            let status = false;
+            if(transferId !== recipientId){
+                let nameOfTransferAccount;
+                //name, date, type, amount, description = '', title, accountsId
+                let transferCurrency;
+                accounts.map(a => {
+                    if(a.id === transferId){
+                        nameOfTransferAccount = a.name;
+                        if(Number(a.balance) > amount){
+                            a.balance = Number(a.balance) - amount;
+                            transferCurrency = a.currency;
+                            a.transactions.push(new Transaction(`Money transfer to another account`, 
+                                                                    new Date(), 
+                                                                    'outcome', 
+                                                                    amount, 
+                                                                    '',
+                                                                    '', 
+                                                                    a.id));
+                            status = true;
+                        }
+                        
+                    }
+                })
+                if(status > 0){
+                    accounts.map(a => {
+                        if(a.id === recipientId){
+                            if(transferCurrency === "BGN" && ( a.currency === "USD"|| a.currency === "EUR")){ 
+                                amount *= 0.51;
+                            }else if(transferCurrency === "USD" && a.currency === "BGN"){ 
+                                amount *= 1.94;
+                            }else if(transferCurrency === "USD" && a.currency === "EUR"){ 
+                                amount *= 0.99;
+                            }else if(transferCurrency === "EUR" && a.currency === "BGN"){ 
+                                amount *= 1.96;
+                            }else if(transferCurrency === "EUR" && a.currency === "USD"){ 
+                                amount *= 1.01;
+                            }
+                        a.balance = Number(a.balance) + amount;   
+                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, new Date(), "income", amount, "", recipientId))
                         }
                     })
                 }
