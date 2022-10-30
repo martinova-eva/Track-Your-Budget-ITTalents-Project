@@ -35,7 +35,6 @@
     font-weight: 500;
 }
 .sortWrapper{
-    width: 60%;
     display: flex;
     gap: 3rem;
     align-items: center;
@@ -47,15 +46,23 @@
     min-width: 15vw;
     max-width: 20vw;
 }
-#date-btn{
+#delete-account-btn{
     color:#13b977;
     background-color:white;
     min-width: 15vw;
     max-width: 20vw;
 }
-#incomes-btn{
+#clear-filters-btn{
     color:#13b977;
     background-color:white;
+    min-width: 15vw;
+    max-width: 20vw;
+}
+#date-range-picker{
+    min-width: 15vw;
+    max-width: 20vw;
+}
+#date-range-picker:hover{
     min-width: 15vw;
     max-width: 20vw;
 }
@@ -74,7 +81,6 @@
 .shortListIcon{
     height: 2rem;
 }
-
 .expensesShortList{
     display: flex;
     flex-direction: row;

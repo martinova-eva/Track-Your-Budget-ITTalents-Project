@@ -156,7 +156,7 @@ export default function TransactionsList() {
                     {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
                 </SelectElement>
 
-                <DateRangePicker size="lg"  style={stylesDatePicker}
+                <DateRangePicker size="lg" id="date-range-picker" 
                     value= {range}
                     onChange={(e) => {
                         transactions = [...accountManager.showStatisticsByDateRange(AccountId, e)];
@@ -165,7 +165,8 @@ export default function TransactionsList() {
                     placeholder="Select Date Range"
                     format="dd-MM-yyyy"
                 />
-                <Button type="button" variant="contained" size="large" id="incomes-btn">Clear filters</Button>
+                <Button type="button" variant="contained" size="large" id="clear-filters-btn">Clear filters</Button>
+                <Button type="button" variant="contained" size="large" id="delete-account-btn">Delete account</Button>
             </Box>
 
 
