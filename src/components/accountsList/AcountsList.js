@@ -18,6 +18,7 @@ import { Modal } from 'react-bootstrap';
 import { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DropDownOptions from '../CheckingAccountForm/dropDownOptions';
+import Target from '../target/target';
 
 
 const style = {
@@ -45,6 +46,7 @@ export default function AccountsList() {
   
 const accounts = accountManager.getAllUserAccounts(owner.username);
 const savingsAccounts = accountManager.getAllSavingsAccounts(owner.username);
+const savingsAccount = accountManager.checkForSavingsAccount(owner.username);
 const deleteAccount=()=>{
   accountManager.removeSavingsAccount((savingsAccounts[0].id));
   navigate('/home');
@@ -55,7 +57,8 @@ const deleteAccount=()=>{
 
 
   return (
-    
+    <>
+    <Target savingsAccount={savingsAccount}></Target>
     <div className="accountsWrapper" >
       <div className='accountsImageHeader'>
         <Typography variant="h5" >
@@ -148,5 +151,6 @@ const deleteAccount=()=>{
         </AccordionSummary>
       </Accordion>
     </div>
+    </>
   );
 }

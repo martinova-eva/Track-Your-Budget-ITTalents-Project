@@ -2,7 +2,6 @@
 import React from "react";
 import { ProgressBar } from "react-bootstrap";
 import "./target.css";
-import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 import { Avatar, Typography, Grid, Icon, Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { accountManager } from "../../server/accountManager/accountManager";
@@ -11,14 +10,13 @@ import { iconsArrOfObjects } from "../categoryCreator/icons";
 import { Modal } from 'react-bootstrap';
 import { useState } from 'react';
 import CreateCheckingAccount from "../CheckingAccountForm/CheckingAccountForm";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Box from '@mui/material/Box';
-import { SignalCellularNullOutlined } from "@mui/icons-material";
 import { useEffect } from 'react';
 
-export default function Target() {
+export default function Target({savingsAccount}) {
     const activeUser = useSelector(state => state.activeUser);
-    const[savingsAccount, setSavingsAccount ] = useState(accountManager.checkForSavingsAccount(activeUser.username))
+    
+    //const[savingsAccount, setSavingsAccount ] = useState(accountManager.checkForSavingsAccount(activeUser.username))
     //const savingsAccount = accountManager.checkForSavingsAccount(activeUser.username);
     const [show, setShow] = useState(false);  
     const handleClose = () => setShow(false);
@@ -27,9 +25,9 @@ export default function Target() {
 
     if(savingsAccount){
         const now = Math.round(((savingsAccount.balance/savingsAccount.target)*100))
-        const icon = savingsAccount.icon;
-        const iconDisplay = getTheIcon(icon);
+        const icon = savingsAccount.icon.toLowerCase();
         const leftSum = (Math.round(savingsAccount.balance - savingsAccount.target)).toFixed(2);
+      
 
         if(now >= 100){
             targetDisplay =  <div className="wellDoneTarget">
@@ -67,8 +65,15 @@ export default function Target() {
                     <div className="progressBarContainer">
                         <ProgressBar variant="custom"  now={now} label={`${now}%`} />
                     </div>
-                    <Avatar sx={{ width: 56, height: 56, bgcolor: "white"}} >{iconDisplay}</Avatar>
-             
+                    <Avatar sx={{ width: 56, height: 56, bgcolor: "white"}} > <Icon className="shortListIcon" >
+                {iconsArrOfObjects.map(i => {
+                    if (i.title.toLowerCase() === icon) {
+                        return i.tag;
+                        }
+                    })
+                }
+                </Icon>
+                </Avatar>
                 </div>
             </div>
 

@@ -327,15 +327,6 @@ export let accountManager = (function(){
             savings.push(newAccount);
             localStorage.setItem('savings', JSON.stringify(savings));
         }
-        // removeSavingsAccount(id){
-        //     let accounts = this.getAllSavingsAccounts();
-        //     accounts = accounts.map(a => {
-        //         if(a.id !== id){
-        //             return a;
-        //         }
-        //     })
-        //     localStorage.setItem('savings', JSON.stringify(accounts));
-        // }
         removeSavingsAccount(id){
             let accounts = this.getAllSavingsAccounts();
             let index = accounts.indexOf(id)

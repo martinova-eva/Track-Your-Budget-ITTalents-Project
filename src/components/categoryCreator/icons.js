@@ -62,8 +62,8 @@ export const iconsArrOfObjects = [
 ]
 export default function getTheIcon(titleOfIcon){
     iconsArrOfObjects.map(icon => {
-        if(icon.title.toLocaleLowerCase() === titleOfIcon){
+        if(icon.title.toLowerCase() === titleOfIcon.toLowerCase()){
             return icon.tag;
-        }
+        } 
     })
 }

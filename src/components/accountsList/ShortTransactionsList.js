@@ -43,7 +43,7 @@ export default function ShortTransactionsList({ id }) {
                 <div className="shortListCategoryWrapper">
             <Icon className="shortListIcon" >
                 {iconsArrOfObjects.map(icon => {
-                    if (icon.title.toLowerCase() ===row.name.toLowerCase()) {
+                    if (icon.title.toLowerCase() === row.name.toLowerCase()) {
                         return icon.tag;
                         }
                     })
