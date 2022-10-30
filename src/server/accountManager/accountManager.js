@@ -232,7 +232,7 @@ export let accountManager = (function(){
                                 transferAmount *= 1.01;
                             }
 
-                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, new Date(), transferAmount), "", recipientId)
+                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, new Date(),'income', transferAmount , '', recipientId))
                         }
                     })
                 }

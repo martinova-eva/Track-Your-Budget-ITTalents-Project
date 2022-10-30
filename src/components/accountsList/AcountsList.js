@@ -48,9 +48,12 @@ const accounts = accountManager.getAllUserAccounts(owner.username);
 const savingsAccounts = accountManager.getAllSavingsAccounts(owner.username);
 const savingsAccount = accountManager.checkForSavingsAccount(owner.username);
 const deleteAccount=()=>{
-  accountManager.removeSavingsAccount((savingsAccounts[0].id));
+  if(savingsAccount){
+    accountManager.removeSavingsAccount((savingsAccounts[0].id));
   navigate('/home');
 }
+
+  }
 
 
 
