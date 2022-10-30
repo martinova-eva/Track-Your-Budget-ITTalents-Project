@@ -10,8 +10,7 @@ import { accountManager } from '../../server/accountManager/accountManager';
 import { useSelector } from 'react-redux';
 import getTheIcon, { iconsArrOfObjects } from '../../components/categoryCreator/icons';
 import CloseIcon from '@mui/icons-material/Close';
-
-
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function TransactionPage() {
   const navigate = useNavigate();
@@ -88,11 +87,11 @@ export default function TransactionPage() {
             value={typeOfTransaction}
             onChange={value => setTypeOfTransaction(value)}
           >
-            {<MenuItem key={'income'} value={'income'}>{'Income'}</MenuItem>}
-            {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
+            {<MenuItem key={'income'} value={'income'}>{'Incomes'}</MenuItem>}
+            {<MenuItem key={'outcome'} value={'outcome'}>{'Expenses'}</MenuItem>}
           </SelectElement>
 
-          {typeOfTransaction === "income" ? <SelectElement className="select-element" title={"Choose from income category:"}
+          {typeOfTransaction === "income" ? <SelectElement className="select-element" title={"Choose from incomes:"}
             value={categoryName}
             onChange={value => setCategoryName(value)}
           >
@@ -100,12 +99,12 @@ export default function TransactionPage() {
               {option.tag}{option.title}
             </MenuItem>))}
           </SelectElement> :
-            <SelectElement className="select-element" title={"Choose from outcome category:"}
+            <SelectElement className="select-element" title={"Choose from expenses:"}
               value={categoryName}
               onChange={value => setCategoryName(value)}
             >
               {possibleOutcomeArr.map((option, i) => (<MenuItem key={i} value={option.title}>
-                {option.tag} {option.title}
+                {option.tag} {option.title} 
               </MenuItem>))}
             </SelectElement>}
 
@@ -168,7 +167,7 @@ export default function TransactionPage() {
                 }
                 sx={{ mb: 2 }}
               >
-                You don`t have enough money in this account!!
+                You don`t have enough money in this account!
               </Alert> : null}
           <Button type="button" onClick={handleCreateNewTransaction}>Add transaction</Button>
           

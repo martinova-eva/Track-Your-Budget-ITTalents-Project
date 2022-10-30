@@ -46,7 +46,7 @@ export default function TransactionsList() {
     let accountsForTransfer = accountManager.getAccountsForTransfer(AccountId)
     console.log(accountsForTransfer);
   
-    const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
+    //const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
     const [data, setData] = useState({
         labels: allTransactionForAccount.map(data => data.name),
         datasets: [{
@@ -67,13 +67,12 @@ export default function TransactionsList() {
         }]
     });
     const showAll= ()=>{
-        setTransactions(accountManager.getFormatedTransactions(AccountId))
+        setTransactions(accountManager.getFormatedTransactions(AccountId));
     }
     const deleteAccount=()=>{
         accountManager.removeAccount(AccountId);
         navigate('/home');
     }
-    //тази функция сортира, но не ги принтира на ново!
     const showByCategories = (category) => {
         setTransactions([]);
          let arrOfTr = []
@@ -103,12 +102,20 @@ export default function TransactionsList() {
                 if (category === "income") {
                     a.transactions.map(tr => {
                         if (tr.type === "income") {
+                            let date;
+                            let arrOfDate = tr.date.split('.');
+                            date = arrOfDate[1] + "." + arrOfDate[0] + '.' + arrOfDate[2];
+                            tr.date = date;
                             arrOfTr.push(tr);
                         }
                     })
                 } else if (category === "outcome") {
                     a.transactions.map(tr => {
                         if (tr.type === "outcome") {
+                            let date;
+                            let arrOfDate = tr.date.split('.');
+                            date = arrOfDate[1] + "." + arrOfDate[0] + '.' + arrOfDate[2];
+                            tr.date = date;
                             arrOfTr.push(tr);
                         }
                     })

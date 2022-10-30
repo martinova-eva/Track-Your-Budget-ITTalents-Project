@@ -180,6 +180,10 @@ export let accountManager = (function(){
                     a.transactions.map(tr => {
                         let isBetween = moment(tr.date).isBetween(new Date(range[0]), new Date(range[1]),  'days', "[]");
                         if(isBetween){
+                            let date;
+                            let arrOfDate = tr.date.split('.');
+                            date = arrOfDate[1] + "." + arrOfDate[0] + '.' + arrOfDate[2];
+                            tr.date = date;
                             statisticData.push(tr);
                         }
                     })
@@ -200,10 +204,44 @@ export let accountManager = (function(){
             accounts.splice(index,1)
             localStorage.setItem('accounts', JSON.stringify(accounts));
         }
+        transferFunds(transferId, recipientId){
+            let accounts = this.getAllAccounts();
+            if(transferId !== recipientId){
+                let nameOfTransferAccount;
+                let transferAmount;
+                let transferCurrency;
+                accounts.map(a => {
+                    if(a.id === transferId){
+                        nameOfTransferAccount = a.name;
+                        transferAmount = Number(a.balance);
+                        transferCurrency = a.currency;
+                    }
+                })
+                if(transferAmount > 0){
+                    accounts.map(a => {
+                        if(a.id === recipientId){
+                            if(transferCurrency === "BGN" && ( a.currency === "USD"|| a.currency === "EUR")){ 
+                                transferAmount *= 0.51;
+                            }else if(transferCurrency === "USD" && a.currency === "BGN"){ 
+                                transferAmount *= 1.94;
+                            }else if(transferCurrency === "USD" && a.currency === "EUR"){ 
+                                transferAmount *= 0.99;
+                            }else if(transferCurrency === "EUR" && a.currency === "BGN"){ 
+                                transferAmount *= 1.96;
+                            }else if(transferCurrency === "EUR" && a.currency === "USD"){ 
+                                transferAmount *= 1.01;
+                            }
+
+                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, new Date(), transferAmount), "", recipientId)
+                        }
+                    })
+                }
+            }
+           localStorage.setItem('accounts', JSON.stringify(accounts)); 
+        }
         addTransaction(name, date, type, amount, description, title, accountsId, owner){
             let accounts = this.getAllAccounts();
             let transaction = new Transaction(name, date, type, amount, description, title, accountsId);
-            console.log(transaction);
             accounts.map(a => {
                 if(a.id === accountsId){
                     if(transaction.type === "outcome" && Number(a.balance) >= Number(transaction.amount)){
@@ -268,7 +306,6 @@ export let accountManager = (function(){
                             if(tr.type === "outcome"){
                                 a.balance = Number(a.balance) + Number(tr.amount);
                             }else{
-                                //****/**************************************** */ */
                                 let savingsAccount = this.checkForSavingsAccount(owner);
                                 if(savingsAccount){
                                     let ratio = (Number(savingsAccount.percentage))/100;
@@ -351,37 +388,38 @@ export let accountManager = (function(){
                 }
             })
             customCategories.map(c => {
+                let isExist = false;
                 if (c.type === "income") {
-                  iconsArrOfObjects.map(i => {
-                    if(i.title === c.tag){
-                      c.tag = i.tag;
-                    }
-                  });
-                  let isExist = false;
-                  possibleIncomeArr.map(e => {
-                    if(e.id === c.id){
-                        isExist = true;
-                    }
-                  })
-                  if(!isExist){
-                    possibleIncomeArr.push(c);
-                  }
+                        iconsArrOfObjects.map(i => {
+                            if(i.title === c.tag){
+                            c.tag = i.tag;
+                            }
+                        });
+                        
+                        possibleIncomeArr.map(e => {
+                            if(e.id === c.id){
+                                isExist = true;
+                            }
+                        })
+                        if(!isExist){
+                            possibleIncomeArr.push(c);
+                        }
                     
                 } else {
-                   iconsArrOfObjects.map(i => {
-                    if(i.title === c.tag){
-                      c.tag = i.tag;
-                    }
-                  });
-                  let isExist = false;
-                  possibleOutcomeArr.map(e => {
-                    if(e.id === c.id){
-                        isExist = true;
-                    }
-                  })
-                  if(!isExist){
-                    possibleOutcomeArr.push(c);
-                  }
+                        iconsArrOfObjects.map(i => {
+                            if(i.title === c.tag){
+                            c.tag = i.tag;
+                            }
+                        });
+                        
+                        possibleOutcomeArr.map(e => {
+                            if(e.id === c.id){
+                                isExist = true;
+                            }
+                        })
+                        if(!isExist){
+                            possibleOutcomeArr.push(c);
+                        }
                     
                 }
               })

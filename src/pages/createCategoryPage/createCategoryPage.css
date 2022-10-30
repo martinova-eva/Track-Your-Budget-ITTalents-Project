@@ -10,7 +10,7 @@
 .icons-container{
     display: flex;
     flex-direction: column !important;
-    margin: 5vh 5vw;
+    margin: 3vh 3vw;
     padding: 2vh 2vw;
 }
 .fieldStyle{
@@ -18,14 +18,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
 }
 .category-center{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    
 }
 .distance-inputs{
     margin: 0 2vw;
@@ -33,5 +32,5 @@
 .form-margin{
     display: flex;
     flex-direction: column;
-    gap: 1.5vh
+    gap: 1.5vh;
 }
