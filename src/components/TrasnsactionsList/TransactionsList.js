@@ -39,7 +39,7 @@ export default function TransactionsList() {
     const handleShow = () => setShow(true);
     const navigate = useNavigate();
   
-    const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
+    //const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
     const [data, setData] = useState({
         labels: allTransactionForAccount.map(data => data.name),
         datasets: [{
@@ -60,7 +60,7 @@ export default function TransactionsList() {
         }]
     });
     const showAll= ()=>{
-        setTransactions(accountManager.getFormatedTransactions(AccountId))
+        setTransactions(accountManager.getFormatedTransactions(AccountId));
     }
     const deleteAccount=()=>{
         accountManager.removeAccount(AccountId);

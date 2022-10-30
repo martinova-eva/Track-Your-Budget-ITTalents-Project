@@ -207,7 +207,6 @@ export let accountManager = (function(){
         addTransaction(name, date, type, amount, description, title, accountsId, owner){
             let accounts = this.getAllAccounts();
             let transaction = new Transaction(name, date, type, amount, description, title, accountsId);
-            console.log(transaction);
             accounts.map(a => {
                 if(a.id === accountsId){
                     if(transaction.type === "outcome" && Number(a.balance) >= Number(transaction.amount)){
@@ -357,37 +356,38 @@ export let accountManager = (function(){
                 }
             })
             customCategories.map(c => {
+                let isExist = false;
                 if (c.type === "income") {
-                  iconsArrOfObjects.map(i => {
-                    if(i.title === c.tag){
-                      c.tag = i.tag;
-                    }
-                  });
-                  let isExist = false;
-                  possibleIncomeArr.map(e => {
-                    if(e.id === c.id){
-                        isExist = true;
-                    }
-                  })
-                  if(!isExist){
-                    possibleIncomeArr.push(c);
-                  }
+                        iconsArrOfObjects.map(i => {
+                            if(i.title === c.tag){
+                            c.tag = i.tag;
+                            }
+                        });
+                        
+                        possibleIncomeArr.map(e => {
+                            if(e.id === c.id){
+                                isExist = true;
+                            }
+                        })
+                        if(!isExist){
+                            possibleIncomeArr.push(c);
+                        }
                     
                 } else {
-                   iconsArrOfObjects.map(i => {
-                    if(i.title === c.tag){
-                      c.tag = i.tag;
-                    }
-                  });
-                  let isExist = false;
-                  possibleOutcomeArr.map(e => {
-                    if(e.id === c.id){
-                        isExist = true;
-                    }
-                  })
-                  if(!isExist){
-                    possibleOutcomeArr.push(c);
-                  }
+                        iconsArrOfObjects.map(i => {
+                            if(i.title === c.tag){
+                            c.tag = i.tag;
+                            }
+                        });
+                        
+                        possibleOutcomeArr.map(e => {
+                            if(e.id === c.id){
+                                isExist = true;
+                            }
+                        })
+                        if(!isExist){
+                            possibleOutcomeArr.push(c);
+                        }
                     
                 }
               })

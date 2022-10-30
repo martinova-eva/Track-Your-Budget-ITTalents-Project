@@ -7,6 +7,7 @@ import { accountManager } from '../../server/accountManager/accountManager';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
+import { Modal } from 'react-bootstrap';
 
 export default function CreateCategoryPage() {
 
@@ -16,6 +17,9 @@ export default function CreateCategoryPage() {
     const [missingData, setMissingData] = useState(false);
     const owner = useSelector(state => state.activeUser);
     const navigate = useNavigate();
+    const [show, setShow] = useState(false); //modal functions
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const handleCreateNewCategory = () => {
         if (nameOfCategory && typeOfCategory && iconTitle) {
@@ -32,10 +36,10 @@ export default function CreateCategoryPage() {
 
     return (
         <Grid className="fieldStyle">
-            <Box sx={{ borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column', m: '2rem', mx: '10rem' }}>
+            <Box sx={{ borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column',  mx: '6rem',alignItems:'center' }}>
 
-                <Avatar className="fieldStyle" sx={{ m: '2rem' }} alt="logo" src="..\assets\10491-logo-wallet.png" size="lg" />
-                <h3>Create new category</h3>
+                <Avatar  sx={{ m: '1rem' }} alt="logo" src="..\assets\10491-logo-wallet.png" size="lg" />
+                <h4>Create new category</h4>
 
                 <FormControl >
                     <Grid className="category-center">
@@ -54,8 +58,8 @@ export default function CreateCategoryPage() {
                                 value={typeOfCategory}
                                 onChange={value => setTypeOfCategory(value)}>
 
-                                {<MenuItem key={'income'} value={'income'}>{'Income'}</MenuItem>}
-                                {<MenuItem key={'outcome'} value={'outcome'}>{'Outcome'}</MenuItem>}
+                                {<MenuItem key={'income'} value={'income'}>{'Incomes'}</MenuItem>}
+                                {<MenuItem key={'outcome'} value={'outcome'}>{'Expenses'}</MenuItem>}
                             </SelectElement>
                             {missingData ? <Alert
                                     variant="outlined" severity="error"
@@ -79,7 +83,7 @@ export default function CreateCategoryPage() {
                         </Box>
                     </Grid>
                     <Box className="icons-container" sx={{  borderColor: 'paper', boxShadow: 2, display: "flex", flexDirection: 'column' }}>
-                        <h3>Choose icon</h3>
+                        <h5>Choose icon</h5>
                         <RadioGroup required
                             value={iconTitle}
                             onChange={e => setIconTitle(e.target.value)}>
@@ -93,9 +97,27 @@ export default function CreateCategoryPage() {
                             </Box>
                         </RadioGroup>
                     </Box>
-                    <Button type="button" onClick={handleCreateNewCategory}>Add this category</Button>
+                    <Button type="button" onClick={()=> {
+                        if (nameOfCategory && typeOfCategory && iconTitle) {
+                            setMissingData(false);
+                            handleShow();
+                        }else{
+                            setMissingData(true);
+                        }
+                            }}>Add this category</Button>
                 </FormControl>
-
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton></Modal.Header>
+                            <Modal.Body>{`Are you sure you want to create ${nameOfCategory} category?`}</Modal.Body>
+                            <Modal.Footer>
+                            <Button variant="secondary"  onClick={handleCreateNewCategory}>
+                            Yes
+                            </Button>
+                            <Button variant="secondary" onClick={handleClose}>
+                                No
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
             </Box>
         </Grid>
     )
