@@ -37,7 +37,7 @@ export default function TransactionPage() {
         setMissingData(false)
         setBalance(false);
         accountManager.addTransaction(categoryName, `${date.$M + 1}.${date.$D}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
-        navigate('/add-transaction');
+        navigate('/home');
         setSelectedAccount('');
         setTypeOfTransaction('');
         setCategoryName('');
@@ -50,7 +50,7 @@ export default function TransactionPage() {
         setMissingData(false)
         setBalance(false);
         accountManager.addTransaction(categoryName, `${date.$M + 1}.${date.$D}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);
-        navigate('/add-transaction');
+        navigate('/home');
         setSelectedAccount('');
         setTypeOfTransaction('');
         setCategoryName('');

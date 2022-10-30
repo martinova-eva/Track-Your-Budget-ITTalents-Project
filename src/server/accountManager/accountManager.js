@@ -181,12 +181,10 @@ export let accountManager = (function(){
                         let isBetween = moment(tr.date).isBetween(new Date(range[0]), new Date(range[1]),  'days', "[]");
                         if(isBetween){
                             statisticData.push(tr);
-                            console.log(tr);
                         }
                     })
                 }
             })
-            console.log(statisticData);
             return statisticData;
         }
 
@@ -213,21 +211,36 @@ export let accountManager = (function(){
                         a.transactions.push(transaction);
 
                     }else if(transaction.type === "income"){
-                        //да добавя и преизчисление за превалутирането
                         let savingsAccount = this.checkForSavingsAccount(owner);
                         if(savingsAccount){
-                            let savingsIncome = (Number(transaction.amount) * Number(savingsAccount.percentage)/100);
-                           
-    
+                            let savingsIncome = 0;
+                                if(a.currency === savingsAccount.currency){
+                                    savingsIncome = (Number(transaction.amount) * Number(savingsAccount.percentage)/100);
+                                }else if(a.currency === "EUR" &&  savingsAccount.currency === "BGN"){
+                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*1.96;
+                                }else if(a.currency === "EUR" &&  savingsAccount.currency === "USD"){
+                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*1.01;
+                                }else if(a.currency === "BGN" &&  savingsAccount.currency === "USD"){
+                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*0.51;
+                                }else if(a.currency === "BGN" &&  savingsAccount.currency === "EUR"){
+                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*0.51;
+                                }else if(a.currency === "USD" &&  savingsAccount.currency === "EUR"){
+                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*0.99;
+                                }else if(a.currency === "USD" &&  savingsAccount.currency === "BGN"){
+                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*1.94;
+                                }
+
                                 let allSavingsAccounts = this.getAllSavingsAccounts();
                                  allSavingsAccounts.map(s => {
                                         if(s.owner === owner){
-                                            s.balance =  Number(savingsAccount.balance)  + Number(savingsIncome);
+                                            s.balance = (Number(savingsAccount.balance)  + Number(savingsIncome)).toFixed(2);
                                         }
-                                    })
+                                    });
                             localStorage.setItem('savings', JSON.stringify(allSavingsAccounts));
-                            a.balance = (Number(a.balance) + ((Number(transaction.amount) - Number(savingsIncome))));
-                            transaction.amount = (Number(transaction.amount) - Number(savingsIncome));
+                            
+                            transaction.amount = (Number(transaction.amount) - (Number(transaction.amount)*(savingsAccount.percentage/100)));
+                            a.balance = (Number(a.balance) + (Number(transaction.amount)));
+
                             a.transactions.push(transaction);
                         }else{
                             a.balance = Number(a.balance) + Number(transaction.amount);
@@ -236,14 +249,13 @@ export let accountManager = (function(){
                         
                     }                   
                 }
-                //логика за сортиране на транзакциите, за да държи винаги сортиран масива
                 a.transactions.sort(function(a, b){
                     return new Date(b.date) - new Date(a.date);
                 });
             });
             localStorage.setItem('accounts', JSON.stringify(accounts));
         }
-        removeTransaction( transactionId, accountsId){
+        removeTransaction( transactionId, accountsId, owner){
             let accounts = this.getAllAccounts();
             accounts.map(a => {
                 
@@ -256,8 +268,42 @@ export let accountManager = (function(){
                             if(tr.type === "outcome"){
                                 a.balance = Number(a.balance) + Number(tr.amount);
                             }else{
-                                //тук ще има логика и с превалутирането и преизчисление в спестовния акаунт
-                                a.balance = Number(a.balance) - Number(tr.amount);
+                                //****/**************************************** */ */
+                                let savingsAccount = this.checkForSavingsAccount(owner);
+                                if(savingsAccount){
+                                    let ratio = (Number(savingsAccount.percentage))/100;
+                                  
+                                    if(a.currency === savingsAccount.currency){
+                                        savingsAccount.balance = Number(savingsAccount.balance)- Number(tr.amount)*ratio;
+
+                                    }else if(a.currency === "EUR" &&  savingsAccount.currency === "BGN"){
+                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*1.96;
+
+                                    }else if(a.currency === "EUR" &&  savingsAccount.currency === "USD"){
+                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*1.01;
+
+                                    }else if(a.currency === "BGN" &&  savingsAccount.currency === "USD"){
+                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*0.51;
+
+                                    }else if(a.currency === "BGN" &&  savingsAccount.currency === "EUR"){
+                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*0.51;
+
+                                    }else if(a.currency === "USD" &&  savingsAccount.currency === "EUR"){
+                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*0.99;
+
+                                    }else if(a.currency === "USD" &&  savingsAccount.currency === "BGN"){
+                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*1.94;
+                                    }
+                                    let allSavingsAccounts = this.getAllSavingsAccounts();
+                                    allSavingsAccounts.map(s => {
+                                        if(s.owner === owner){
+                                            s.balance =  (savingsAccount.balance).toFixed(2);
+                                        }
+                                    });
+                                    localStorage.setItem('savings', JSON.stringify(allSavingsAccounts));
+                                }
+                                    a.balance = (Number(a.balance) - Number(tr.amount)).toFixed(2);
+                                
                             }
                         }
                     })
