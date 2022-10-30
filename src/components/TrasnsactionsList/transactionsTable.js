@@ -24,9 +24,7 @@ import { visuallyHidden } from '@mui/utils';
 import { Icon } from '@mui/material';
 import { iconsArrOfObjects } from '../categoryCreator/icons';
 import { accountManager } from '../../server/accountManager/accountManager';
-
-
-
+import { useSelector } from "react-redux";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -145,6 +143,7 @@ export default function EnhancedTable({rows, AccountId, setTransactions, account
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const owner = useSelector(state => state.activeUser);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -263,7 +262,7 @@ export default function EnhancedTable({rows, AccountId, setTransactions, account
                       <TableCell align="left">{row.description}</TableCell>
                       <TableCell align="left">
                       <IconButton aria-label="delete" size="small" onClick={() => {
-                  accountManager.removeTransaction(row.id, AccountId);
+                  accountManager.removeTransaction(row.id, AccountId, owner.username); 
                   setTransactions(accountManager.getFormatedTransactions(AccountId))
 
               }}>
