@@ -11,6 +11,7 @@ const initialState = {
   percentage:'',
   icon:'',
   transactions: [],
+  accountCreated: false,
 }
 
 

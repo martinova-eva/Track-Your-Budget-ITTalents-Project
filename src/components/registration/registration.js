@@ -43,7 +43,6 @@ const regexPass = '^[A-Za-z0-9]{6,16}$' ;
       helperTextUsername = "This username is taken";
    }
   
-
    if(!validUsername){
       userNameTakenError = true;
    }
@@ -56,7 +55,7 @@ const regexPass = '^[A-Za-z0-9]{6,16}$' ;
    const handleRegister = () => {
       if(validUsername && validPassword){
          dispatch(registerNewUser({ username, password }));
-        // navigate('/login');
+         navigate('/login');
          setUsername('');
          setPassword('');
          setConfirmPass('');

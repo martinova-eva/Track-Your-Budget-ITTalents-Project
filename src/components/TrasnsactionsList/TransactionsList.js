@@ -19,6 +19,7 @@ import getTheIcon, { iconsArrOfObjects } from "../categoryCreator/icons";
 import { updateTransactions } from "../../store/checkingAccountSlice";
 import EnhancedTable from "./transactionsTable";
 import { useNavigate } from "react-router-dom";
+import DropDownOptions from "../CheckingAccountForm/dropDownOptions";
 
 
 export default function TransactionsList() {
@@ -38,6 +39,12 @@ export default function TransactionsList() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const navigate = useNavigate();
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);  //modal functions
+    const handleCloseDeleteModal = () => setOpenDeleteModal(false);
+    const handleOpenDeleteModal = () => setOpenDeleteModal(true);
+    const[backupAccount, setBackupAccount] = useState('');
+    let accountsForTransfer = accountManager.getAccountsForTransfer(AccountId)
+    console.log(accountsForTransfer);
   
     const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
     const [data, setData] = useState({
@@ -116,6 +123,7 @@ export default function TransactionsList() {
 
     return (
         <div >
+            
             <Box className="sortWrapper"
                 component="form"
                 sx={{
@@ -131,6 +139,7 @@ export default function TransactionsList() {
                 id="incomes-btn"
                 onClick={showAll}
                 >All Transactions</Button>
+
                 <SelectElement title={"Transaction type:"}
                     value={typeOfTransaction}
                     onChange={value => {
@@ -178,27 +187,17 @@ export default function TransactionsList() {
                 variant="contained" 
                 size="large" 
                 id="delete-btn"
-                onClick={handleShow}
+                onClick={handleOpenDeleteModal}
                 >Delete Account
                 </Button>
-                 <Modal show={show} onHide={handleClose}>
-                     <Modal.Header closeButton></Modal.Header>
-        <Modal.Body>{`Are you sure you want to delete account ${accountName}`}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" id="deleteConfirmBtn" onClick={deleteAccount}>
-           Yes
-          </Button>
-        </Modal.Footer>
-      </Modal>
                 
             </Box>
+          
 
             <div className="listandChart">
       <div id="table">  
       <Typography variant="subtitle2">{`Transactions for account: ${accountName}`}</Typography> 
+      <Typography variant="subtitle2">{`Balance: ${accountBalance} ${accountCurrency}`}</Typography> 
    <EnhancedTable
     rows={transactions} 
     AccountId = {AccountId}
@@ -215,52 +214,32 @@ export default function TransactionsList() {
                     {/* {<BarChart data={data}></BarChart>} */}
                 </div>
             </div>
+
+            <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
+                     <Modal.Header closeButton></Modal.Header>
+        <Modal.Body>
+        <Typography>{`Are you sure you want to delete account ${accountName}`}</Typography>
+        
+         <Typography>{`You have ${accountBalance} ${accountCurrency} left in your account.`}</Typography>
+        <DropDownOptions    
+            fullWidth
+            helperText={`Please choose account to transfer your balance.`}
+            arr={accountsForTransfer}
+            value={backupAccount}
+            handleChange={(e)=> setBackupAccount(e.target.value)}>
+            </DropDownOptions> 
+      
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDeleteModal}>
+            Close
+          </Button>
+          <Button variant="primary" id="deleteConfirmBtn" onClick={deleteAccount}>
+           Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
         </div>
     )
 }
 
-{/* <Box sx={{ borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column' }}>
-<ListGroup>
-    <Typography className="transactionsHeader" variant="h6">
-        List of transactions for {accountName}
-    </Typography>
-    <Typography className="transactionsHeader" variant="h8">
-        Balance: {accountBalance}{accountCurrency}
-    </Typography>
-    <Box className="listWrapper">
-        {transactions.map(transaction => (
-
-            <ListGroup.Item key={transaction.id} className="transactionListWrapper">
-                {/* <Icon className="shortListIcon" key={uuidV4()}>{iconsArrOfObjects.map(i => {
-            if (transaction.name.toLowerCase() === i.title) {
-                return i.tag;
-            }
-        })} </Icon> */}
-//                 <Typography variant="subtitle2" className="transactionListTitles">
-//                     {transaction.name}
-//                 </Typography>
-//                 <div className="transactionList">
-//                     <Typography variant="subtitle2">
-//                         {transaction.date}
-//                     </Typography>
-                //     <Typography className={transaction.type === "outcome" ? "transactionAmmountOutcome" :
-                //         "transactionAmmountIncome"} variant="subtitle2">
-                //         {transaction.type === 'income' ? "+ " : "- "}
-                //         {transaction.amount}{accountCurrency}
-                //   </Typography>
-//                     <Typography variant="subtitle2">
-//                         {transaction.description}
-//                     </Typography>
-                    // <IconButton aria-label="delete" size="small" onClick={() => {
-                    //     accountManager.removeTransaction(transaction.id, AccountId);
-                    //     setTransactions(accountManager.getFormatedTransactions(AccountId))
-
-                    // }}>
-                    //     <DeleteIcon fontSize="inherit" />
-                    // </IconButton>
-//                 </div>
-//             </ListGroup.Item>
-//         ))}
-//     </Box>
-// </ListGroup>
-// </Box> */}

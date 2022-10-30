@@ -27,14 +27,11 @@ export const checkingAccountSlice = createSlice({
     },
     udateAccountCreationStatus: (state) => {
       state.accountCreated = false;
-    },
-    updateTransactions:(state, action)=>{
-      state.transactions = action.payload.transactions;
     }
 
   },
 })
 
-export const { create, udateAccountCreationStatus, updateTransactions } = checkingAccountSlice.actions
+export const { create, udateAccountCreationStatus } = checkingAccountSlice.actions
 
 export default checkingAccountSlice.reducer

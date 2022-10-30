@@ -36,9 +36,9 @@
 }
 .sortWrapper{
     display: flex;
+    justify-content: center;
     gap: 3rem;
-    align-items: center;
-    margin: 3rem auto;
+    align-items: baseline;
 }
 #incomes-btn{
     color:#13b977;
@@ -123,4 +123,7 @@
 #delete-btn{
     color:rgb(251,103,103);
     background-color:white;
+}
+#selectorForCategories{
+    width: 50rem;
 }
