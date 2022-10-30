@@ -204,6 +204,41 @@ export let accountManager = (function(){
             accounts.splice(index,1)
             localStorage.setItem('accounts', JSON.stringify(accounts));
         }
+        transferFunds(transferId, recipientId){
+            let accounts = this.getAllAccounts();
+            if(transferId !== recipientId){
+                let nameOfTransferAccount;
+                let transferAmount;
+                let transferCurrency;
+                accounts.map(a => {
+                    if(a.id === transferId){
+                        nameOfTransferAccount = a.name;
+                        transferAmount = Number(a.balance);
+                        transferCurrency = a.currency;
+                    }
+                })
+                if(transferAmount > 0){
+                    accounts.map(a => {
+                        if(a.id === recipientId){
+                            if(transferCurrency === "BGN" && ( a.currency === "USD"|| a.currency === "EUR")){ 
+                                transferAmount *= 0.51;
+                            }else if(transferCurrency === "USD" && a.currency === "BGN"){ 
+                                transferAmount *= 1.94;
+                            }else if(transferCurrency === "USD" && a.currency === "EUR"){ 
+                                transferAmount *= 0.99;
+                            }else if(transferCurrency === "EUR" && a.currency === "BGN"){ 
+                                transferAmount *= 1.96;
+                            }else if(transferCurrency === "EUR" && a.currency === "USD"){ 
+                                transferAmount *= 1.01;
+                            }
+
+                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, new Date(), transferAmount), "", recipientId)
+                        }
+                    })
+                }
+            }
+           localStorage.setItem('accounts', JSON.stringify(accounts)); 
+        }
         addTransaction(name, date, type, amount, description, title, accountsId, owner){
             let accounts = this.getAllAccounts();
             let transaction = new Transaction(name, date, type, amount, description, title, accountsId);
@@ -430,7 +465,7 @@ export let accountManager = (function(){
             });
             return accountName;
         }
-    
+        
 
 
 
