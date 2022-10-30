@@ -55,13 +55,19 @@ export let accountManager = (function(){
             this.value = value;
         }
     }
-    
+    class Achievment{
+        constructor(owner, title){
+            this.owner = owner;
+            this.title = title;
+        }
+    }
     class AccountManager {
             
         constructor() {
             this.accounts = [];
             this.savingsAccounts = [];
             this.customCategories = [];
+            this.achievments = [];
            
             if(localStorage.getItem('accounts')){
                 this.accounts = JSON.parse(localStorage.getItem('accounts'));
@@ -71,6 +77,9 @@ export let accountManager = (function(){
             }
             if(localStorage.getItem('categories')){
                 this.customCategories = JSON.parse(localStorage.getItem('categories'));
+            }
+            if(localStorage.getItem('achievments')){
+                this.achievments = JSON.parse(localStorage.getItem('achievments'));
             }
         }
         getAllAccounts() {
@@ -357,6 +366,33 @@ export let accountManager = (function(){
             let existSavingsAccount = accounts.find(accounts => accounts.owner === owner);
             return existSavingsAccount;
         }
+        getAllAchievments() {
+            return JSON.parse(localStorage.getItem('achievments')) || [];
+        }
+        cteateAchievent(owner){
+            let allAchievments = this.getAllAchievments();
+            let savingsAccounts = this.getAllSavingsAccounts();
+            savingsAccounts.map(a => {
+                if(a.owner === owner){
+                    if(Number(a.balance) >= Number(a.target)){
+                        a.balance = Number(a.balance) - Number(a.target);
+                        a.target = 0;
+                        allAchievments.push(new Achievment(owner, a.name))
+                    }
+                }
+            })
+            localStorage.setItem('achievments', JSON.stringify(allAchievments));
+        }
+        checkForAchievments(owner){
+            let allAchievments = this.getAllAchievments();
+            let ownerAchievments = [];
+            allAchievments.map(a => {
+                if(a.owner === owner){
+                    ownerAchievments.push(a);
+                }
+            })
+            return ownerAchievments;
+        }
         
         createSavingsAccount(owner, name, currency,  target, balance, percentage, icon) {
             let savings = this.getAllSavingsAccounts();
@@ -364,15 +400,6 @@ export let accountManager = (function(){
             savings.push(newAccount);
             localStorage.setItem('savings', JSON.stringify(savings));
         }
-        // removeSavingsAccount(id){
-        //     let accounts = this.getAllSavingsAccounts();
-        //     accounts = accounts.map(a => {
-        //         if(a.id !== id){
-        //             return a;
-        //         }
-        //     })
-        //     localStorage.setItem('savings', JSON.stringify(accounts));
-        // }
         removeSavingsAccount(id){
             let accounts = this.getAllSavingsAccounts();
             let index = accounts.indexOf(id)
@@ -481,8 +508,6 @@ export let accountManager = (function(){
             })
             return(filteredAccounts);
         }
-        
-    
     }
     return new AccountManager()
 

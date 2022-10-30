@@ -44,8 +44,7 @@ export default function TransactionsList() {
     const handleOpenDeleteModal = () => setOpenDeleteModal(true);
     const[backupAccount, setBackupAccount] = useState('');
     let accountsForTransfer = accountManager.getAccountsForTransfer(AccountId)
-    console.log(accountsForTransfer);
-  
+      
     //const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
     const [data, setData] = useState({
         labels: allTransactionForAccount.map(data => data.name),
