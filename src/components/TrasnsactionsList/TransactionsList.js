@@ -20,6 +20,7 @@ import { updateTransactions } from "../../store/checkingAccountSlice";
 import EnhancedTable from "./transactionsTable";
 import { useNavigate } from "react-router-dom";
 import DropDownOptions from "../CheckingAccountForm/dropDownOptions";
+import { Grid, TextField } from "@mui/material";
 
 
 export default function TransactionsList() {
@@ -43,8 +44,13 @@ export default function TransactionsList() {
     const handleCloseDeleteModal = () => setOpenDeleteModal(false);
     const handleOpenDeleteModal = () => setOpenDeleteModal(true);
     const[backupAccount, setBackupAccount] = useState('');
+    console.log(backupAccount);
     let accountsForTransfer = accountManager.getAccountsForTransfer(AccountId)
-      
+   let deleteOptions = false;
+    if(accountBalance>0){
+        deleteOptions = true;
+    }
+  
     //const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
     const [data, setData] = useState({
         labels: allTransactionForAccount.map(data => data.name),
@@ -220,31 +226,69 @@ export default function TransactionsList() {
                     {/* {<BarChart data={data}></BarChart>} */}
                 </div>
             </div>
-
-            <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
+{deleteOptions ? 
+<Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
                      <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
         <Typography>{`Are you sure you want to delete account ${accountName}`}</Typography>
         
          <Typography>{`You have ${accountBalance} ${accountCurrency} left in your account.`}</Typography>
-        <DropDownOptions    
+         <Grid className="wrapper">
+      <TextField
+        fullWidth
+        id="outlined-select-currency"
+        select
+        value={backupAccount}
+        onChange={(e)=> setBackupAccount(e.target.value)}
+        helperText={`Please choose account to transfer your balance.`}
+      >
+        {accountsForTransfer.map((option) =>(
+          
+          <MenuItem key={uuidV4()} value={option.id}>
+            {option.name}
+          </MenuItem>
+        ))}
+      </TextField>
+    </Grid>
+
+        {/* <DropDownOptions    
             fullWidth
             helperText={`Please choose account to transfer your balance.`}
             arr={accountsForTransfer}
             value={backupAccount}
-            handleChange={(e)=> setBackupAccount(e.target.value)}>
-            </DropDownOptions> 
-      
+            handleChange={(e)=> setBackupAccount(e.target.id)}>
+            </DropDownOptions>  */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseDeleteModal}>
             Close
           </Button>
-          <Button variant="primary" id="deleteConfirmBtn" onClick={deleteAccount}>
+          <Button variant="primary" id="deleteConfirmBtn" onClick={()=>{
+    accountManager.transferFunds(AccountId,backupAccount)
+    deleteAccount(AccountId);
+}}>
            Yes
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> 
+      :
+      <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
+      <Modal.Header closeButton></Modal.Header>
+<Modal.Body>
+<Typography>{`Are you sure you want to delete account ${accountName}`}</Typography>
+</Modal.Body>
+<Modal.Footer>
+<Button variant="secondary" onClick={handleCloseDeleteModal}>
+Close
+</Button>
+<Button variant="primary" id="deleteConfirmBtn" 
+onClick={()=>{
+    deleteAccount(AccountId);
+}}>
+Yes
+</Button>
+</Modal.Footer>
+</Modal>}
         </div>
     )
 }
