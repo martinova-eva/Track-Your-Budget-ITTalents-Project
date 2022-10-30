@@ -11,8 +11,6 @@ const initialState = {
   accountCreated: false,
 }
 
-
-
 export const checkingAccountSlice = createSlice({
   name: 'createCheckingAccount',
   initialState,
@@ -29,11 +27,14 @@ export const checkingAccountSlice = createSlice({
     },
     udateAccountCreationStatus: (state) => {
       state.accountCreated = false;
+    },
+    updateTransactions:(state, action)=>{
+      state.transactions = action.payload.transactions;
     }
+
   },
 })
 
-// Action creators are generated for each case reducer function
-export const { create, udateAccountCreationStatus } = checkingAccountSlice.actions
+export const { create, udateAccountCreationStatus, updateTransactions } = checkingAccountSlice.actions
 
 export default checkingAccountSlice.reducer

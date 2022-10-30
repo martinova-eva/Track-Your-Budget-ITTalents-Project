@@ -156,6 +156,22 @@ export let accountManager = (function(){
             })
             return statisticData;
         }
+        showStatisticsByDateRangeForChart(arrOfTransactions){
+            let statisticData = [];
+            arrOfTransactions.map(tr => {
+                
+                    const transactionType = statisticData.find(item => item.name === tr.name);
+
+                    if(transactionType){
+                        transactionType.value =Number(transactionType.value) + Number(tr.amount);
+                    }else{
+                        statisticData.push(new StatisticObject(tr.name, tr.amount))
+                    }
+                
+                
+            })
+            return statisticData;
+        }
         showStatisticsByDateRange(accountId, range){
             let allAccounts = this.getAllAccounts();
             let statisticData = [];
@@ -173,6 +189,7 @@ export let accountManager = (function(){
             console.log(statisticData);
             return statisticData;
         }
+
         addAccount(id, nameOfAccount, owner, transactions, currency, balance) {
             let accounts = this.getAllAccounts();
             let newAccount = new Account(id, nameOfAccount, owner, transactions, currency, balance)
@@ -181,11 +198,8 @@ export let accountManager = (function(){
         }
         removeAccount(id){
             let accounts = this.getAllAccounts();
-            accounts = accounts.map(a => {
-                if(a.id !== id){
-                    return a;
-                }
-            })
+            let index = accounts.indexOf(id)
+            accounts.splice(index,1)
             localStorage.setItem('accounts', JSON.stringify(accounts));
         }
         addTransaction(name, date, type, amount, description, title, accountsId, owner){
@@ -330,16 +344,47 @@ export let accountManager = (function(){
               })
         }
         getAccountCurrency(accountId){
+            let currency = ''
             let accounts = this.getAllAccounts()
             accounts.map(ac => {
                 if(ac.id === accountId){
-                    return ac.currency;
+                    currency =  ac.currency;
                 }
             })
-
-
-
+            return currency;
         }
+        getFormatedTransactions(AccountId){
+            let accounts = this.getAllAccounts();
+            let transactions = [];
+            accounts.map(a => {
+                if (a.id === AccountId) {
+                    a.transactions.map(tr => {
+                        let date;
+                        let arrOfDate = tr.date.split('.');
+                        date = arrOfDate[1] + "." + arrOfDate[0] + '.' + arrOfDate[2];
+                        tr.date = date;
+                    })
+                    transactions = [...a.transactions];
+                }
+            });
+            return transactions;
+        }
+   
+        getAccountName(AccountId){
+            let accountName = '';
+            let accounts = this.getAllAccounts();
+            accounts.map(a => {
+                if (a.id === AccountId) {
+                     accountName = a.name;
+                }
+               
+            });
+            return accountName;
+        }
+    
+
+
+
     }
     return new AccountManager()
 

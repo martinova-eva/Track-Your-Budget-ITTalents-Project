@@ -60,3 +60,6 @@
     width: 6rem;
     text-align: left;
 }
+.shortListIcon>svg{
+    vertical-align:top;
+}

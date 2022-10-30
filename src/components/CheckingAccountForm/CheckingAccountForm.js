@@ -13,7 +13,7 @@ import { createSavingsAccount } from "../../store/SavingsAccountSlice";
 import { userManager } from "../../server/userManager/userManager";
 import { accountManager } from "../../server/accountManager/accountManager";
 
-export default function CreateCheckingAccount({ handleClose }) {
+export default function CreateCheckingAccount() {
    const [accountName, setAccountName] = useState('');
    const [accountStartAmount, setAccountStartAmount] = useState('');
    const [currency, setCurrency] = useState('');
@@ -21,7 +21,6 @@ export default function CreateCheckingAccount({ handleClose }) {
    const [target, setTarget] = useState('');
    const [percentage, setPercentage] = useState('');
    const [icon, setIcon] = useState('');
-   
    const navigate = useNavigate();
    const dispatch = useDispatch();
 
@@ -29,32 +28,30 @@ export default function CreateCheckingAccount({ handleClose }) {
    const checkingAccount = useSelector(state => state.createCheckingAccount)
    const owner = user.username;
    const accountCreated = checkingAccount.accountCreated;
-   console.log(accountCreated);
+  
 
-   useEffect(()=>{
+   // useEffect(()=>{
 
-      return () => {
-         dispatch(udateAccountCreationStatus())
-      }
-   },[])
+   //    return () => {
+   //       dispatch(udateAccountCreationStatus())
+   //    }
+   // },[])
    
-   // if(accountCreated){
-   //    setCreatedMessage('You created new account'); 
-   //  }
+ 
    
    const handleDispatch = ()=> {
       if(type === "checking"){
          dispatch(create({owner, accountName, currency, accountStartAmount}))
-        // navigate('/home');
+         navigate('/home');  
          setAccountName('');
          setCurrency('');
          setAccountStartAmount('');
+         
 
       }
       if(type === "savings"){
          dispatch(createSavingsAccount({owner, accountName, currency, target , accountStartAmount, percentage, icon}))
-         navigate('/home');
-         
+         navigate('/home');  
          setAccountName('');
          setCurrency('');
          setAccountStartAmount('');
@@ -62,7 +59,10 @@ export default function CreateCheckingAccount({ handleClose }) {
          setPercentage('');
          setIcon('');
       }
-     
+      if(accountCreated){
+         navigate('/home'); 
+      }
+      
    }
   
    const currencies = [
@@ -235,9 +235,9 @@ export default function CreateCheckingAccount({ handleClose }) {
                   Create new account
                   </Button>
                  
-                <Typography className="accountMessage" variant="h5" gutterBottom>
+                {/* <Typography className="accountMessage" variant="h5" gutterBottom>
               {accountCreated ? 'You created new account' : null}
-                </Typography>  
+                </Typography>   */}
 
             </form>
          

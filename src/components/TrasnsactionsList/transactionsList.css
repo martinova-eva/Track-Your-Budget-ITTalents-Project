@@ -40,6 +40,10 @@
     align-items: center;
     margin: 3rem auto;
 }
+#incomes-btn{
+    color:#13b977;
+    background-color:white;
+}
 #category-btn{
     color:#13b977;
     background-color:white;
@@ -55,8 +59,8 @@
 #clear-filters-btn{
     color:#13b977;
     background-color:white;
-    min-width: 15vw;
-    max-width: 20vw;
+    /* min-width: 15vw;
+    max-width: 20vw; */
 }
 #date-range-picker{
     min-width: 15vw;
@@ -73,6 +77,7 @@
     display: flex;
     justify-content: center;
     gap: 5rem;
+    margin: 1rem 1rem;
     
 }
 .pieChart{
@@ -88,9 +93,8 @@
     text-align: left;
     height: 3rem;
     background-color: rgba(250,160,160, 0.15)
-    
-
 }
+
 .incomesShortList{
     display: flex;
     flex-direction: row;
@@ -100,4 +104,23 @@
     background-color: rgb(178,224,184,0.15) 
 
 }
+.listCategoryWrapper{
+    display: flex;
+    gap: 0.5rem;
 
+}
+.listIcon>svg{
+    vertical-align:top;
+}
+#table{
+    width: 50%;
+}
+#deleteConfirmBtn{
+    color:red;
+    background-color:white;
+
+}
+#delete-btn{
+    color:rgb(251,103,103);
+    background-color:white;
+}
