@@ -59,7 +59,7 @@ export default function Target({savingsAccount}) {
         }else{        targetDisplay =   
             <div className="targetWrapper">
                 <Typography variant="h5" gutterBottom>
-                Hello, {activeUser.username} you have {100- now}% left to reach your savings goal
+                Hello, {activeUser.username} you have {100- now }% left to reach your savings goal
           </Typography>
                 <div className="target">
                     <div className="progressBarContainer">

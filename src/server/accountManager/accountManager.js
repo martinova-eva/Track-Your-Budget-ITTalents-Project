@@ -55,13 +55,19 @@ export let accountManager = (function(){
             this.value = value;
         }
     }
-    
+    class Achievment{
+        constructor(owner, title){
+            this.owner = owner;
+            this.title = title;
+        }
+    }
     class AccountManager {
             
         constructor() {
             this.accounts = [];
             this.savingsAccounts = [];
             this.customCategories = [];
+            this.achievments = [];
            
             if(localStorage.getItem('accounts')){
                 this.accounts = JSON.parse(localStorage.getItem('accounts'));
@@ -71,6 +77,9 @@ export let accountManager = (function(){
             }
             if(localStorage.getItem('categories')){
                 this.customCategories = JSON.parse(localStorage.getItem('categories'));
+            }
+            if(localStorage.getItem('achievments')){
+                this.achievments = JSON.parse(localStorage.getItem('achievments'));
             }
         }
         getAllAccounts() {
@@ -204,7 +213,7 @@ export let accountManager = (function(){
             accounts.splice(index,1)
             localStorage.setItem('accounts', JSON.stringify(accounts));
         }
-        transferFunds(transferId, recipientId){
+        transferAllFunds(transferId, recipientId){
             let accounts = this.getAllAccounts();
             if(transferId !== recipientId){
                 let nameOfTransferAccount;
@@ -233,6 +242,53 @@ export let accountManager = (function(){
                             }
 
                         a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, new Date(),'income', transferAmount , '', recipientId))
+                        }
+                    })
+                }
+            }
+           localStorage.setItem('accounts', JSON.stringify(accounts)); 
+        }
+        ordinaryTransfer(transferId, recipientId, amount){
+            let accounts = this.getAllAccounts();
+            let status = false;
+            if(transferId !== recipientId){
+                let nameOfTransferAccount;
+                //name, date, type, amount, description = '', title, accountsId
+                let transferCurrency;
+                accounts.map(a => {
+                    if(a.id === transferId){
+                        nameOfTransferAccount = a.name;
+                        if(Number(a.balance) > amount){
+                            a.balance = Number(a.balance) - amount;
+                            transferCurrency = a.currency;
+                            a.transactions.push(new Transaction(`Money transfer to another account`, 
+                                                                    new Date(), 
+                                                                    'outcome', 
+                                                                    amount, 
+                                                                    '',
+                                                                    '', 
+                                                                    a.id));
+                            status = true;
+                        }
+                        
+                    }
+                })
+                if(status > 0){
+                    accounts.map(a => {
+                        if(a.id === recipientId){
+                            if(transferCurrency === "BGN" && ( a.currency === "USD"|| a.currency === "EUR")){ 
+                                amount *= 0.51;
+                            }else if(transferCurrency === "USD" && a.currency === "BGN"){ 
+                                amount *= 1.94;
+                            }else if(transferCurrency === "USD" && a.currency === "EUR"){ 
+                                amount *= 0.99;
+                            }else if(transferCurrency === "EUR" && a.currency === "BGN"){ 
+                                amount *= 1.96;
+                            }else if(transferCurrency === "EUR" && a.currency === "USD"){ 
+                                amount *= 1.01;
+                            }
+                        a.balance = Number(a.balance) + amount;   
+                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, new Date(), "income", amount, "", recipientId))
                         }
                     })
                 }
@@ -357,6 +413,33 @@ export let accountManager = (function(){
             let existSavingsAccount = accounts.find(accounts => accounts.owner === owner);
             return existSavingsAccount;
         }
+        getAllAchievments() {
+            return JSON.parse(localStorage.getItem('achievments')) || [];
+        }
+        cteateAchievent(owner){
+            let allAchievments = this.getAllAchievments();
+            let savingsAccounts = this.getAllSavingsAccounts();
+            savingsAccounts.map(a => {
+                if(a.owner === owner){
+                    if(Number(a.balance) >= Number(a.target)){
+                        a.balance = Number(a.balance) - Number(a.target);
+                        a.target = 0;
+                        allAchievments.push(new Achievment(owner, a.name))
+                    }
+                }
+            })
+            localStorage.setItem('achievments', JSON.stringify(allAchievments));
+        }
+        checkForAchievments(owner){
+            let allAchievments = this.getAllAchievments();
+            let ownerAchievments = [];
+            allAchievments.map(a => {
+                if(a.owner === owner){
+                    ownerAchievments.push(a);
+                }
+            })
+            return ownerAchievments;
+        }
         
         createSavingsAccount(owner, name, currency,  target, balance, percentage, icon) {
             let savings = this.getAllSavingsAccounts();
@@ -472,8 +555,6 @@ export let accountManager = (function(){
             })
             return(filteredAccounts);
         }
-        
-    
     }
     return new AccountManager()
 
