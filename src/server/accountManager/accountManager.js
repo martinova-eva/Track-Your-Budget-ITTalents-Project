@@ -180,6 +180,10 @@ export let accountManager = (function(){
                     a.transactions.map(tr => {
                         let isBetween = moment(tr.date).isBetween(new Date(range[0]), new Date(range[1]),  'days', "[]");
                         if(isBetween){
+                            let date;
+                            let arrOfDate = tr.date.split('.');
+                            date = arrOfDate[1] + "." + arrOfDate[0] + '.' + arrOfDate[2];
+                            tr.date = date;
                             statisticData.push(tr);
                         }
                     })
@@ -268,7 +272,6 @@ export let accountManager = (function(){
                             if(tr.type === "outcome"){
                                 a.balance = Number(a.balance) + Number(tr.amount);
                             }else{
-                                //****/**************************************** */ */
                                 let savingsAccount = this.checkForSavingsAccount(owner);
                                 if(savingsAccount){
                                     let ratio = (Number(savingsAccount.percentage))/100;
