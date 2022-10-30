@@ -21,6 +21,7 @@ import EnhancedTable from "./transactionsTable";
 import { useNavigate } from "react-router-dom";
 import DropDownOptions from "../CheckingAccountForm/dropDownOptions";
 import { Grid, TextField } from "@mui/material";
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 
 
 export default function TransactionsList() {
@@ -43,8 +44,12 @@ export default function TransactionsList() {
     const [openDeleteModal, setOpenDeleteModal] = useState(false);  //modal functions
     const handleCloseDeleteModal = () => setOpenDeleteModal(false);
     const handleOpenDeleteModal = () => setOpenDeleteModal(true);
+    const [openTransferModal, setTransferModal] = useState(false);  //modal functions
+    const handleCloseTransferModal = () => setTransferModal(false);
+    const handleOpenTransferModal = () => setTransferModal(true);
     const[backupAccount, setBackupAccount] = useState('');
-    console.log(backupAccount);
+    const[recipient, setRecipient] = useState('');
+    const[transferingAmount, setTransferingAmount] = useState(0);
     let accountsForTransfer = accountManager.getAccountsForTransfer(AccountId)
    let deleteOptions = false;
     if(accountBalance>0){
@@ -194,14 +199,7 @@ export default function TransactionsList() {
                     placeholder="Select Date Range"
                     format="dd-MM-yyyy"
                 />
-                  <Button 
-                type="button" 
-                variant="contained" 
-                size="large" 
-                id="delete-btn"
-                onClick={handleOpenDeleteModal}
-                >Delete Account
-                </Button>
+                
                 
             </Box>
           
@@ -218,6 +216,22 @@ export default function TransactionsList() {
     >
 
     </EnhancedTable>
+    <Button 
+                type="button" 
+                variant="contained" 
+                size="large" 
+                id="delete-btn"
+                onClick={handleOpenDeleteModal}
+                >Delete Account
+                </Button>
+    <Button 
+                type="button" 
+                variant="contained" 
+                size="large" 
+                id="incomes-btn"
+                onClick={handleOpenTransferModal}
+                ><SwapHorizIcon></SwapHorizIcon> Transfer money to another account </Button>
+                
     </div> 
            
                 <div className="pieChart">
@@ -225,7 +239,9 @@ export default function TransactionsList() {
                     {/* пазим за друга статистика този*/}
                     {/* {<BarChart data={data}></BarChart>} */}
                 </div>
+               
             </div>
+            
 {deleteOptions ? 
 <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
                      <Modal.Header closeButton></Modal.Header>
@@ -250,21 +266,13 @@ export default function TransactionsList() {
         ))}
       </TextField>
     </Grid>
-
-        {/* <DropDownOptions    
-            fullWidth
-            helperText={`Please choose account to transfer your balance.`}
-            arr={accountsForTransfer}
-            value={backupAccount}
-            handleChange={(e)=> setBackupAccount(e.target.id)}>
-            </DropDownOptions>  */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseDeleteModal}>
             Close
           </Button>
           <Button variant="primary" id="deleteConfirmBtn" onClick={()=>{
-    accountManager.transferFunds(AccountId,backupAccount)
+    accountManager.transferAllFunds(AccountId,backupAccount)
     deleteAccount(AccountId);
 }}>
            Yes
@@ -289,6 +297,58 @@ Yes
 </Button>
 </Modal.Footer>
 </Modal>}
+<Modal show={openTransferModal} onHide={handleCloseTransferModal}>
+                     <Modal.Header closeButton></Modal.Header>
+        <Modal.Body>
+         <Typography className="transferMoneyLogo">{`Your current account balance is ${accountBalance} ${accountCurrency}.`}</Typography>
+         <div className="transferMoneyLogo">
+            <SwapHorizIcon></SwapHorizIcon>
+         <Typography variant="button">{`Transfer Money`}</Typography>
+         </div>
+         <Grid className="transferMoneywrapper">
+      <TextField
+        fullWidth
+        id="outlined-select-currency"
+        select
+        value={recipient}
+        onChange={(e)=> setRecipient(e.target.value)}
+        helperText={`Please choose account.`}
+      >
+        {accountsForTransfer.map((option) =>(
+          
+          <MenuItem key={uuidV4()} value={option.id}>
+            {option.name}
+          </MenuItem>
+        ))}
+      </TextField>
+
+      <TextField
+            required
+            fullWidth
+            type="number"
+            InputProps={{ inputProps: { min: 0, max:{accountBalance}}}}
+            id="outlined-number"
+            label="Amount"
+            placeholder="Enter amount"
+            onChange={(e)=> setTransferingAmount(e.target.value)}
+         />
+    </Grid>
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseTransferModal}>
+            Cancel
+          </Button>
+          <Button variant="primary" id="transferMoneyBtn" onClick={()=>{
+    accountManager.ordinaryTransfer(AccountId,recipient, transferingAmount)
+    setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username))
+    setRecipient('')
+    setTransferingAmount(0)
+}}>
+           Transfer
+          </Button>
+        </Modal.Footer>
+      </Modal> 
         </div>
     )
 }

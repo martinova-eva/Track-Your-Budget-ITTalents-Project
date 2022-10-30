@@ -127,3 +127,18 @@
 #selectorForCategories{
     width: 50rem;
 }
+.transferMoneyLogo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    color: #13b977;
+}
+#transferMoneyBtn{
+    color: #13b977;
+
+}
+.transferMoneywrapper{
+   padding:1rem;
+}
+
