@@ -253,7 +253,6 @@ export let accountManager = (function(){
             let status = false;
             if(transferId !== recipientId){
                 let nameOfTransferAccount;
-                //name, date, type, amount, description = '', title, accountsId
                 let transferCurrency;
                 accounts.map(a => {
                     if(a.id === transferId){
@@ -270,7 +269,6 @@ export let accountManager = (function(){
                                                                     a.id));
                             status = true;
                         }
-                        
                     }
                 })
                 if(status > 0){

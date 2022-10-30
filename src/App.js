@@ -13,6 +13,7 @@ import DemoPage from './pages/demoPage/demoPage';
 import { useSelector } from 'react-redux';
 import { render } from '@testing-library/react';
 import ErrorPage from './pages/errorPage/errorPage';
+import HistoryPage from './pages/historyPage/historyPage';
 
 export default function App() {
 
@@ -64,6 +65,11 @@ export default function App() {
         <Route path="/create-account" element={<>
           <Navigation/>
         <CreateCheckingAccount/>
+        </>} />
+
+        <Route path="/history" element={<>
+          <Navigation/>
+          <HistoryPage/>
         </>} />
         
         <Route path="*" element={<>

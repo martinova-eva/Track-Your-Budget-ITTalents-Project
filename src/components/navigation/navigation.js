@@ -84,4 +84,4 @@ useEffect(()=>{
       </Navbar>
     );
   }
-  //<Button onClick={handleLogout} className="exit" variant="outline-dark">Logout</Button>
+  
