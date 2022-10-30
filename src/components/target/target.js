@@ -14,20 +14,17 @@ import CreateCheckingAccount from "../CheckingAccountForm/CheckingAccountForm";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Box from '@mui/material/Box';
 import { SignalCellularNullOutlined } from "@mui/icons-material";
+import { useEffect } from 'react';
 
 export default function Target() {
     const activeUser = useSelector(state => state.activeUser);
-    const savingsAccount = accountManager.checkForSavingsAccount(activeUser.username);
+    const[savingsAccount, setSavingsAccount ] = useState(accountManager.checkForSavingsAccount(activeUser.username))
+    //const savingsAccount = accountManager.checkForSavingsAccount(activeUser.username);
     const [show, setShow] = useState(false);  
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-  
-  
- 
-   
-    console.log();
     let targetDisplay;
-  
+
     if(savingsAccount){
         const now = Math.round(((savingsAccount.balance/savingsAccount.target)*100))
         const icon = savingsAccount.icon;

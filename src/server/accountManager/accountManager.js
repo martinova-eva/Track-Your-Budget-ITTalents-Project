@@ -364,13 +364,19 @@ export let accountManager = (function(){
             savings.push(newAccount);
             localStorage.setItem('savings', JSON.stringify(savings));
         }
+        // removeSavingsAccount(id){
+        //     let accounts = this.getAllSavingsAccounts();
+        //     accounts = accounts.map(a => {
+        //         if(a.id !== id){
+        //             return a;
+        //         }
+        //     })
+        //     localStorage.setItem('savings', JSON.stringify(accounts));
+        // }
         removeSavingsAccount(id){
             let accounts = this.getAllSavingsAccounts();
-            accounts = accounts.map(a => {
-                if(a.id !== id){
-                    return a;
-                }
-            })
+            let index = accounts.indexOf(id)
+            accounts.splice(index,1)
             localStorage.setItem('savings', JSON.stringify(accounts));
         }
         getAllCategories() {
@@ -465,10 +471,18 @@ export let accountManager = (function(){
             });
             return accountName;
         }
+        getAccountsForTransfer(accountId){
+            let accounts = this.getAllAccounts()
+            let filteredAccounts = [];
+            accounts.map(ac => {
+                if(ac.id !== accountId){
+                    filteredAccounts.push(ac)
+                }
+            })
+            return(filteredAccounts);
+        }
         
-
-
-
+    
     }
     return new AccountManager()
 

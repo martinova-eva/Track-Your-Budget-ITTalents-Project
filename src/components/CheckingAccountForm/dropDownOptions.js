@@ -18,10 +18,10 @@ export default function DropDownOptions({ helperText, label, arr, value, handleC
         onChange={handleChange}
         helperText={helperText}
       >
-        {arr.map((option) =>(
+        {arr.map((option,id) =>(
           
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
+          <MenuItem key={id} value={option.name}>
+            {option.name}
           </MenuItem>
         ))}
       </TextField>

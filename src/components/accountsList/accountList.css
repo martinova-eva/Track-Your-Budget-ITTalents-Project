@@ -46,12 +46,14 @@
 }
 .shortListCategoryWrapper{
     display: flex;
-    flex-direction: row;
+    gap: 0.5rem;
     justify-content: center;
+    width: 8rem;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
     align-items: center;
-    gap: 1rem;
-    text-align: left;
-    height: 3rem;
+  
 }
 .shortListIcon{
     height: 3rem;
@@ -62,4 +64,22 @@
 }
 .shortListIcon>svg{
     vertical-align:top;
+}
+.tableDescriptionOverflow{
+    white-space: nowrap; 
+    width: 12.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+#deleteSavingsIcon{
+    display: flex;
+    justify-content: flex-end;
+
+}
+.accountBalanceShortList{
+    display: flex;
+    justify-content: flex-start;
+    padding: 1rem;
+    color: #319260
+   
 }

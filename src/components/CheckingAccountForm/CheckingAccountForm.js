@@ -67,15 +67,15 @@ export default function CreateCheckingAccount() {
   
    const currencies = [
       {
-         value: 'USD',
+         name: 'USD',
          label: '$',
       },
       {
-         value: 'EUR',
+         name: 'EUR',
          label: '€',
       },
       {
-         value: 'BGN',
+         name: 'BGN',
          label: 'лв.',
       },
 
@@ -85,18 +85,18 @@ export default function CreateCheckingAccount() {
    if(!isExistSavingsAccount){
       accountTypes = [
          {
-            value: 'checking',
+            name: 'checking',
             label: 'checking',
          },
          {
-            value: 'savings',
+            name: 'savings',
             label: 'savings',
          },
       ];
    }else{
       accountTypes = [
          {
-            value: 'checking',
+            name: 'checking',
             label: 'checking',
          },
       ];
