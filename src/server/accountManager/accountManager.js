@@ -371,7 +371,7 @@ export let accountManager = (function(){
                                     });
                             localStorage.setItem('savings', JSON.stringify(allSavingsAccounts));
                             
-                            transaction.amount = (Number(transaction.amount) - (Number(transaction.amount)*(savingsAccount.percentage/100)));
+                            transaction.amount = Number(((Number(transaction.amount) - (Number(transaction.amount)*(savingsAccount.percentage/100)))).toFixed(2));
                             a.balance = Number((Number(a.balance) + (Number(transaction.amount))).toFixed(2));
 
                             a.transactions.push(transaction);

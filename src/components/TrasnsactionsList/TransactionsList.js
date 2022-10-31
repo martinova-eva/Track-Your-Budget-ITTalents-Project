@@ -23,7 +23,6 @@ import DropDownOptions from "../CheckingAccountForm/dropDownOptions";
 import { Grid, TextField } from "@mui/material";
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 
-
 export default function TransactionsList() {
     const params = useParams();
     const AccountId = params.id;
@@ -47,16 +46,16 @@ export default function TransactionsList() {
     const [openTransferModal, setTransferModal] = useState(false);  //modal functions
     const handleCloseTransferModal = () => setTransferModal(false);
     const handleOpenTransferModal = () => setTransferModal(true);
-    const[backupAccount, setBackupAccount] = useState('');
-    const[recipient, setRecipient] = useState('');
-    const[transferingAmount, setTransferingAmount] = useState(0);
+    const [backupAccount, setBackupAccount] = useState('');
+    const [recipient, setRecipient] = useState('');
+    const [transferingAmount, setTransferingAmount] = useState(0);
     let accountsForTransfer = accountManager.getAccountsForTransfer(AccountId)
-   let deleteOptions = false;
-    if(accountBalance>0){
+    let deleteOptions = false;
+    if (accountBalance > 0) {
         deleteOptions = true;
     }
-  
-    const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10};
+
+    const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
     const [data, setData] = useState({
         labels: allTransactionForAccount.map(data => data.name),
         datasets: [{
@@ -76,7 +75,7 @@ export default function TransactionsList() {
             hoverOffset: 4
         }]
     });
-    const showAll= ()=>{
+    const showAll = () => {
         setTransactions(accountManager.getFormatedTransactions(AccountId));
         setData({
             labels: allTransactionForAccount.map(data => data.name),
@@ -98,13 +97,13 @@ export default function TransactionsList() {
             }]
         })
     }
-    const deleteAccount=()=>{
+    const deleteAccount = () => {
         accountManager.removeAccount(AccountId);
         navigate('/home');
     }
     const showByCategories = (category) => {
         setTransactions([]);
-         let arrOfTr = []
+        let arrOfTr = []
         const allTransactionsByType = accountManager.showStatisticsByTransactionType(AccountId, category);
         setData({
             labels: allTransactionsByType.map(data => data.name),
@@ -152,16 +151,16 @@ export default function TransactionsList() {
 
             }
         });
-        arrOfTr.sort(function(a, b){
+        arrOfTr.sort(function (a, b) {
             return new Date(b.date) - new Date(a.date);
         });
         setTransactions(arrOfTr);
     }
- 
+
 
     return (
         <div >
-            
+
             <Box className="sortWrapper"
                 component="form"
                 sx={{
@@ -170,12 +169,12 @@ export default function TransactionsList() {
                 noValidate
                 autoComplete="off"
             >
-                <Button 
-                type="button" 
-                variant="contained" 
-                size="large" 
-                id="incomes-btn"
-                onClick={showAll}
+                <Button
+                    type="button"
+                    variant="contained"
+                    size="large"
+                    id="incomes-btn"
+                    onClick={showAll}
                 >All Transactions</Button>
 
                 <SelectElement title={"Transaction type:"}
@@ -188,188 +187,189 @@ export default function TransactionsList() {
                     {<MenuItem key={'income'} value={'income'} >{'Incomes'}</MenuItem>}
                     {<MenuItem key={'outcome'} value={'outcome'}>{'Expenses'}</MenuItem>}
                 </SelectElement>
-                    <Box id="date-range-picker" sx={{ borderColor: 'paper'}}>
-                <DateRangePicker size="lg"  
-                    style={stylesDatePicker}
-                    value= {range}
-                    onChange={(e) => {
-                        let statisticData = accountManager.showStatisticsByDateRange(AccountId, e);
-                        setTransactions(statisticData);
-                        let chartData = accountManager.showStatisticsByDateRangeForChart(statisticData);
-                        setData({
-                            labels: chartData.map(data => data.name),
-                            datasets: [{
-                                label: '',
-                                data: chartData.map(data => data.value),
-                                backgroundColor: [
-                                    'rgb(19,185,119)',
-                                    'rgb(255, 99, 132)',
-                                    'rgb(255,44,87)',
-                                    'rgb(255,205,0)',
-                                    'rgb(183,101,201)',
-                                    'rgb(91,224,255)',
-                                    'rgb(43,174,246)',
-                                    'rgb(255,161,1)',
-                                    'rgb(66,205,0)',
+                <Box id="date-range-picker" sx={{ borderColor: 'paper' }}>
+                    <DateRangePicker size="lg"
+                        style={stylesDatePicker}
+                        value={range}
+                        onChange={(e) => {
+                            let statisticData = accountManager.showStatisticsByDateRange(AccountId, e);
+                            setTransactions(statisticData);
+                            let chartData = accountManager.showStatisticsByDateRangeForChart(statisticData);
+                            setData({
+                                labels: chartData.map(data => data.name),
+                                datasets: [{
+                                    label: '',
+                                    data: chartData.map(data => data.value),
+                                    backgroundColor: [
+                                        'rgb(19,185,119)',
+                                        'rgb(255, 99, 132)',
+                                        'rgb(255,44,87)',
+                                        'rgb(255,205,0)',
+                                        'rgb(183,101,201)',
+                                        'rgb(91,224,255)',
+                                        'rgb(43,174,246)',
+                                        'rgb(255,161,1)',
+                                        'rgb(66,205,0)',
 
-                                ],
-                                hoverOffset: 4
-                            }]
-                        })
-                     }}
-                    placeholder="Select Date Range"
-                    format="dd-MM-yyyy"
-                />
+                                    ],
+                                    hoverOffset: 4
+                                }]
+                            })
+                        }}
+                        placeholder="Select Date Range"
+                        format="dd-MM-yyyy"
+                    />
                 </Box>
             </Box>
-          
+
 
             <div className="listandChart">
-      <div id="table">  
-      <Typography variant="subtitle2">{`Transactions for account: ${accountName}`}</Typography> 
-      <Typography variant="subtitle2">{`Balance: ${accountBalance} ${accountCurrency}`}</Typography> 
-   <EnhancedTable
-    rows={transactions} 
-    AccountId = {AccountId}
-    setTransactions = {setTransactions}
-    setAccountBalance = {setAccountBalance}
-    accountCurrency = {accountCurrency}
-    >
+                <div id="table">
+                    <Typography variant="subtitle2">{`Transactions for account: ${accountName}`}</Typography>
+                    <Typography variant="subtitle2">{`Balance: ${accountBalance} ${accountCurrency}`}</Typography>
+                    <EnhancedTable
+                        rows={transactions}
+                        AccountId={AccountId}
+                        setTransactions={setTransactions}
+                        setAccountBalance={setAccountBalance}
+                        accountCurrency={accountCurrency}
+                    >
 
-    </EnhancedTable>
-    <Button 
-                type="button" 
-                variant="contained" 
-                size="large" 
-                id="delete-btn"
-                onClick={handleOpenDeleteModal}
-                >Delete Account
-                </Button>
-    <Button 
-                type="button" 
-                variant="contained" 
-                size="large" 
-                id="incomes-btn"
-                onClick={handleOpenTransferModal}
-                ><SwapHorizIcon></SwapHorizIcon> Transfer money to another account </Button>
-                
-    </div> 
-           
+                    </EnhancedTable>
+                    <Button
+                        type="button"
+                        variant="contained"
+                        size="large"
+                        id="delete-btn"
+                        onClick={handleOpenDeleteModal}
+                    >Delete Account
+                    </Button>
+                    <Button
+                        type="button"
+                        variant="contained"
+                        size="large"
+                        id="incomes-btn"
+                        onClick={handleOpenTransferModal}
+                    >
+                    <SwapHorizIcon key={uuidV4()}></SwapHorizIcon> Transfer money to another account </Button>
+
+                </div>
+
                 <div className="pieChart">
                     <PieChart data={data}></PieChart>
                     {/* пазим за друга статистика този*/}
                     {/* {<BarChart data={data}></BarChart>} */}
                 </div>
-               
+
             </div>
-            
-{deleteOptions ? 
-<Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
-                     <Modal.Header closeButton></Modal.Header>
-        <Modal.Body>
-        <Typography>{`Are you sure you want to delete account ${accountName}`}</Typography>
-        
-         <Typography>{`You have ${accountBalance} ${accountCurrency} left in your account.`}</Typography>
-         <Grid className="wrapper">
-      <TextField
-        fullWidth
-        id="outlined-select-currency"
-        select
-        value={backupAccount}
-        onChange={(e)=> setBackupAccount(e.target.value)}
-        helperText={`Please choose account to transfer your balance.`}
-      >
-        {accountsForTransfer.map((option) =>(
-          
-          <MenuItem key={uuidV4()} value={option.id}>
-            {option.name}
-          </MenuItem>
-        ))}
-      </TextField>
-    </Grid>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDeleteModal}>
-            Close
-          </Button>
-          <Button variant="primary" id="deleteConfirmBtn" onClick={()=>{
-    accountManager.transferAllFunds(AccountId,backupAccount)
-    deleteAccount(AccountId);
-}}>
-           Yes
-          </Button>
-        </Modal.Footer>
-      </Modal> 
-      :
-      <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
-      <Modal.Header closeButton></Modal.Header>
-<Modal.Body>
-<Typography>{`Are you sure you want to delete account ${accountName}`}</Typography>
-</Modal.Body>
-<Modal.Footer>
-<Button variant="secondary" onClick={handleCloseDeleteModal}>
-Close
-</Button>
-<Button variant="primary" id="deleteConfirmBtn" 
-onClick={()=>{
-    deleteAccount(AccountId);
-}}>
-Yes
-</Button>
-</Modal.Footer>
-</Modal>}
-<Modal show={openTransferModal} onHide={handleCloseTransferModal}>
-                     <Modal.Header closeButton></Modal.Header>
-        <Modal.Body>
-         <Typography className="transferMoneyLogo">{`Your current account balance is ${accountBalance} ${accountCurrency}.`}</Typography>
-         <div className="transferMoneyLogo">
-            <SwapHorizIcon></SwapHorizIcon>
-         <Typography variant="button">{`Transfer Money`}</Typography>
-         </div>
-         <Grid className="transferMoneywrapper">
-      <TextField
-        fullWidth
-        id="outlined-select-currency"
-        select
-        value={recipient}
-        onChange={(e)=> setRecipient(e.target.value)}
-        helperText={`Please choose account.`}
-      >
-        {accountsForTransfer.map((option) =>(
-          
-          <MenuItem key={uuidV4()} value={option.id}>
-            {option.name}
-          </MenuItem>
-        ))}
-      </TextField>
 
-      <TextField
-            required
-            fullWidth
-            type="number"
-            InputProps={{ inputProps: { min: 0, max:{accountBalance}}}}
-            id="outlined-number"
-            label="Amount"
-            placeholder="Enter amount"
-            onChange={(e)=> setTransferingAmount(e.target.value)}
-         />
-    </Grid>
+            {deleteOptions ?
+                <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
+                    <Modal.Header closeButton></Modal.Header>
+                    <Modal.Body>
+                        <Typography>{`Are you sure you want to delete account ${accountName}`}</Typography>
 
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseTransferModal}>
-            Cancel
-          </Button>
-          <Button variant="primary" id="transferMoneyBtn" onClick={()=>{
-    accountManager.ordinaryTransfer(AccountId,recipient, transferingAmount)
-    setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username))
-    setRecipient('')
-    setTransferingAmount(0)
-}}>
-           Transfer
-          </Button>
-        </Modal.Footer>
-      </Modal> 
+                        <Typography>{`You have ${accountBalance} ${accountCurrency} left in your account.`}</Typography>
+                        <Grid className="wrapper">
+                            <TextField
+                                fullWidth
+                                id="outlined-select-currency"
+                                select
+                                value={backupAccount}
+                                onChange={(e) => setBackupAccount(e.target.value)}
+                                helperText={`Please choose account to transfer your balance.`}
+                            >
+                                {accountsForTransfer.map((option) => (
+
+                                    <MenuItem key={uuidV4()} value={option.id}>
+                                        {option.name}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        </Grid>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                            Close
+                        </Button>
+                        <Button variant="primary" id="deleteConfirmBtn" onClick={() => {
+                            accountManager.transferAllFunds(AccountId, backupAccount)
+                            deleteAccount(AccountId);
+                        }}>
+                            Yes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+                :
+                <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
+                    <Modal.Header closeButton></Modal.Header>
+                    <Modal.Body>
+                        <Typography>{`Are you sure you want to delete account ${accountName}`}</Typography>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                            Close
+                        </Button>
+                        <Button variant="primary" id="deleteConfirmBtn"
+                            onClick={() => {
+                                deleteAccount(AccountId);
+                            }}>
+                            Yes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>}
+            <Modal show={openTransferModal} onHide={handleCloseTransferModal}>
+                <Modal.Header closeButton></Modal.Header>
+                <Modal.Body>
+                    <Typography className="transferMoneyLogo">{`Your current account balance is ${accountBalance} ${accountCurrency}.`}</Typography>
+                    <div className="transferMoneyLogo">
+                        <SwapHorizIcon></SwapHorizIcon>
+                        <Typography variant="button">{`Transfer Money`}</Typography>
+                    </div>
+                    <Grid className="transferMoneywrapper">
+                        <TextField
+                            fullWidth
+                            id="outlined-select-currency"
+                            select
+                            value={recipient}
+                            onChange={(e) => setRecipient(e.target.value)}
+                            helperText={`Please choose account.`}
+                        >
+                            {accountsForTransfer.map((option) => (
+
+                                <MenuItem key={uuidV4()} value={option.id}>
+                                    {option.name}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+
+                        <TextField
+                            required
+                            fullWidth
+                            type="number"
+                            InputProps={{ inputProps: { min: 0, max: { accountBalance } } }}
+                            id="outlined-number"
+                            label="Amount"
+                            placeholder="Enter amount"
+                            onChange={(e) => setTransferingAmount(e.target.value)}
+                        />
+                    </Grid>
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseTransferModal}>
+                        Cancel
+                    </Button>
+                    <Button variant="primary" id="transferMoneyBtn" onClick={() => {
+                        accountManager.ordinaryTransfer(AccountId, recipient, transferingAmount)
+                        setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username))
+                        setRecipient('')
+                        setTransferingAmount(0)
+                    }}>
+                        Transfer
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }

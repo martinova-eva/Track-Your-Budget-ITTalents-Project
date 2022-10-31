@@ -56,7 +56,7 @@ export const iconsArrOfObjects = [
     { title: "car supplies and renovation", tag: <CarRepairIcon key={uuidV4()} color="success" /> },
     { title: "car insurance", tag: <NoCrashIcon key={uuidV4()} color="success" /> },
     { title: 'events', tag: <EventAvailableIcon key={uuidV4()} color="success" /> },
-    { title: 'education', tag: <SchoolIcon color="success" /> },
+    { title: 'education', tag: <SchoolIcon key={uuidV4()} color="success" /> },
     { title: 'familly', tag: <FamilyRestroomIcon key={uuidV4()} color="success" /> },
     { title: 'kids', tag: <BabyChangingStationIcon key={uuidV4()} color="success" /> },
 ]
