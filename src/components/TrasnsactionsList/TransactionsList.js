@@ -56,7 +56,7 @@ export default function TransactionsList() {
         deleteOptions = true;
     }
   
-    //const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
+    const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10,};
     const [data, setData] = useState({
         labels: allTransactionForAccount.map(data => data.name),
         datasets: [{
@@ -167,8 +167,9 @@ export default function TransactionsList() {
                     {<MenuItem key={'income'} value={'income'} >{'Incomes'}</MenuItem>}
                     {<MenuItem key={'outcome'} value={'outcome'}>{'Expenses'}</MenuItem>}
                 </SelectElement>
-
-                <DateRangePicker size="lg" id="date-range-picker" 
+                    <Box id="date-range-picker" sx={{ borderColor: 'paper'}}>
+                <DateRangePicker size="lg"  
+                    style={stylesDatePicker}
                     value= {range}
                     onChange={(e) => {
                         let statisticData = accountManager.showStatisticsByDateRange(AccountId, e);
@@ -199,8 +200,7 @@ export default function TransactionsList() {
                     placeholder="Select Date Range"
                     format="dd-MM-yyyy"
                 />
-                
-                
+                </Box>
             </Box>
           
 

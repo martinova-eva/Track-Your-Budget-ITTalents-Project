@@ -141,4 +141,45 @@
 .transferMoneywrapper{
    padding:1rem;
 }
+#date-range-picker *{
+    color:#13b977 !important;
+    border-color: #13b977 !important;
+}
+#date-range-picker * :hover{
+    color:#13b977 !important;
+    border-color: #13b977 !important;
+}
+/* #date-range-picker * :active{
+    color:#13b977 !important;
+    border-color: #13b977 !important;
+}
+#date-range-picker * :focus{
+    color:#13b977 !important;
+    border-color: #13b977 !important;
+}
+#date-range-picker * :checked{
+    color:#13b977 !important;
+    border-color: #13b977 !important;
+}
+#date-range-picker * :link{
+    color:#13b977 !important;
+    border-color: #13b977 !important;
+} */
 
+/* #date-range-picker__day--selected:hover,
+#date-range-picker__day--in-selecting-range:hover,
+#date-range-picker__day--in-range:hover,
+#date-range-picker__month-text--selected:hover,
+#date-range-picker__month-text--in-selecting-range:hover,
+#date-range-picker__month-text--in-range:hover,
+#date-range-picker__quarter-text--selected:hover,
+#date-range-picker__quarter-text--in-selecting-range:hover,
+#date-range-picker__quarter-text--in-range:hover,
+#date-range-picker__year-text--selected:hover,
+#date-range-picker__year-text--in-selecting-range:hover,
+#date-range-picker__year-text--in-range:hover {
+  border: none;
+  border-color: #13b977 !important;
+  color:#13b977 !important;
+  
+} */
