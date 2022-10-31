@@ -219,6 +219,8 @@ export let accountManager = (function(){
                 let nameOfTransferAccount;
                 let transferAmount;
                 let transferCurrency;
+                let date = new Date();
+                let dateToString = `${date.getMonth() + 1}. ${date.getDate()}. ${date.getFullYear()}`;
                 accounts.map(a => {
                     if(a.id === transferId){
                         nameOfTransferAccount = a.name;
@@ -241,16 +243,26 @@ export let accountManager = (function(){
                                 transferAmount *= 1.01;
                             }
 
-                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, new Date(),'income', transferAmount , '', recipientId))
+                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, dateToString, transferAmount), "", recipientId)
                         }
                     })
+                }else{
+                    return false;
                 }
             }
-           localStorage.setItem('accounts', JSON.stringify(accounts)); 
+           localStorage.setItem('accounts', JSON.stringify(accounts));
+           return true; 
+        }
+        getCurrentDate(){
+            let date = new Date();
+            let dateToString = `${date.getMonth() + 1}. ${date.getDate()}. ${date.getFullYear()}`;
+            return dateToString;
         }
         ordinaryTransfer(transferId, recipientId, amount){
             let accounts = this.getAllAccounts();
             let status = false;
+            // let date = new Date();
+            // let dateToString = `${date.getMonth() + 1}. ${date.getDate()}. ${date.getFullYear()}`;
             if(transferId !== recipientId){
                 let nameOfTransferAccount;
                 let transferCurrency;
@@ -261,7 +273,7 @@ export let accountManager = (function(){
                             a.balance = Number(a.balance) - amount;
                             transferCurrency = a.currency;
                             a.transactions.push(new Transaction(`Money transfer to another account`, 
-                                                                    new Date(), 
+                                                                    this.getCurrentDate(), 
                                                                     'outcome', 
                                                                     amount, 
                                                                     '',
@@ -286,7 +298,7 @@ export let accountManager = (function(){
                                 amount *= 1.01;
                             }
                         a.balance = Number(a.balance) + amount;   
-                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, new Date(), "income", amount, "", recipientId))
+                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, this.getCurrentDate(), "income", amount, "", recipientId))
                         }
                     })
                 }
