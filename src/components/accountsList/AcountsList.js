@@ -59,18 +59,20 @@ export default function AccountsList() {
   const [data, setData] = useState({
     labels: statisticsData.map(data => data.name),
     datasets: [{
-        label: 'Balance',
+        label: 'All your accounts',
         data: statisticsData.map(data => data.balance),
         backgroundColor: [
             'rgb(255, 99, 132)',
-            'rgb(255,44,87)',
             'rgb(255,205,0)',
             'rgb(19,185,119)',
             'rgb(183,101,201)',
             'rgb(91,224,255)',
+            'rgb(218, 57, 80)',
             'rgb(43,174,246)',
             'rgb(255,161,1)',
+            'rgb(255,44,87)',
             'rgb(66,205,0)',
+            'rgb(54, 122, 255)',
         ],
         hoverOffset: 4
     }]
@@ -173,7 +175,7 @@ export default function AccountsList() {
             </Modal>
           </AccordionSummary>
         </Accordion>
-        <BarChart data={data}></BarChart>
+        {statisticsData ? <BarChart data={data}></BarChart> : null}
       </div>
     </>
   );
