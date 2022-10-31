@@ -329,6 +329,10 @@ export let accountManager = (function(){
         }
         addTransaction(name, date, type, amount, description, title, accountsId, owner){
             let accounts = this.getAllAccounts();
+            
+            if(date.includes('undefined')){
+                date = this.getCurrentDate();
+            }
             let transaction = new Transaction(name, date, type, amount, description, title, accountsId);
             accounts.map(a => {
                 if(a.id === accountsId){
