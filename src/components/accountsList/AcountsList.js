@@ -19,6 +19,7 @@ import { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DropDownOptions from '../CheckingAccountForm/dropDownOptions';
 import Target from '../target/target';
+import BarChart from '../TrasnsactionsList/barChart';
 
 
 const style = {
@@ -34,88 +35,107 @@ export default function AccountsList() {
   const [show, setShow] = useState(false);  //bt
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const[backupAccount, setBackupAccount] = useState('');
+  const [backupAccount, setBackupAccount] = useState('');
 
 
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);  
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const handleCloseDeleteModal = () => setOpenDeleteModal(false);
   const handleOpenDeleteModal = () => setOpenDeleteModal(true);
   // const [accounts, setAccounts] = useState(accountManager.getAllUserAccounts(owner.username));
   // const [savingsAccounts, setSavingsAccounts] = useState( accountManager.getAllSavingsAccounts(owner.username));
 
-  
-const accounts = accountManager.getAllUserAccounts(owner.username);
-const savingsAccounts = accountManager.getAllSavingsAccounts(owner.username);
-const savingsAccount = accountManager.checkForSavingsAccount(owner.username);
-const deleteAccount=()=>{
-  if(savingsAccount){
-    accountManager.removeSavingsAccount((savingsAccounts[0].id));
-  navigate('/home');
-}
+
+  const accounts = accountManager.getAllUserAccounts(owner.username);
+  const savingsAccounts = accountManager.getAllSavingsAccounts(owner.username);
+  const savingsAccount = accountManager.checkForSavingsAccount(owner.username);
+  const deleteAccount = () => {
+    if (savingsAccount) {
+      accountManager.removeSavingsAccount((savingsAccounts[0].id));
+      navigate('/home');
+    }
 
   }
-
+  let statisticsData = accountManager.showStatisticsByAccounts(owner.username);
+  const [data, setData] = useState({
+    labels: statisticsData.map(data => data.name),
+    datasets: [{
+        label: 'Balance',
+        data: statisticsData.map(data => data.balance),
+        backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255,44,87)',
+            'rgb(255,205,0)',
+            'rgb(19,185,119)',
+            'rgb(183,101,201)',
+            'rgb(91,224,255)',
+            'rgb(43,174,246)',
+            'rgb(255,161,1)',
+            'rgb(66,205,0)',
+        ],
+        hoverOffset: 4
+    }]
+});
 
 
 
 
   return (
     <>
-    <Target savingsAccount={savingsAccount}></Target>
-    <div className="accountsWrapper" >
-      <div className='accountsImageHeader'>
-        <Typography variant="h5" >
-          Your accounts
-        </Typography>
-      </div>
+      <Target savingsAccount={savingsAccount}></Target>
+      <div className="accountsWrapper" >
+        <div className='accountsImageHeader'>
+          <Typography variant="h5" >
+            Your accounts
+          </Typography>
+        </div>
 
-      {accounts.map(account => (
-        <Accordion 
-          key={account.id}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography  onClick={(e)=>{
-              navigate(`/transactions/${account.id}`)
-            }}
-            >{`Checking account: ${account.name}`}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-          
-            <Typography className='accountBalanceShortList' variant="subtitle2">{`Account balance: ${account.balance} ${account.currency}`}</Typography>
-            
-            <ShortTransactionsList id={account.id} />
-          </AccordionDetails>
-        </Accordion>))}
+        {accounts.map(account => (
+          <Accordion
+            key={account.id}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography onClick={(e) => {
+                navigate(`/transactions/${account.id}`)
+              }}
+              >{`Checking account: ${account.name}`}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
 
-        
-        
+              <Typography className='accountBalanceShortList' variant="subtitle2">{`Account balance: ${account.balance} ${account.currency}`}</Typography>
+
+              <ShortTransactionsList id={account.id} />
+            </AccordionDetails>
+          </Accordion>))}
+
+
+
         {savingsAccounts.map(account => (
-        <Accordion
-        expanded={false}
-          key={account.id}
-         >
-            
-          <AccordionSummary
-           expandIcon={ <div id='deleteSavingsIcon'>
-           <IconButton 
-            aria-label="delete" size="small" onClick={handleOpenDeleteModal} >
+          <Accordion
+            expanded={false}
+            key={account.id}
+          >
 
-                 <DeleteIcon fontSize="inherit" />
-             </IconButton>
-             </div>}>
-            <Typography>{`Savings account: ${account.name}`}</Typography>
-          </AccordionSummary>
-        </Accordion>))}
+            <AccordionSummary
+              expandIcon={<div id='deleteSavingsIcon'>
+                <IconButton
+                  aria-label="delete" size="small" onClick={handleOpenDeleteModal} >
+
+                  <DeleteIcon fontSize="inherit" />
+                </IconButton>
+              </div>}>
+              <Typography>{`Savings account: ${account.name}`}</Typography>
+            </AccordionSummary>
+          </Accordion>))}
 
         <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
-                     <Modal.Header closeButton></Modal.Header>
-        <Modal.Body>
-        <Typography>{`Are you sure you want to delete your savings account?`}</Typography>
-        
-        {/* <Typography>{`You have ${savingsAccounts[0].balance} ${savingsAccounts[0].currency} left in your account.`}</Typography>
+          <Modal.Header closeButton></Modal.Header>
+          <Modal.Body>
+            <Typography>{`Are you sure you want to delete your savings account?`}</Typography>
+
+            {/* <Typography>{`You have ${savingsAccounts[0].balance} ${savingsAccounts[0].currency} left in your account.`}</Typography>
         <DropDownOptions    
             fullWidth
             helperText={`Please choose account to transfer your balance.`}
@@ -123,37 +143,38 @@ const deleteAccount=()=>{
             value={backupAccount}
             handleChange={(e)=> setBackupAccount(e.target.value)}>
             </DropDownOptions> */}
-      
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDeleteModal}>
-            Close
-          </Button>
-          <Button variant="primary" id="deleteConfirmBtn" onClick={deleteAccount}>
-           Yes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseDeleteModal}>
+              Close
+            </Button>
+            <Button variant="primary" id="deleteConfirmBtn" onClick={deleteAccount}>
+              Yes
+            </Button>
+          </Modal.Footer>
+        </Modal>
 
 
 
 
-      <Accordion expanded={true}>
-        <AccordionSummary >
-          <Typography onClick={handleShow}>
-            <AddCircleOutlineIcon className="addNewIcon" />
-            Add new account
-          </Typography>
-          <Modal show={show} onHide={handleClose}>
-          <Box sx={{ borderColor: 'paper', boxShadow: 20, display: "flex", flexDirection: 'column'}}>
-        <Modal.Header closeButton>    
-        </Modal.Header>
-        <Modal.Body><CreateCheckingAccount onClose={handleClose} /></Modal.Body>
-        </Box>
-      </Modal>
-        </AccordionSummary>
-      </Accordion>
-    </div>
+        <Accordion expanded={true}>
+          <AccordionSummary >
+            <Typography onClick={handleShow}>
+              <AddCircleOutlineIcon className="addNewIcon" />
+              Add new account
+            </Typography>
+            <Modal show={show} onHide={handleClose}>
+              <Box sx={{ borderColor: 'paper', boxShadow: 20, display: "flex", flexDirection: 'column' }}>
+                <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body><CreateCheckingAccount onClose={handleClose} /></Modal.Body>
+              </Box>
+            </Modal>
+          </AccordionSummary>
+        </Accordion>
+        <BarChart data={data}></BarChart>
+      </div>
     </>
   );
 }

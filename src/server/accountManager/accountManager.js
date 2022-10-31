@@ -61,6 +61,12 @@ export let accountManager = (function(){
             this.title = title;
         }
     }
+    class AccountObj{
+        constructor(name, balance){
+            this.name = name;
+            this.balance= balance;
+        }
+    }
     class AccountManager {
             
         constructor() {
@@ -94,6 +100,14 @@ export let accountManager = (function(){
                 }
             })
             return userAccounts;
+        }
+        showStatisticsByAccounts(owner){
+            let allAccounts = this.getAllUserAccounts(owner);
+            let statisticData = [];
+            allAccounts.map(a => {
+                statisticData.push(new AccountObj(a.name, a.balance));
+            })
+            return statisticData;
         }
         checkAccountBalance(accountId, owner){
             let userAccounts = this.getAllUserAccounts(owner);
