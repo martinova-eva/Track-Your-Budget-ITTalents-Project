@@ -261,8 +261,6 @@ export let accountManager = (function(){
         ordinaryTransfer(transferId, recipientId, amount){
             let accounts = this.getAllAccounts();
             let status = false;
-            // let date = new Date();
-            // let dateToString = `${date.getMonth() + 1}. ${date.getDate()}. ${date.getFullYear()}`;
             if(transferId !== recipientId){
                 let nameOfTransferAccount;
                 let transferCurrency;

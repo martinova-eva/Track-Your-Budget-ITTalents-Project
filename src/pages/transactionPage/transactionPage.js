@@ -40,7 +40,7 @@ export default function TransactionPage() {
         setSelectedAccount('');
         setTypeOfTransaction('');
         setCategoryName('');
-        setDate(new Date());
+        setDate(accountManager.getCurrentDate());
         setDescription('');
         setIconTitle('');
         setAmount('');
@@ -53,8 +53,7 @@ export default function TransactionPage() {
         setSelectedAccount('');
         setTypeOfTransaction('');
         setCategoryName('');
-        setDate(new Date());
-        setDescription('');
+        setDate(accountManager.getCurrentDate());
         setIconTitle('');
         setAmount('');
       } else {

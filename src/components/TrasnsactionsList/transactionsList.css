@@ -141,6 +141,10 @@
 .transferMoneywrapper{
    padding:1rem;
 }
+#date-range-picker{
+    color:#13b977 !important;
+    border-color: #13b977 !important;
+}
 #date-range-picker *{
     color:#13b977 !important;
     border-color: #13b977 !important;

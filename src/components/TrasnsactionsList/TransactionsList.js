@@ -56,7 +56,7 @@ export default function TransactionsList() {
         deleteOptions = true;
     }
   
-    const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10,};
+    const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10};
     const [data, setData] = useState({
         labels: allTransactionForAccount.map(data => data.name),
         datasets: [{
