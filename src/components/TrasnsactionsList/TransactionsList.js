@@ -230,6 +230,7 @@ export default function TransactionsList() {
     rows={transactions} 
     AccountId = {AccountId}
     setTransactions = {setTransactions}
+    setAccountBalance = {setAccountBalance}
     accountCurrency = {accountCurrency}
     >
 

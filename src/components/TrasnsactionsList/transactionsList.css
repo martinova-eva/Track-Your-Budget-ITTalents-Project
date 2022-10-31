@@ -43,7 +43,7 @@
 #incomes-btn{
     color:#13b977;
     background-color:white;
-    margin: 0 1vw;
+    margin: 1vh 1vw;
 }
 #category-btn{
     color:#13b977;
@@ -60,8 +60,6 @@
 #clear-filters-btn{
     color:#13b977;
     background-color:white;
-    /* min-width: 15vw;
-    max-width: 20vw; */
 }
 #date-range-picker{
     min-width: 15vw;
@@ -125,7 +123,7 @@
 #delete-btn{
     color:rgb(251,103,103);
     background-color:white;
-    margin: 0 1vw;
+    margin: 1vh 1vw;
 }
 #selectorForCategories{
     width: 50rem;

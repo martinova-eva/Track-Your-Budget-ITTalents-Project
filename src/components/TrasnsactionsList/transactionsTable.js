@@ -139,7 +139,7 @@ EnhancedTableHead.propTypes = {
 
 
 
-export default function EnhancedTable({rows, AccountId, setTransactions, accountCurrency}) {
+export default function EnhancedTable({rows, AccountId, setTransactions, accountCurrency, setAccountBalance}) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -269,7 +269,8 @@ export default function EnhancedTable({rows, AccountId, setTransactions, account
                       <TableCell align="left">
                       <IconButton aria-label="delete" size="small" onClick={() => {
                   accountManager.removeTransaction(row.id, AccountId, owner.username); 
-                  setTransactions(accountManager.getFormatedTransactions(AccountId))
+                  setTransactions(accountManager.getFormatedTransactions(AccountId));
+                  setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username));
 
               }}>
                   <DeleteIcon fontSize="inherit" />
