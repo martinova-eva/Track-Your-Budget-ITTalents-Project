@@ -573,6 +573,16 @@ export let accountManager = (function(){
             })
             return(filteredAccounts);
         }
+        checkForTag(name){
+            let allCategories = this.getAllCategories();
+            let tag;
+            allCategories.map(c => {
+                if(c.title === name){
+                    tag = c.tag;
+                }
+            });
+            return tag;
+        }
     }
     return new AccountManager()
 

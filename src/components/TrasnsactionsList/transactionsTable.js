@@ -246,8 +246,8 @@ export default function EnhancedTable({rows, AccountId, setTransactions, account
                               return icon.tag;
                           }else if( row.name.toLowerCase().includes('transfer')){
                             return <SwapHorizIcon key={uuidV4()} color="success"/>
-                          }else{
-                            
+                          }else if(accountManager.checkForTag(row.name.toLowerCase()) === icon.title.toLowerCase()){
+                            return icon.tag;
                           }
                       })
                       }
