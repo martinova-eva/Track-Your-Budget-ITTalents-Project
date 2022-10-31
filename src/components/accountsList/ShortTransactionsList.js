@@ -11,7 +11,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 
 
 export default function ShortTransactionsList({ id }) {
@@ -46,8 +46,12 @@ export default function ShortTransactionsList({ id }) {
                 <div className="shortListCategoryWrapper">
             <Icon className="shortListIcon" >
                 {iconsArrOfObjects.map(icon => {
-                    if (icon.title.toLowerCase() === row.name.toLowerCase()) {
-                        return icon.tag;
+                        if (icon.title.toLowerCase() === row.name.toLowerCase()) {
+                            return icon.tag;
+                        }else if( row.name.toLowerCase().includes('transfer')){
+                            return <SwapHorizIcon key={uuidV4()} color="success"/>
+                        }else if(accountManager.checkForTag(row.name.toLowerCase()) === icon.title.toLowerCase()){
+                            return icon.tag;
                         }
                     })
                 }

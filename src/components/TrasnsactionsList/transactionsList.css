@@ -43,6 +43,7 @@
 #incomes-btn{
     color:#13b977;
     background-color:white;
+    margin: 0 1vw;
 }
 #category-btn{
     color:#13b977;
@@ -81,8 +82,9 @@
     
 }
 .pieChart{
-    height: 25rem;
+    width: 30vw;
 }
+
 .shortListIcon{
     height: 2rem;
 }
@@ -123,6 +125,7 @@
 #delete-btn{
     color:rgb(251,103,103);
     background-color:white;
+    margin: 0 1vw;
 }
 #selectorForCategories{
     width: 50rem;
@@ -141,7 +144,7 @@
 .transferMoneywrapper{
    padding:1rem;
 }
-#date-range-picker{
+#date-range-picker {
     color:#13b977 !important;
     border-color: #13b977 !important;
 }

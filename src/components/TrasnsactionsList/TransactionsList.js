@@ -78,6 +78,25 @@ export default function TransactionsList() {
     });
     const showAll= ()=>{
         setTransactions(accountManager.getFormatedTransactions(AccountId));
+        setData({
+            labels: allTransactionForAccount.map(data => data.name),
+            datasets: [{
+                label: '',
+                data: allTransactionForAccount.map(data => data.value),
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255,44,87)',
+                    'rgb(255,205,0)',
+                    'rgb(19,185,119)',
+                    'rgb(183,101,201)',
+                    'rgb(91,224,255)',
+                    'rgb(43,174,246)',
+                    'rgb(255,161,1)',
+                    'rgb(66,205,0)',
+                ],
+                hoverOffset: 4
+            }]
+        })
     }
     const deleteAccount=()=>{
         accountManager.removeAccount(AccountId);
