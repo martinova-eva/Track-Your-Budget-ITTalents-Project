@@ -173,7 +173,6 @@ export default function TransactionsList() {
                     value= {range}
                     onChange={(e) => {
                         let statisticData = accountManager.showStatisticsByDateRange(AccountId, e);
-
                         setTransactions(statisticData);
                         let chartData = accountManager.showStatisticsByDateRangeForChart(statisticData);
                         setData({

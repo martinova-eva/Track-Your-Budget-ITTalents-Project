@@ -243,7 +243,11 @@ export let accountManager = (function(){
                                 transferAmount *= 1.01;
                             }
 
-                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, dateToString, transferAmount), "", recipientId)
+                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, dateToString, transferAmount), "", recipientId);
+                        a.transactions.sort(function(a, b){
+                            return new Date(b.date) - new Date(a.date);
+                        });
+                
                         }
                     })
                 }else{
@@ -278,6 +282,9 @@ export let accountManager = (function(){
                                                                     '', 
                                                                     a.id));
                             status = true;
+                            a.transactions.sort(function(a, b){
+                                return new Date(b.date) - new Date(a.date);
+                            });
                         }
                     }
                 })
@@ -296,7 +303,10 @@ export let accountManager = (function(){
                                 amount *= 1.01;
                             }
                         a.balance = Number(a.balance) + amount;   
-                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, this.getCurrentDate(), "income", amount, "", recipientId))
+                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, this.getCurrentDate(), "income", amount, "", recipientId));
+                        a.transactions.sort(function(a, b){
+                            return new Date(b.date) - new Date(a.date);
+                        });
                         }
                     })
                 }

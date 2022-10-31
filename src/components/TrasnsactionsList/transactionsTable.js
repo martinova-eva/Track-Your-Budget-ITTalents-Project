@@ -25,6 +25,8 @@ import { Icon } from '@mui/material';
 import { iconsArrOfObjects } from '../categoryCreator/icons';
 import { accountManager } from '../../server/accountManager/accountManager';
 import { useSelector } from "react-redux";
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import { v4 as uuidV4 } from 'uuid';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -242,6 +244,10 @@ export default function EnhancedTable({rows, AccountId, setTransactions, account
                       {iconsArrOfObjects.map(icon => {
                           if (icon.title.toLowerCase() === row.name.toLowerCase()) {
                               return icon.tag;
+                          }else if( row.name.toLowerCase().includes('transfer')){
+                            return <SwapHorizIcon key={uuidV4()} color="success"/>
+                          }else{
+                            
                           }
                       })
                       }
