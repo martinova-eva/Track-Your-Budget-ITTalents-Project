@@ -177,6 +177,9 @@ export let accountManager = (function(){
                     })
                 }
             })
+            statisticData.sort(function(a, b){
+                return new Date(b.date) - new Date(a.date);
+            });
             return statisticData;
         }
         showStatisticsByDateRangeForChart(arrOfTransactions){
