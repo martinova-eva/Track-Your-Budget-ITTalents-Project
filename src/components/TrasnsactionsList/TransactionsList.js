@@ -50,7 +50,8 @@ export default function TransactionsList() {
     const[backupAccount, setBackupAccount] = useState('');
     const[recipient, setRecipient] = useState('');
     const[transferingAmount, setTransferingAmount] = useState(0);
-    let accountsForTransfer = accountManager.getAccountsForTransfer(AccountId)
+    let accountsForTransfer = accountManager.getAccountsForTransfer(AccountId, owner.username)
+    
    let deleteOptions = false;
     if(accountBalance>0){
         deleteOptions = true;
@@ -76,6 +77,7 @@ export default function TransactionsList() {
             hoverOffset: 4
         }]
     });
+    console.log(recipient);
     const showAll= ()=>{
         setTransactions(accountManager.getFormatedTransactions(AccountId));
     }
@@ -246,9 +248,9 @@ export default function TransactionsList() {
 <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
                      <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
-        <Typography>{`Are you sure you want to delete account ${accountName}`}</Typography>
+        <Typography>{`Are you sure you want to delete your savings account?`}</Typography>
         
-         <Typography>{`You have ${accountBalance} ${accountCurrency} left in your account.`}</Typography>
+         {/* <Typography>{`You have ${accountBalance} ${accountCurrency} left in your account.`}</Typography> */}
          <Grid className="wrapper">
       <TextField
         fullWidth
@@ -344,6 +346,7 @@ Yes
     setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username))
     setRecipient('')
     setTransferingAmount(0)
+    handleCloseTransferModal()
 }}>
            Transfer
           </Button>

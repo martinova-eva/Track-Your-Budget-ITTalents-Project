@@ -13,12 +13,14 @@ import CreateCheckingAccount from '../CheckingAccountForm/CheckingAccountForm';
 import { accountManager } from '../../server/accountManager/accountManager';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Button, Paper, IconButton } from '@mui/material';
+import { Button, Paper, IconButton, Grid, TextField, MenuItem } from '@mui/material';
 import { Modal } from 'react-bootstrap';
 import { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DropDownOptions from '../CheckingAccountForm/dropDownOptions';
 import Target from '../target/target';
+import { Troubleshoot } from '@mui/icons-material';
+import { v4 as uuidV4 } from 'uuid';
 
 
 const style = {
@@ -40,20 +42,40 @@ export default function AccountsList() {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);  
   const handleCloseDeleteModal = () => setOpenDeleteModal(false);
   const handleOpenDeleteModal = () => setOpenDeleteModal(true);
-  // const [accounts, setAccounts] = useState(accountManager.getAllUserAccounts(owner.username));
-  // const [savingsAccounts, setSavingsAccounts] = useState( accountManager.getAllSavingsAccounts(owner.username));
+ 
 
   
 const accounts = accountManager.getAllUserAccounts(owner.username);
 const savingsAccounts = accountManager.getAllSavingsAccounts(owner.username);
 const savingsAccount = accountManager.checkForSavingsAccount(owner.username);
-const deleteAccount=()=>{
-  if(savingsAccount){
-    accountManager.removeSavingsAccount((savingsAccounts[0].id));
-  navigate('/home');
+let transferingOptions = false;
+let savingsBalance = 0;
+let savingsCurrency = '';
+let savingsId = '';
+if(savingsAccount){
+  savingsBalance = savingsAccount.balance;
+  savingsCurrency = savingsAccount.currency;
+  savingsId = savingsAccount.id;
+  if(savingsBalance>0 && accounts){
+    transferingOptions = true;
+  }
+
 }
 
+const deleteAccount=(savingsId)=>{
+  if(savingsAccount){
+    accountManager.removeSavingsAccount((savingsId));
+  navigate('/home');
+}
   }
+  const deleteAndTransfer = (savingsId, recipientId) => {
+    if (savingsAccount) {
+      accountManager.transferAllFunds(savingsId, recipientId)
+      accountManager.removeSavingsAccount((savingsId));
+      navigate('/home');
+    }
+  }
+
 
 
 
@@ -80,7 +102,7 @@ const deleteAccount=()=>{
             <Typography  onClick={(e)=>{
               navigate(`/transactions/${account.id}`)
             }}
-            >{`Checking account: ${account.name}`}</Typography>
+            >{`${account.name}`}</Typography>
           </AccordionSummary>
           <AccordionDetails>
           
@@ -110,34 +132,61 @@ const deleteAccount=()=>{
           </AccordionSummary>
         </Accordion>))}
 
-        <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
+
+
+        {transferingOptions ? 
+<Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
                      <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
-        <Typography>{`Are you sure you want to delete your savings account?`}</Typography>
+        <Typography>{`Are you sure you want to delete account your savings account?`}</Typography>
         
-        {/* <Typography>{`You have ${savingsAccounts[0].balance} ${savingsAccounts[0].currency} left in your account.`}</Typography>
-        <DropDownOptions    
-            fullWidth
-            helperText={`Please choose account to transfer your balance.`}
-            arr={accounts}
-            value={backupAccount}
-            handleChange={(e)=> setBackupAccount(e.target.value)}>
-            </DropDownOptions> */}
-      
+         <Typography>{`You have ${savingsBalance} ${savingsCurrency} left in your account.`}</Typography>
+         <Grid className="wrapper">
+      <TextField
+        fullWidth
+        id="outlined-select-currency"
+        select
+        value={backupAccount}
+        onChange={(e)=> setBackupAccount(e.target.value)}
+        helperText={`Please choose account to transfer your balance.`}
+      >
+        {accounts.map((option) =>(
+          
+          <MenuItem key={uuidV4()} value={option.id}>
+            {option.name}
+          </MenuItem>
+        ))}
+      </TextField>
+    </Grid>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseDeleteModal}>
             Close
           </Button>
-          <Button variant="primary" id="deleteConfirmBtn" onClick={deleteAccount}>
+          <Button variant="primary" id="deleteConfirmBtn" onClick={deleteAndTransfer}>
            Yes
           </Button>
         </Modal.Footer>
-      </Modal>
 
+      </Modal> : 
+      <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
+      <Modal.Header closeButton></Modal.Header>
+<Modal.Body>
+<Typography>{`Are you sure you want to delete account your savings account?`}</Typography>
+</Modal.Body>
+<Modal.Footer>
+<Button variant="secondary" onClick={handleCloseDeleteModal}>
+Close
+</Button>
+<Button variant="primary" id="deleteConfirmBtn" 
+onClick={deleteAccount(savingsId)}>
+Yes
+</Button>
+</Modal.Footer>
+</Modal>
+}
 
-
-
+      
       <Accordion expanded={true}>
         <AccordionSummary >
           <Typography onClick={handleShow}>

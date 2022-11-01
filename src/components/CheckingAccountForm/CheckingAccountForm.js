@@ -21,48 +21,32 @@ export default function CreateCheckingAccount() {
    const [target, setTarget] = useState('');
    const [percentage, setPercentage] = useState('');
    const [icon, setIcon] = useState('');
-   const navigate = useNavigate();
-   const dispatch = useDispatch();
+   
 
    const user = useSelector(state => state.activeUser);
    const checkingAccount = useSelector(state => state.createCheckingAccount)
    const owner = user.username;
-   const accountCreated = checkingAccount.accountCreated;
-  
-
-   // useEffect(()=>{
-
-   //    return () => {
-   //       dispatch(udateAccountCreationStatus())
-   //    }
-   // },[])
+   const navigate = useNavigate();
+   const dispatch = useDispatch();
    
- 
    
    const handleDispatch = ()=> {
-      if(type === "checking"){
+      if(type === "checking"){  
          dispatch(create({owner, accountName, currency, accountStartAmount}))
-         navigate('/home');  
          setAccountName('');
          setCurrency('');
-         setAccountStartAmount('');
-         
-
+         setAccountStartAmount('');   
       }
       if(type === "savings"){
          dispatch(createSavingsAccount({owner, accountName, currency, target , accountStartAmount, percentage, icon}))
-         navigate('/home');  
          setAccountName('');
          setCurrency('');
          setAccountStartAmount('');
          setTarget('');
          setPercentage('');
-         setIcon('');
+         setIcon('');  
       }
-      if(accountCreated){
-         navigate('/home'); 
-      }
-      
+        
    }
   
    const currencies = [
@@ -229,16 +213,14 @@ export default function CreateCheckingAccount() {
                 type="button"
                 variant="contained" 
                 size="large" 
-                id="submitButton" 
-                onClick={handleDispatch}
+                id="createButton" 
+                onClick={()=>{
+                  handleDispatch();
+                  navigate('/home')
+                }}
                  >
                   Create new account
                   </Button>
-                 
-                {/* <Typography className="accountMessage" variant="h5" gutterBottom>
-              {accountCreated ? 'You created new account' : null}
-                </Typography>   */}
-
             </form>
          
          </div>

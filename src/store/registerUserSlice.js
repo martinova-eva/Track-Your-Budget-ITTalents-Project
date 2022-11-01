@@ -41,7 +41,9 @@ export const registerUser = createAsyncThunk(
       const data = await response.json()
       if (!response.ok) {
         return thunkAPI.rejectWithValue('This username already exist')
-      } 
+      } else{
+        return data;
+      }
     } catch (error) {
 
       return thunkAPI.rejectWithValue('This username already exist')
@@ -55,34 +57,29 @@ export const registerUserSlice = createSlice({
   name: 'registerUser',
   initialState,
   reducers: {
-    changeUserData: (state, action) => {
-      state.username = action.payload.username;
-      state.password = action.payload.password;
+    changeUsernameStatus: (state,action) => {
+      state.usernameTaken = action.payload;
     }
   },
   extraReducers: (builder) => {
     builder.addCase(registerUser.fulfilled, (state, action) => {
       console.log("yes")
         state.userLoading = false;
-        state.usernameTaken = false;
-      
-        
+        state.usernameTaken = false;    
     })
     builder.addCase(registerUser.rejected, (state, action) => {
       console.log("x")
       state.userLoading = false;
-      state.usernameTaken = true;
-      
+      state.usernameTaken = true;    
     })
     builder.addCase(registerUser.pending, (state, action) => {
       state.userLoading = true;
-      state.usernameTaken = false;
-      
+      state.usernameTaken = false;  
     })
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { changeUserData } = registerUserSlice.actions
+export const { changeUsernameStatus } = registerUserSlice.actions
 
 export default registerUserSlice.reducer;

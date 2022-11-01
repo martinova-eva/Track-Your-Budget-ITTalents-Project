@@ -32,22 +32,15 @@ export default function LoginForm() {
       dispatch(loginUser({ username, password }));
       setUsername('');
       setPassword('');
-
    }
    else 
       helperText = "Required field";
       error = true
-   
-  
    }
-   
    if (wrongCredentials) {
       helperText = "Wrong Credentials";
       error = true
-   }
-
- 
-   else {
+   }else {
       error = false
       helperText = "";
    }
@@ -59,10 +52,7 @@ export default function LoginForm() {
             <Typography className="formHeader" variant="h4" >
                Sign in
             </Typography>
-
             <FormControl className="formStyle" fullWidth variant="outlined">
-               {/* <form className="formStyle"> */}
-
                <TextField
                   required 
                   fullWidth

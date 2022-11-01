@@ -8,7 +8,6 @@ const initialState = {
   currency: '',
   accountStartAmount: '',
   transactions: [],
-  accountCreated: false,
 }
 
 export const checkingAccountSlice = createSlice({
@@ -21,14 +20,10 @@ export const checkingAccountSlice = createSlice({
       state.currency = action.payload.currency;
       state.accountStartAmount = action.payload.accountStartAmount;
       if (state.accountName && state.currency && state.accountStartAmount) {
-        accountManager.addAccount(state.owner, state.accountName, state.currency, state.accountStartAmount);
-        state.accountCreated = true;
+        accountManager.addAccount(state.owner, state.accountName, state.currency, state.accountStartAmount);  
       }
     },
-    udateAccountCreationStatus: (state) => {
-      state.accountCreated = false;
-    }
-
+   
   },
 })
 

@@ -33,6 +33,7 @@ useEffect(()=>{
   const handleLogout = ()=> {
     userManager.logoutFromStorage();
     dispatch(logOutUser(sessionId));
+
      
   }
     return (
@@ -74,7 +75,7 @@ useEffect(()=>{
                   type="button"
                   variant="contained"
                   size="large"
-                  id="submitButton"
+                  id="logOutButton"
                   onClick={handleLogout}
                >Logout</Button>
                 

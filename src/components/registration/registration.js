@@ -3,66 +3,88 @@ import { Avatar, Button, Grid, Paper, TextField, Typography } from "@mui/materia
 import PasswordFields from "./passowrdField";
 import { Link, useNavigate } from "react-router-dom";
 import "./registration.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userManager } from "../../server/userManager/userManager";
-import { registerUser as registerNewUser } from "../../store/registerUserSlice";
+import { registerUser as registerNewUser, changeUsernameStatus } from "../../store/registerUserSlice";
+import { Home } from "@mui/icons-material";
+
+
 
 export default function RegistrationForm() {
-
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
    const [confirmPass, setConfirmPass] = useState('');
    const user = useSelector(state => state.registerUser);
    const usernameTaken = user.usernameTaken;
-  
+   const [passDontMatch, setPassDontMatch] = useState(false);
+   const [userNameTakenError, setUserNameTakenError] = useState(false);
+   const[helperText,setHelperText] = useState("Password must be at least 6 letters");
+   const[helperTextUsername, setHelperTextUsername] = useState("Username must be 3-16 letters")
 
-   let passDontMatch = false;
-   let userNameTakenError = false;
-   let helperText = "Password must be at least 6 letters";
-   let helperTextUsername = "Username must be 3-16 letters";
    const navigate = useNavigate();
    const dispatch = useDispatch();
 
-
-      ///^(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[!@#$%]).{6,16}$/
 const regex = '^[A-Za-z0-9]{3,16}$';
 const regexPass = '^[A-Za-z0-9]{6,16}$' ;
  const validUsername = username.match(regex);
  const validPassword = password.match(regexPass);
 
 
-   if (password && confirmPass) {
-      if (password !== confirmPass) {
-         passDontMatch = true;
-         helperText = "Passwords do not match";
+ useEffect(()=>{
+   if(username || password || confirmPass ){
+      if(!validUsername){
+         setUserNameTakenError(true)
+      }
+      if(validUsername){
+         setUserNameTakenError(false)
+      }
+      if(validPassword){
+         setPassDontMatch(false);
+         
+      }
+      if(password !== confirmPass){
+         setPassDontMatch(true);
+         setHelperText("Passwords do not match")
+      }
+      if(!validPassword){
+         setPassDontMatch(true);
+         setHelperText("Password must be at least 6 letters");
+
+      }else{
+         setPassDontMatch(false);
+         setHelperText("Password must be at least 6 letters");
       }
    }
-   if(usernameTaken){
-      userNameTakenError = true;
-      helperTextUsername = "This username is taken";
-   }
   
-   if(!validUsername){
-      userNameTakenError = true;
+ 
+ },[username, password])
+
+ useEffect(()=>{
+   
+   if(usernameTaken){
+      setHelperTextUsername("This username is taken");
+      setUserNameTakenError(true); 
    }
  
-   if(!validPassword){
-      passDontMatch = true;
-   }
+ },[usernameTaken])
+
+
+ 
  
 
    const handleRegister = () => {
       if(validUsername && validPassword){
-         dispatch(registerNewUser({ username, password }));
-         navigate('/login');
-         setUsername('');
-         setPassword('');
-         setConfirmPass('');
-      }
-      if(!usernameTaken){
-          navigate('/login');
-      }
+         dispatch(registerNewUser({ username, password }))
+         .then((data)=>{
+            console.log(data);
+            if(data.type !== "register/rejected"){
+               navigate('/login')
+            }
+            
+
+         })
+      } 
+   
    }
 
  
@@ -81,8 +103,8 @@ const regexPass = '^[A-Za-z0-9]{6,16}$' ;
                   helperText={ helperTextUsername}
                   fullWidth
                   id="outlined-required"
-                  label="Name"
-                  placeholder="Enter your name"
+                  label="Username"
+                  placeholder="Enter your username"
                   value={username}
                   onChange={e => setUsername(e.target.value.trim())}
                />

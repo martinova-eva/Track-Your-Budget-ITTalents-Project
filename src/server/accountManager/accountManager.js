@@ -543,14 +543,18 @@ export let accountManager = (function(){
             });
             return accountName;
         }
-        getAccountsForTransfer(accountId){
-            let accounts = this.getAllAccounts()
+        getAccountsForTransfer(accountId, owner){
+            let accounts = this.getAllAccounts();
+            let savingsAccount = this.checkForSavingsAccount(owner)
             let filteredAccounts = [];
             accounts.map(ac => {
                 if(ac.id !== accountId){
                     filteredAccounts.push(ac)
                 }
             })
+            if(savingsAccount){
+                filteredAccounts.push(savingsAccount)
+            }
             return(filteredAccounts);
         }
     }

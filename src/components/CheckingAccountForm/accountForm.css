@@ -19,11 +19,6 @@
     display: flex;
     flex-wrap: wrap;
 }
-
-#submitButton {
-    background-color: #13b977;
-}
-
 .closeIconContainer {
     display: flex;
     justify-content: end;
@@ -36,5 +31,10 @@
 }
 .accountMessage{
     color:#13b977
+
+}
+#createButton{
+    background-color: #13b977;
+    color: white;
 
 }
