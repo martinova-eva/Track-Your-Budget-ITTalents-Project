@@ -513,13 +513,14 @@ export let accountManager = (function(){
             savingsAccounts.map(a => {
                 if(a.owner === owner){
                     if(Number(a.balance) >= Number(a.target)){
-                        a.balance = Number(a.balance) - Number(a.target);
+                        a.balance = Number((Number(a.balance) - Number(a.target)).toFixed(2));
                         a.target = 0;
                         allAchievments.push(new Achievment(owner, a.name))
                     }
                 }
             })
             localStorage.setItem('achievments', JSON.stringify(allAchievments));
+            localStorage.setItem('savings', JSON.stringify(savingsAccounts));
         }
         checkForAchievments(owner){
             let allAchievments = this.getAllAchievments();

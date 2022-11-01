@@ -31,6 +31,7 @@ export default function Target({savingsAccount, accounts}) {
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const handleCloseDeleteModal = () => setOpenDeleteModal(false);
     const handleOpenDeleteModal = () => setOpenDeleteModal(true);
+    
 let savingsBalance = 0;
 let savingsCurrency = '';
 let savingsId = '';
@@ -55,16 +56,19 @@ const deleteAccount=(savingsId)=>{
         accountManager.removeSavingsAccount((savingsId));
       }
     }
+
   
 
     if(savingsAccount){
-        const now = Math.round(((savingsAccount.balance/savingsAccount.target)*100))
+        const now = (Math.round(((savingsAccount.balance/savingsAccount.target)*100)))
         const icon = savingsAccount.icon.toLowerCase();
-        const leftSum = (Math.round(savingsAccount.balance - savingsAccount.target)).toFixed(2);
+        const leftSum = (savingsAccount.balance);
         if(now>100){
+          accountManager.cteateAchievent(activeUser.username)
             buttonMessage = 'Transfer your balance'
         }
         if(now===100){
+          accountManager.cteateAchievent(activeUser.username)
             buttonMessage = 'Create new savings target'
         }
       
