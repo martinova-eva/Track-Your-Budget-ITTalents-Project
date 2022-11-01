@@ -46,22 +46,12 @@ export default function TransactionsList() {
     const [openTransferModal, setTransferModal] = useState(false);  //modal functions
     const handleCloseTransferModal = () => setTransferModal(false);
     const handleOpenTransferModal = () => setTransferModal(true);
-<<<<<<< HEAD
-    const[backupAccount, setBackupAccount] = useState('');
-    const[recipient, setRecipient] = useState('');
-    const[transferingAmount, setTransferingAmount] = useState(0);
-    let accountsForTransfer = accountManager.getAccountsForTransfer(AccountId, owner.username)
-    
-   let deleteOptions = false;
-    if(accountBalance>0){
-=======
     const [backupAccount, setBackupAccount] = useState('');
     const [recipient, setRecipient] = useState('');
     const [transferingAmount, setTransferingAmount] = useState(0);
-    let accountsForTransfer = accountManager.getAccountsForTransfer(AccountId)
+    let accountsForTransfer = accountManager.getAccountsForTransfer(AccountId, owner.username)
     let deleteOptions = false;
     if (accountBalance > 0) {
->>>>>>> 14c70a4ce722b154e8c56916406b2feee17ad979
         deleteOptions = true;
     }
 
@@ -85,12 +75,7 @@ export default function TransactionsList() {
             hoverOffset: 4
         }]
     });
-<<<<<<< HEAD
-    console.log(recipient);
-    const showAll= ()=>{
-=======
     const showAll = () => {
->>>>>>> 14c70a4ce722b154e8c56916406b2feee17ad979
         setTransactions(accountManager.getFormatedTransactions(AccountId));
         setData({
             labels: allTransactionForAccount.map(data => data.name),
@@ -277,86 +262,6 @@ export default function TransactionsList() {
                 </div>
 
             </div>
-            
-{deleteOptions ? 
-<Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
-                     <Modal.Header closeButton></Modal.Header>
-        <Modal.Body>
-        <Typography>{`Are you sure you want to delete your savings account?`}</Typography>
-        
-         {/* <Typography>{`You have ${accountBalance} ${accountCurrency} left in your account.`}</Typography> */}
-         <Grid className="wrapper">
-      <TextField
-        fullWidth
-        id="outlined-select-currency"
-        select
-        value={backupAccount}
-        onChange={(e)=> setBackupAccount(e.target.value)}
-        helperText={`Please choose account to transfer your balance.`}
-      >
-        {accountsForTransfer.map((option) =>(
-          
-          <MenuItem key={uuidV4()} value={option.id}>
-            {option.name}
-          </MenuItem>
-        ))}
-      </TextField>
-    </Grid>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDeleteModal}>
-            Close
-          </Button>
-          <Button variant="primary" id="deleteConfirmBtn" onClick={()=>{
-    accountManager.transferAllFunds(AccountId,backupAccount)
-    deleteAccount(AccountId);
-}}>
-           Yes
-          </Button>
-        </Modal.Footer>
-      </Modal> 
-      :
-      <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
-      <Modal.Header closeButton></Modal.Header>
-<Modal.Body>
-<Typography>{`Are you sure you want to delete account ${accountName}`}</Typography>
-</Modal.Body>
-<Modal.Footer>
-<Button variant="secondary" onClick={handleCloseDeleteModal}>
-Close
-</Button>
-<Button variant="primary" id="deleteConfirmBtn" 
-onClick={()=>{
-    deleteAccount(AccountId);
-}}>
-Yes
-</Button>
-</Modal.Footer>
-</Modal>}
-<Modal show={openTransferModal} onHide={handleCloseTransferModal}>
-                     <Modal.Header closeButton></Modal.Header>
-        <Modal.Body>
-         <Typography className="transferMoneyLogo">{`Your current account balance is ${accountBalance} ${accountCurrency}.`}</Typography>
-         <div className="transferMoneyLogo">
-            <SwapHorizIcon></SwapHorizIcon>
-         <Typography variant="button">{`Transfer Money`}</Typography>
-         </div>
-         <Grid className="transferMoneywrapper">
-      <TextField
-        fullWidth
-        id="outlined-select-currency"
-        select
-        value={recipient}
-        onChange={(e)=> setRecipient(e.target.value)}
-        helperText={`Please choose account.`}
-      >
-        {accountsForTransfer.map((option) =>(
-          
-          <MenuItem key={uuidV4()} value={option.id}>
-            {option.name}
-          </MenuItem>
-        ))}
-      </TextField>
 
             {deleteOptions ?
                 <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
@@ -364,23 +269,107 @@ Yes
                     <Modal.Body>
                         <Typography>{`Are you sure you want to delete account ${accountName}`}</Typography>
 
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseTransferModal}>
-            Cancel
-          </Button>
-          <Button variant="primary" id="transferMoneyBtn" onClick={()=>{
-    accountManager.ordinaryTransfer(AccountId,recipient, transferingAmount)
-    setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username))
-    setRecipient('')
-    setTransferingAmount(0)
-    handleCloseTransferModal()
-}}>
-           Transfer
-          </Button>
-        </Modal.Footer>
-      </Modal> 
+                        <Typography>{`You have ${accountBalance} ${accountCurrency} left in your account.`}</Typography>
+                        <Grid className="wrapper">
+                            <TextField
+                                fullWidth
+                                id="outlined-select-currency"
+                                select
+                                value={backupAccount}
+                                onChange={(e) => setBackupAccount(e.target.value)}
+                                helperText={`Please choose account to transfer your balance.`}
+                            >
+                                {accountsForTransfer.map((option) => (
+
+                                    <MenuItem key={uuidV4()} value={option.id}>
+                                        {option.name}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        </Grid>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                            Close
+                        </Button>
+                        <Button variant="primary" id="deleteConfirmBtn" onClick={() => {
+                            accountManager.transferAllFunds(AccountId, backupAccount)
+                            deleteAccount(AccountId);
+                        }}>
+                            Yes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+                :
+                <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
+                    <Modal.Header closeButton></Modal.Header>
+                    <Modal.Body>
+                        <Typography>{`Are you sure you want to delete account ${accountName}`}</Typography>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                            Close
+                        </Button>
+                        <Button variant="primary" id="deleteConfirmBtn"
+                            onClick={() => {
+                                deleteAccount(AccountId);
+                            }}>
+                            Yes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>}
+            <Modal show={openTransferModal} onHide={handleCloseTransferModal}>
+                <Modal.Header closeButton></Modal.Header>
+                <Modal.Body>
+                    <Typography className="transferMoneyLogo">{`Your current account balance is ${accountBalance} ${accountCurrency}.`}</Typography>
+                    <div className="transferMoneyLogo">
+                        <SwapHorizIcon></SwapHorizIcon>
+                        <Typography variant="button">{`Transfer Money`}</Typography>
+                    </div>
+                    <Grid className="transferMoneywrapper">
+                        <TextField
+                            fullWidth
+                            id="outlined-select-currency"
+                            select
+                            value={recipient}
+                            onChange={(e) => setRecipient(e.target.value)}
+                            helperText={`Please choose account.`}
+                        >
+                            {accountsForTransfer.map((option) => (
+
+                                <MenuItem key={uuidV4()} value={option.id}>
+                                    {option.name}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+
+                        <TextField
+                            required
+                            fullWidth
+                            type="number"
+                            InputProps={{ inputProps: { min: 0, max: { accountBalance } } }}
+                            id="outlined-number"
+                            label="Amount"
+                            placeholder="Enter amount"
+                            onChange={(e) => setTransferingAmount(e.target.value)}
+                        />
+                    </Grid>
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseTransferModal}>
+                        Cancel
+                    </Button>
+                    <Button variant="primary" id="transferMoneyBtn" onClick={() => {
+                        accountManager.ordinaryTransfer(AccountId, recipient, transferingAmount)
+                        setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username))
+                        setRecipient('')
+                        setTransferingAmount(0)
+                    }}>
+                        Transfer
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }
-
