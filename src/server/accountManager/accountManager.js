@@ -305,7 +305,7 @@ export let accountManager = (function(){
                         }
                     }
                 })
-                if(status > 0){
+                if(status){
                     accounts.map(a => {
                         if(a.id === recipientId){
                             if(transferCurrency === "BGN" && ( a.currency === "USD"|| a.currency === "EUR")){ 
@@ -329,6 +329,57 @@ export let accountManager = (function(){
                 }
             }
            localStorage.setItem('accounts', JSON.stringify(accounts)); 
+        }
+        transferToSavingsAccount(transferId, recipientId, amount){
+            let accounts = this.getAllAccounts();
+            let status = false;
+            let allSavingsAccounts = this.getAllSavingsAccounts();
+            
+                let nameOfTransferAccount;
+                let transferCurrency;
+                accounts.map(a => {
+                    if(a.id === transferId){
+                        nameOfTransferAccount = a.name;
+                        if(Number(a.balance) > amount){
+                            a.balance = Number((Number(a.balance) - amount).toFixed(2));
+                            transferCurrency = a.currency;
+                            a.transactions.push(new Transaction(`Money transfer to savings account`, 
+                                                                    this.getCurrentDate(), 
+                                                                    'outcome', 
+                                                                    amount, 
+                                                                    '',
+                                                                    '', 
+                                                                    a.id));
+                            status = true;
+                            a.transactions.sort(function(a, b){
+                                return new Date(b.date) - new Date(a.date);
+                            });
+                        }
+                    }else{
+                        return false;
+                    }
+                })
+                if(status){
+                    allSavingsAccounts.map(a => {
+                        if(a.id === recipientId){
+                                if(transferCurrency === "BGN" && ( a.currency === "USD"|| a.currency === "EUR")){ 
+                                    amount *= 0.51;
+                                }else if(transferCurrency === "USD" && a.currency === "BGN"){ 
+                                    amount *= 1.94;
+                                }else if(transferCurrency === "USD" && a.currency === "EUR"){ 
+                                    amount *= 0.99;
+                                }else if(transferCurrency === "EUR" && a.currency === "BGN"){ 
+                                    amount *= 1.96;
+                                }else if(transferCurrency === "EUR" && a.currency === "USD"){ 
+                                    amount *= 1.01;
+                                }
+                            a.balance = Number((Number(a.balance) + amount).toFixed(2));   
+                        }
+                    })
+                }
+            
+           localStorage.setItem('accounts', JSON.stringify(accounts)); 
+           localStorage.setItem('savings', JSON.stringify(allSavingsAccounts)); 
         }
         addTransaction(name, date, type, amount, description, title, accountsId, owner){
             let accounts = this.getAllAccounts();
