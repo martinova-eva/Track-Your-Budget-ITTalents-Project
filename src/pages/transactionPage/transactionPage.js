@@ -18,7 +18,7 @@ export default function TransactionPage() {
   const [typeOfTransaction, setTypeOfTransaction] = useState('');
   const [categoryName, setCategoryName] = useState('');
   const [iconTitle, setIconTitle] = useState('');
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(accountManager.getCurrentDate());
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState(0);
   const [missingData, setMissingData] = useState(false);
@@ -40,7 +40,7 @@ export default function TransactionPage() {
         setSelectedAccount('');
         setTypeOfTransaction('');
         setCategoryName('');
-        setDate(new Date());
+        setDate(accountManager.getCurrentDate());
         setDescription('');
         setIconTitle('');
         setAmount('');
@@ -53,8 +53,7 @@ export default function TransactionPage() {
         setSelectedAccount('');
         setTypeOfTransaction('');
         setCategoryName('');
-        setDate(new Date());
-        setDescription('');
+        setDate(accountManager.getCurrentDate());
         setIconTitle('');
         setAmount('');
       } else {

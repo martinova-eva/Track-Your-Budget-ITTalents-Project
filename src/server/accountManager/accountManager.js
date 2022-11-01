@@ -61,6 +61,12 @@ export let accountManager = (function(){
             this.title = title;
         }
     }
+    class AccountObj{
+        constructor(name, balance){
+            this.name = name;
+            this.balance= balance;
+        }
+    }
     class AccountManager {
             
         constructor() {
@@ -94,6 +100,14 @@ export let accountManager = (function(){
                 }
             })
             return userAccounts;
+        }
+        showStatisticsByAccounts(owner){
+            let allAccounts = this.getAllUserAccounts(owner);
+            let statisticData = [];
+            allAccounts.map(a => {
+                statisticData.push(new AccountObj(a.name, a.balance));
+            })
+            return statisticData;
         }
         checkAccountBalance(accountId, owner){
             let userAccounts = this.getAllUserAccounts(owner);
@@ -163,6 +177,9 @@ export let accountManager = (function(){
                     })
                 }
             })
+            statisticData.sort(function(a, b){
+                return new Date(b.date) - new Date(a.date);
+            });
             return statisticData;
         }
         showStatisticsByDateRangeForChart(arrOfTransactions){
@@ -219,6 +236,8 @@ export let accountManager = (function(){
                 let nameOfTransferAccount;
                 let transferAmount;
                 let transferCurrency;
+                let date = new Date();
+                let dateToString = `${date.getMonth() + 1}. ${date.getDate()}. ${date.getFullYear()}`;
                 accounts.map(a => {
                     if(a.id === transferId){
                         nameOfTransferAccount = a.name;
@@ -241,12 +260,24 @@ export let accountManager = (function(){
                                 transferAmount *= 1.01;
                             }
 
-                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, new Date(),'income', transferAmount , '', recipientId))
+                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, dateToString, transferAmount), "", recipientId);
+                        a.transactions.sort(function(a, b){
+                            return new Date(b.date) - new Date(a.date);
+                        });
+                
                         }
                     })
+                }else{
+                    return false;
                 }
             }
-           localStorage.setItem('accounts', JSON.stringify(accounts)); 
+           localStorage.setItem('accounts', JSON.stringify(accounts));
+           return true; 
+        }
+        getCurrentDate(){
+            let date = new Date();
+            let dateToString = `${date.getMonth() + 1}. ${date.getDate()}. ${date.getFullYear()}`;
+            return dateToString;
         }
         ordinaryTransfer(transferId, recipientId, amount){
             let accounts = this.getAllAccounts();
@@ -258,16 +289,19 @@ export let accountManager = (function(){
                     if(a.id === transferId){
                         nameOfTransferAccount = a.name;
                         if(Number(a.balance) > amount){
-                            a.balance = Number(a.balance) - amount;
+                            a.balance = Number((Number(a.balance) - amount).toFixed(2));
                             transferCurrency = a.currency;
                             a.transactions.push(new Transaction(`Money transfer to another account`, 
-                                                                    new Date(), 
+                                                                    this.getCurrentDate(), 
                                                                     'outcome', 
                                                                     amount, 
                                                                     '',
                                                                     '', 
                                                                     a.id));
                             status = true;
+                            a.transactions.sort(function(a, b){
+                                return new Date(b.date) - new Date(a.date);
+                            });
                         }
                     }
                 })
@@ -285,8 +319,11 @@ export let accountManager = (function(){
                             }else if(transferCurrency === "EUR" && a.currency === "USD"){ 
                                 amount *= 1.01;
                             }
-                        a.balance = Number(a.balance) + amount;   
-                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, new Date(), "income", amount, "", recipientId))
+                        a.balance = Number((Number(a.balance) + amount).toFixed(2));   
+                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, this.getCurrentDate(), "income", amount, "", recipientId));
+                        a.transactions.sort(function(a, b){
+                            return new Date(b.date) - new Date(a.date);
+                        });
                         }
                     })
                 }
@@ -295,11 +332,15 @@ export let accountManager = (function(){
         }
         addTransaction(name, date, type, amount, description, title, accountsId, owner){
             let accounts = this.getAllAccounts();
+            
+            if(date.includes('undefined')){
+                date = this.getCurrentDate();
+            }
             let transaction = new Transaction(name, date, type, amount, description, title, accountsId);
             accounts.map(a => {
                 if(a.id === accountsId){
                     if(transaction.type === "outcome" && Number(a.balance) >= Number(transaction.amount)){
-                        a.balance = Number(a.balance) -  Number(transaction.amount);
+                        a.balance = Number((Number(a.balance) -  Number(transaction.amount)).toFixed(2));
                         a.transactions.push(transaction);
 
                     }else if(transaction.type === "income"){
@@ -325,17 +366,17 @@ export let accountManager = (function(){
                                 let allSavingsAccounts = this.getAllSavingsAccounts();
                                  allSavingsAccounts.map(s => {
                                         if(s.owner === owner){
-                                            s.balance = (Number(savingsAccount.balance)  + Number(savingsIncome)).toFixed(2);
+                                            s.balance = Number((Number(savingsAccount.balance)  + Number(savingsIncome)).toFixed(2));
                                         }
                                     });
                             localStorage.setItem('savings', JSON.stringify(allSavingsAccounts));
                             
-                            transaction.amount = (Number(transaction.amount) - (Number(transaction.amount)*(savingsAccount.percentage/100)));
-                            a.balance = (Number(a.balance) + (Number(transaction.amount)));
+                            transaction.amount = Number(((Number(transaction.amount) - (Number(transaction.amount)*(savingsAccount.percentage/100)))).toFixed(2));
+                            a.balance = Number((Number(a.balance) + (Number(transaction.amount))).toFixed(2));
 
                             a.transactions.push(transaction);
                         }else{
-                            a.balance = Number(a.balance) + Number(transaction.amount);
+                            a.balance = Number((Number(a.balance) + Number(transaction.amount)).toFixed(2));
                             a.transactions.push(transaction);
                         }
                         
@@ -359,6 +400,7 @@ export let accountManager = (function(){
                             indexOfTransaction = i;
                             if(tr.type === "outcome"){
                                 a.balance = Number(a.balance) + Number(tr.amount);
+                                a.balance = Number(a.balance.toFixed(2));
                             }else{
                                 let savingsAccount = this.checkForSavingsAccount(owner);
                                 if(savingsAccount){
@@ -388,12 +430,12 @@ export let accountManager = (function(){
                                     let allSavingsAccounts = this.getAllSavingsAccounts();
                                     allSavingsAccounts.map(s => {
                                         if(s.owner === owner){
-                                            s.balance =  (savingsAccount.balance).toFixed(2);
+                                            s.balance =  Number(savingsAccount.balance.toFixed(2));
                                         }
                                     });
                                     localStorage.setItem('savings', JSON.stringify(allSavingsAccounts));
                                 }
-                                    a.balance = (Number(a.balance) - Number(tr.amount)).toFixed(2);
+                                    a.balance = Number((Number(a.balance) - Number(tr.amount)).toFixed(2));
                                 
                             }
                         }
@@ -556,6 +598,16 @@ export let accountManager = (function(){
                 filteredAccounts.push(savingsAccount)
             }
             return(filteredAccounts);
+        }
+        checkForTag(name){
+            let allCategories = this.getAllCategories();
+            let tag;
+            allCategories.map(c => {
+                if(c.title === name){
+                    tag = c.tag;
+                }
+            });
+            return tag;
         }
     }
     return new AccountManager()

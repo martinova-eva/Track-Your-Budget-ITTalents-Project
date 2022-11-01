@@ -25,6 +25,8 @@ import { Icon } from '@mui/material';
 import { iconsArrOfObjects } from '../categoryCreator/icons';
 import { accountManager } from '../../server/accountManager/accountManager';
 import { useSelector } from "react-redux";
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import { v4 as uuidV4 } from 'uuid';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -137,7 +139,7 @@ EnhancedTableHead.propTypes = {
 
 
 
-export default function EnhancedTable({rows, AccountId, setTransactions, accountCurrency}) {
+export default function EnhancedTable({rows, AccountId, setTransactions, accountCurrency, setAccountBalance}) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -242,6 +244,10 @@ export default function EnhancedTable({rows, AccountId, setTransactions, account
                       {iconsArrOfObjects.map(icon => {
                           if (icon.title.toLowerCase() === row.name.toLowerCase()) {
                               return icon.tag;
+                          }else if( row.name.toLowerCase().includes('transfer')){
+                            return <SwapHorizIcon key={uuidV4()} color="success"/>
+                          }else if(accountManager.checkForTag(row.name.toLowerCase()) === icon.title.toLowerCase()){
+                            return icon.tag;
                           }
                       })
                       }
@@ -263,7 +269,8 @@ export default function EnhancedTable({rows, AccountId, setTransactions, account
                       <TableCell align="left">
                       <IconButton aria-label="delete" size="small" onClick={() => {
                   accountManager.removeTransaction(row.id, AccountId, owner.username); 
-                  setTransactions(accountManager.getFormatedTransactions(AccountId))
+                  setTransactions(accountManager.getFormatedTransactions(AccountId));
+                  setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username));
 
               }}>
                   <DeleteIcon fontSize="inherit" />

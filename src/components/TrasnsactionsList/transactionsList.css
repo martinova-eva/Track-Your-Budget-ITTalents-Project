@@ -43,6 +43,7 @@
 #incomes-btn{
     color:#13b977;
     background-color:white;
+    margin: 1vh 1vw;
 }
 #category-btn{
     color:#13b977;
@@ -59,8 +60,6 @@
 #clear-filters-btn{
     color:#13b977;
     background-color:white;
-    /* min-width: 15vw;
-    max-width: 20vw; */
 }
 #date-range-picker{
     min-width: 15vw;
@@ -81,8 +80,9 @@
     
 }
 .pieChart{
-    height: 25rem;
+    width: 30vw;
 }
+
 .shortListIcon{
     height: 2rem;
 }
@@ -123,6 +123,7 @@
 #delete-btn{
     color:rgb(251,103,103);
     background-color:white;
+    margin: 1vh 1vw;
 }
 #selectorForCategories{
     width: 50rem;
@@ -141,4 +142,49 @@
 .transferMoneywrapper{
    padding:1rem;
 }
+#date-range-picker {
+    color:#13b977 !important;
+    border-color: #13b977 !important;
+}
+#date-range-picker *{
+    color:#13b977 !important;
+    border-color: #13b977 !important;
+}
+#date-range-picker * :hover{
+    color:#13b977 !important;
+    border-color: #13b977 !important;
+}
+/* #date-range-picker * :active{
+    color:#13b977 !important;
+    border-color: #13b977 !important;
+}
+#date-range-picker * :focus{
+    color:#13b977 !important;
+    border-color: #13b977 !important;
+}
+#date-range-picker * :checked{
+    color:#13b977 !important;
+    border-color: #13b977 !important;
+}
+#date-range-picker * :link{
+    color:#13b977 !important;
+    border-color: #13b977 !important;
+} */
 
+/* #date-range-picker__day--selected:hover,
+#date-range-picker__day--in-selecting-range:hover,
+#date-range-picker__day--in-range:hover,
+#date-range-picker__month-text--selected:hover,
+#date-range-picker__month-text--in-selecting-range:hover,
+#date-range-picker__month-text--in-range:hover,
+#date-range-picker__quarter-text--selected:hover,
+#date-range-picker__quarter-text--in-selecting-range:hover,
+#date-range-picker__quarter-text--in-range:hover,
+#date-range-picker__year-text--selected:hover,
+#date-range-picker__year-text--in-selecting-range:hover,
+#date-range-picker__year-text--in-range:hover {
+  border: none;
+  border-color: #13b977 !important;
+  color:#13b977 !important;
+  
+} */
