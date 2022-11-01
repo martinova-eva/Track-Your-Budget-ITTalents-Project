@@ -4,46 +4,49 @@ import './carousel.css';
 
 export default function DemoCarousel() {
   return (
+    <div className='carousel-wrapper'>
     <Carousel variant="dark">
-      
       <Carousel.Item>
         <img
           className="d-block w-100 carousel-container"
-          src="https://cdn.gobankingrates.com/wp-content/uploads/2016/10/Incomible_shutterstock_149790596.jpg"
+          src="./assets/Create account in few easy steps.png"
           alt="First slide"
         />
-        <Carousel.Caption>
-          <h5>FEATURES </h5>
-          {/* <p>Top-ranking financial services guaranteed.</p> */}
-        </Carousel.Caption>
+      
       </Carousel.Item>
       
       <Carousel.Item>
         <img
           className="d-block w-100 carousel-container"
-          src="https://miro.medium.com/max/1100/1*DktFbbzD4aA_H5iSd52M2A.png"
+          src="./assets/Create account in few easy steps (1).png"
           alt="Second slide"
         />
-        <Carousel.Caption>
-        <h5>Your new way of banking. </h5>
-          <p>Top-ranking financial services guaranteed.</p>
-        </Carousel.Caption>
+       
       </Carousel.Item>
 
       <Carousel.Item>
         <img
           className="d-block w-100 carousel-container"
-          src="https://assets-api.kathmandupost.com/thumb.php?src=https://assets-cdn.kathmandupost.com/uploads/source/news/2019/money/p13-mobile-banking_web.jpg&w=900&height=601"
+          src="./assets/Create account in few easy steps (2).png"
           alt="Third slide"
         />
-        <Carousel.Caption>
-          <h5>DEMO</h5>
-          {/* <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p> */}
-        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100 carousel-container"
+          src="./assets/Create account in few easy steps (3).png"
+          alt="Fourth slide"
+        />
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100 carousel-container"
+          src="./assets/Create account in few easy steps (4).png"
+          alt="Fifth slide"
+        />
       </Carousel.Item>
 
     </Carousel>
+    </div>
   );
 }

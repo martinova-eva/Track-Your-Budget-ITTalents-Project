@@ -21,6 +21,7 @@ export const checkingAccountSlice = createSlice({
       state.accountStartAmount = action.payload.accountStartAmount;
       if (state.accountName && state.currency && state.accountStartAmount) {
         accountManager.addAccount(state.owner, state.accountName, state.currency, state.accountStartAmount);  
+       
       }
     },
    
