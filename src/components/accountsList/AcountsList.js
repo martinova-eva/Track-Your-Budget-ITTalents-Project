@@ -106,7 +106,7 @@ const deleteAccount=(savingsId)=>{
 
   return (
     <>
-      <Target savingsAccount={savingsAccount}></Target>
+      <Target savingsAccount={savingsAccount} accounts = {accounts}></Target>
       <div className="accountsWrapper" >
         <div className='accountsImageHeader'>
           <Typography variant="h5" >
@@ -125,7 +125,7 @@ const deleteAccount=(savingsId)=>{
               <Typography onClick={(e) => {
                 navigate(`/transactions/${account.id}`)
               }}
-              >{`Checking account: ${account.name}`}</Typography>
+              >{`${account.name}`}</Typography>
             </AccordionSummary>
             <AccordionDetails>
 
@@ -134,28 +134,6 @@ const deleteAccount=(savingsId)=>{
               <ShortTransactionsList id={account.id} />
             </AccordionDetails>
           </Accordion>))}
-
-
-      {accounts.map(account => (
-        <Accordion 
-          key={account.id}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography  onClick={(e)=>{
-              navigate(`/transactions/${account.id}`)
-            }}
-            >{`${account.name}`}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-          
-            <Typography className='accountBalanceShortList' variant="subtitle2">{`Account balance: ${account.balance} ${account.currency}`}</Typography>
-            
-            <ShortTransactionsList id={account.id} />
-          </AccordionDetails>
-        </Accordion>))}
 
         {savingsAccounts.map(account => (
           <Accordion
@@ -215,7 +193,7 @@ const deleteAccount=(savingsId)=>{
       <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
       <Modal.Header closeButton></Modal.Header>
 <Modal.Body>
-<Typography>{`Are you sure you want to delete account your savings account?`}</Typography>
+<Typography>{`Are you sure you want to delete your savings account?`}</Typography>
 </Modal.Body>
 <Modal.Footer>
 <Button variant="secondary" onClick={handleCloseDeleteModal}>
@@ -244,7 +222,9 @@ Yes
             </Modal>
           </AccordionSummary>
         </Accordion>
-        {statisticsData ? <BarChart data={data}></BarChart> : null}
+        {statisticsData ? <div className='accountsbarChart'>
+           <Typography >{`All checking accounts`}</Typography>
+        <BarChart data={data}></BarChart> </div> : null}
       </div>
     </>
   );

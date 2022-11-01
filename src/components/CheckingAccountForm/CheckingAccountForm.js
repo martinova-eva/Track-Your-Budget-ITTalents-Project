@@ -24,7 +24,6 @@ export default function CreateCheckingAccount() {
    
 
    const user = useSelector(state => state.activeUser);
-   const checkingAccount = useSelector(state => state.createCheckingAccount)
    const owner = user.username;
    const navigate = useNavigate();
    const dispatch = useDispatch();
@@ -33,12 +32,17 @@ export default function CreateCheckingAccount() {
    const handleDispatch = ()=> {
       if(type === "checking"){  
          dispatch(create({owner, accountName, currency, accountStartAmount}))
+         navigate('/home');
          setAccountName('');
          setCurrency('');
          setAccountStartAmount('');   
+
+         
+         
       }
       if(type === "savings"){
          dispatch(createSavingsAccount({owner, accountName, currency, target , accountStartAmount, percentage, icon}))
+         navigate('/home');
          setAccountName('');
          setCurrency('');
          setAccountStartAmount('');
@@ -216,7 +220,6 @@ export default function CreateCheckingAccount() {
                 id="createButton" 
                 onClick={()=>{
                   handleDispatch();
-                  navigate('/home')
                 }}
                  >
                   Create new account

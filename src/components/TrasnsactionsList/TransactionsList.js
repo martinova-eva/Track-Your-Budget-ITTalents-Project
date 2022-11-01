@@ -364,7 +364,8 @@ export default function TransactionsList() {
                         accountManager.ordinaryTransfer(AccountId, recipient, transferingAmount)
                         setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username))
                         setRecipient('')
-                        setTransferingAmount(0)
+                        setTransferingAmount(0);
+                        handleCloseTransferModal()
                     }}>
                         Transfer
                     </Button>

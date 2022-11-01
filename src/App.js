@@ -25,8 +25,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<>
         <DemoPage/>
-        <Link to="/login">You already have an account, click here!</Link><br></br>
-        <Link to="/register">You don't have an account, click here!</Link>
+       
+        <Link className='loginRegisterLinks' to="/register">Click here to join Budget tracker</Link><br></br>
+        <Link className='loginRegisterLinks' to="/login">You already have an account, click here!</Link>
         </>} />
 
         <Route path="/register" element={<>
