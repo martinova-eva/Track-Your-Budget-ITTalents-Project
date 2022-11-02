@@ -142,7 +142,7 @@ const deleteAccount=(savingsId)=>{
           <Box sx={{ borderColor: 'paper', boxShadow: 20, display: "flex", flexDirection: 'column'}}>
         <Modal.Header closeButton>    
         </Modal.Header>
-        <Modal.Body><CreateCheckingAccount onClose={handleClose} /></Modal.Body>
+        <Modal.Body><CreateCheckingAccount handleClose={handleClose} /></Modal.Body>
         </Box>
       </Modal>
      
@@ -211,5 +211,6 @@ Yes
 </Modal>
 }
         </Grid>
+
     )
 }
