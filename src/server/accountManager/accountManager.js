@@ -230,6 +230,7 @@ export let accountManager = (function(){
             accounts.splice(index,1)
             localStorage.setItem('accounts', JSON.stringify(accounts));
         }
+        //transfer savings balance when deleting account
         transferAllFunds(transferId, recipientId){
             let savingsAccounts = this.getAllSavingsAccounts();
             let accounts = this.getAllAccounts();
@@ -260,7 +261,7 @@ export let accountManager = (function(){
                             }else if(transferCurrency === "EUR" && a.currency === "USD"){ 
                                 transferAmount *= 1.01;
                             }
-                                    //name, date, type, amount, description = '', title, accountsId
+                        a.balance = Number(a.balance) + Number(transferAmount);
                         a.transactions.push(new Transaction(`Transfer`, dateToString, "income", transferAmount, "", "", recipientId));
                         a.transactions.sort(function(a, b){
                             return new Date(b.date) - new Date(a.date);
@@ -268,6 +269,71 @@ export let accountManager = (function(){
                 
                         }
                     })
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+           localStorage.setItem('accounts', JSON.stringify(accounts));
+           localStorage.setItem('savings', JSON.stringify(savingsAccounts));
+           return true; 
+        }
+        //transfer account balance when deleting checking account
+        transferAllFundsFromCheckingAccount(transferId, recipientId){
+            let accounts = this.getAllAccounts();
+            let savingsAccounts = this.getAllSavingsAccounts();
+            if(transferId !== recipientId){
+                let nameOfTransferAccount;
+                let transferAmount;
+                let transferCurrency;
+                let date = new Date();
+                let dateToString = `${date.getMonth() + 1}. ${date.getDate()}. ${date.getFullYear()}`;
+                accounts.map(a => {
+                    if(a.id === transferId){
+                        nameOfTransferAccount = a.name;
+                        transferAmount = Number(a.balance);
+                        transferCurrency = a.currency;
+                    }
+                })
+                if(transferAmount > 0){
+                    accounts.map(a => {
+                        if(a.id === recipientId){
+                            if(transferCurrency === "BGN" && ( a.currency === "USD"|| a.currency === "EUR")){ 
+                                transferAmount *= 0.51;
+                            }else if(transferCurrency === "USD" && a.currency === "BGN"){ 
+                                transferAmount *= 1.94;
+                            }else if(transferCurrency === "USD" && a.currency === "EUR"){ 
+                                transferAmount *= 0.99;
+                            }else if(transferCurrency === "EUR" && a.currency === "BGN"){ 
+                                transferAmount *= 1.96;
+                            }else if(transferCurrency === "EUR" && a.currency === "USD"){ 
+                                transferAmount *= 1.01;
+                            }
+                        a.balance = Number(a.balance) + Number(transferAmount);
+                        a.transactions.push(new Transaction(`Transfer`, dateToString, "income", transferAmount, "", "", recipientId));
+                        a.transactions.sort(function(a, b){
+                            return new Date(b.date) - new Date(a.date);
+                        });
+                
+                        }
+                    });
+                    savingsAccounts.map(a => {
+                        if(a.id === recipientId){
+                            if(transferCurrency === "BGN" && ( a.currency === "USD"|| a.currency === "EUR")){ 
+                                transferAmount *= 0.51;
+                            }else if(transferCurrency === "USD" && a.currency === "BGN"){ 
+                                transferAmount *= 1.94;
+                            }else if(transferCurrency === "USD" && a.currency === "EUR"){ 
+                                transferAmount *= 0.99;
+                            }else if(transferCurrency === "EUR" && a.currency === "BGN"){ 
+                                transferAmount *= 1.96;
+                            }else if(transferCurrency === "EUR" && a.currency === "USD"){ 
+                                transferAmount *= 1.01;
+                            }
+                        a.balance = Number(a.balance) + Number(transferAmount);
+                        }
+                    });
                 }else{
                     return false;
                 }
