@@ -2,7 +2,6 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-//import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Link} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -52,13 +51,11 @@ const navigate = useNavigate()
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3">
                <Link to="/home" className="nav-link active text-dark" id="nav-home">Home page</Link>
-               {/* <Link to="/transactions" className="nav-link active text-dark">Accounts</Link> */}
                <Link to="/add-account" className="nav-link active text-dark" id="nav-accounts">Add new account</Link>
                 <NavDropdown
                 
                   title="Transactions"
                   className="text-dark"
-                  // id={`offcanvasNavbarDropdown-expand-${"lg"}`}
                   id="nav-transactions"
                 >
                   <NavDropdown.Item className="onclickNav" as={Link} to="/add-transaction">Add a transaction 
