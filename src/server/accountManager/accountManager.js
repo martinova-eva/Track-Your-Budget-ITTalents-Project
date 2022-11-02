@@ -288,8 +288,8 @@ export let accountManager = (function(){
                 accounts.map(a => {
                     if(a.id === transferId){
                         nameOfTransferAccount = a.name;
-                        if(Number(a.balance) > amount){
-                            a.balance = Number((Number(a.balance) - amount).toFixed(2));
+                        if(Number(a.balance) > Number(amount)){
+                            a.balance = Number((Number(a.balance) - Number(amount)).toFixed(2));
                             transferCurrency = a.currency;
                             a.transactions.push(new Transaction(`Money transfer to another account`, 
                                                                     this.getCurrentDate(), 
@@ -328,7 +328,8 @@ export let accountManager = (function(){
                     })
                 }
             }
-           localStorage.setItem('accounts', JSON.stringify(accounts)); 
+           localStorage.setItem('accounts', JSON.stringify(accounts));
+           return status; 
         }
         transferToSavingsAccount(transferId, recipientId, amount){
             let accounts = this.getAllAccounts();
