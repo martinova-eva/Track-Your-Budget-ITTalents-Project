@@ -35,10 +35,7 @@ export default function CreateCheckingAccount() {
          navigate('/home');
          setAccountName('');
          setCurrency('');
-         setAccountStartAmount('');   
-
-         
-         
+         setAccountStartAmount('');     
       }
       if(type === "savings"){
          dispatch(createSavingsAccount({owner, accountName, currency, target , accountStartAmount, percentage, icon}))
