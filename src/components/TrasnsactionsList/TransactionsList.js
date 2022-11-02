@@ -50,10 +50,13 @@ export default function TransactionsList() {
     const [recipient, setRecipient] = useState('');
     const [transferingAmount, setTransferingAmount] = useState(0);
     let accountsForTransfer = accountManager.getAccountsForTransfer(AccountId, owner.username)
+    let savingsAccount = accountManager.checkForSavingsAccount(owner.username)
+    
     let deleteOptions = false;
     if (accountBalance > 0) {
         deleteOptions = true;
     }
+
 
     const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
     const [data, setData] = useState({
@@ -191,6 +194,7 @@ export default function TransactionsList() {
                     <DateRangePicker size="lg"
                         style={stylesDatePicker}
                         value={range}
+                        className='bahur'
                         onChange={(e) => {
                             let statisticData = accountManager.showStatisticsByDateRange(AccountId, e);
                             setTransactions(statisticData);
@@ -361,7 +365,11 @@ export default function TransactionsList() {
                         Cancel
                     </Button>
                     <Button variant="primary" id="transferMoneyBtn" onClick={() => {
-                        accountManager.ordinaryTransfer(AccountId, recipient, transferingAmount)
+                        if(savingsAccount.id === recipient){
+                            accountManager.transferToSavingsAccount(AccountId, recipient, transferingAmount)
+                        }else{
+                            accountManager.ordinaryTransfer(AccountId, recipient, transferingAmount)
+                        }
                         setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username))
                         setRecipient('')
                         setTransferingAmount(0);

@@ -56,13 +56,15 @@ useEffect(()=>{
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3">
-               <Link to="/home" className="nav-link active text-dark">Home page</Link>
+               <Link to="/home" className="nav-link active text-dark" id="nav-home">Home page</Link>
                {/* <Link to="/transactions" className="nav-link active text-dark">Accounts</Link> */}
-               <Link to="/add-account" className="nav-link active text-dark">Add new account</Link>
+               <Link to="/add-account" className="nav-link active text-dark" id="nav-accounts">Add new account</Link>
                 <NavDropdown
+                
                   title="Transactions"
                   className="text-dark"
-                  id={`offcanvasNavbarDropdown-expand-${"lg"}`}
+                  // id={`offcanvasNavbarDropdown-expand-${"lg"}`}
+                  id="nav-transactions"
                 >
                   <NavDropdown.Item className="onclickNav" as={Link} to="/add-transaction">Add a transaction 
                 </NavDropdown.Item>

@@ -23,7 +23,6 @@ import { Troubleshoot } from '@mui/icons-material';
 import { v4 as uuidV4 } from 'uuid';
 import BarChart from '../TrasnsactionsList/barChart';
 
-
 const style = {
   position: 'absolute',
   top: '50%',
@@ -82,7 +81,7 @@ const deleteAccount=(savingsId)=>{
   const [data, setData] = useState({
     labels: statisticsData.map(data => data.name),
     datasets: [{
-        label: 'All your accounts',
+         label: 'Checking accounts',
         data: statisticsData.map(data => data.balance),
         backgroundColor: [
             'rgb(255, 99, 132)',
@@ -100,9 +99,6 @@ const deleteAccount=(savingsId)=>{
         hoverOffset: 4
     }]
 });
-
-
-
 
   return (
     <>

@@ -217,6 +217,7 @@ export default function CreateCheckingAccount() {
                 id="createButton" 
                 onClick={()=>{
                   handleDispatch();
+                  
                 }}
                  >
                   Create new account

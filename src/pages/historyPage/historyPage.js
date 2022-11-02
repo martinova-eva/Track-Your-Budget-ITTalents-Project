@@ -10,6 +10,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { Box, display } from '@mui/system';
 import CheckIcon from '@mui/icons-material/Check';
+import { v4 as uuidV4 } from 'uuid';
 
 export default function HistoryPage() {
     const owner = useSelector(state => state.activeUser);
@@ -22,15 +23,12 @@ export default function HistoryPage() {
         <>
         <Target savingsAccount={savingsAccount}></Target>
         <Box sx={{ borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column',  mx: '6rem',alignItems:'center' }}>
-        <List  component="nav" aria-label="mailbox folders">
-            {allUserAchievments.map(a => (<ListItem  divider>
-                    <ListItemText primary={a.name} />
+        <List component="nav" aria-label="mailbox folders">
+        <ListItemText key={uuidV4()} primary='Achievments:' />
+            {allUserAchievments.map(a => (<ListItem key={uuidV4()} divider>
+                <CheckIcon color="success" key={uuidV4()}/>   <ListItemText key={uuidV4()} primary={a.title} />
             </ListItem>))
             }
-            <ListItem  divider>
-                <CheckIcon color="success"/>    <ListItemText primary="Achievments...." />
-            </ListItem>
-           
     </List>
     </Box>
         </>
