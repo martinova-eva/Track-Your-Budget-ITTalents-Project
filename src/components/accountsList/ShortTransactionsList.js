@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ListGroup from 'react-bootstrap/ListGroup';
 import { accountManager } from "../../server/accountManager/accountManager";
 import { v4 as uuidV4 } from 'uuid';
@@ -16,7 +16,8 @@ import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 
 export default function ShortTransactionsList({ id }) {
     const accounts = accountManager.getAllAccounts();
-    let transactions = accountManager.showLastFiveTransactionsForAccount(id);
+    const[ transactions, setTransactions] = useState(accountManager.showLastFiveTransactionsForAccount(id));
+    //let transactions = accountManager.showLastFiveTransactionsForAccount(id);
     let accountCurrency = accounts.map(a => {
         if(a.id === id){
             return a.currency
@@ -31,13 +32,14 @@ export default function ShortTransactionsList({ id }) {
         })
 
     }
+    console.log(transactions)
 
     return (
         <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
          
           <TableBody>
-            {transactions.map((row,id) => (
+            { transactions ?   transactions.map((row,id) => (
               <TableRow
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -73,7 +75,7 @@ export default function ShortTransactionsList({ id }) {
                 <TableCell align="left" >
                     <div className="tableDescriptionOverflow">{row.description}</div></TableCell>
               </TableRow>
-            ))}
+            )) : null}
           </TableBody>
         </Table>
       </TableContainer>

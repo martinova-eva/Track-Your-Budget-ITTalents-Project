@@ -299,6 +299,8 @@ export default function TransactionsList() {
                         <Button variant="primary" id="deleteConfirmBtn" onClick={() => {
                             accountManager.transferAllFunds(AccountId, backupAccount)
                             deleteAccount(AccountId);
+                            handleCloseDeleteModal()
+
                         }}>
                             Yes
                         </Button>
@@ -317,6 +319,7 @@ export default function TransactionsList() {
                         <Button variant="primary" id="deleteConfirmBtn"
                             onClick={() => {
                                 deleteAccount(AccountId);
+                                handleCloseDeleteModal();
                             }}>
                             Yes
                         </Button>
@@ -340,7 +343,6 @@ export default function TransactionsList() {
                             helperText={`Please choose account.`}
                         >
                             {accountsForTransfer.map((option) => (
-
                                 <MenuItem key={uuidV4()} value={option.id}>
                                     {option.name}
                                 </MenuItem>
@@ -373,7 +375,7 @@ export default function TransactionsList() {
                         setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username))
                         setRecipient('')
                         setTransferingAmount(0);
-                        handleCloseTransferModal()
+                        setTransferModal(false)
                     }}>
                         Transfer
                     </Button>

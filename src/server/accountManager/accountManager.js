@@ -137,7 +137,7 @@ export let accountManager = (function(){
                     transaction = a.transactions.slice(0,5);
                 }
             })
-            return transaction;
+            return transaction.length>0 ? transaction : false;
         }
         showStatistics(accountId){
             let allAccounts = this.getAllAccounts();

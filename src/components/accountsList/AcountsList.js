@@ -56,7 +56,7 @@ if(savingsAccount){
   savingsBalance = savingsAccount.balance;
   savingsCurrency = savingsAccount.currency;
   savingsId = savingsAccount.id;
-  if(savingsBalance>0 && accounts){
+  if(savingsBalance>0 && accounts.length>0){
     transferingOptions = true;
   }
 
@@ -213,7 +213,7 @@ Yes
               <Box sx={{ borderColor: 'paper', boxShadow: 20, display: "flex", flexDirection: 'column' }}>
                 <Modal.Header closeButton>
                 </Modal.Header>
-                <Modal.Body><CreateCheckingAccount onClose={handleClose} /></Modal.Body>
+                <Modal.Body><CreateCheckingAccount handleClose={handleClose} /></Modal.Body>
               </Box>
             </Modal>
           </AccordionSummary>
