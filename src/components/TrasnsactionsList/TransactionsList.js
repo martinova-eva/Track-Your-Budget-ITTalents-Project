@@ -56,6 +56,8 @@ export default function TransactionsList() {
     if (accountBalance > 0) {
         deleteOptions = true;
     }
+    console.log(backupAccount);
+    console.log(AccountId);
 
 
     const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
@@ -297,8 +299,9 @@ export default function TransactionsList() {
                             Close
                         </Button>
                         <Button variant="primary" id="deleteConfirmBtn" onClick={() => {
-                            accountManager.transferAllFunds(AccountId, backupAccount)
-                            deleteAccount(AccountId);
+                            accountManager.transferAllFundsFromCheckingAccount(AccountId, backupAccount)
+                            accountManager.removeAccount(AccountId);
+                            navigate('/home');
                             handleCloseDeleteModal()
 
                         }}>
