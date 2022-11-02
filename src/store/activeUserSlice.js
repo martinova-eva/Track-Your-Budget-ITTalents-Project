@@ -51,11 +51,10 @@ export const logOutUser = createAsyncThunk(
         }
       })
       const data = await response
-        console.log('data', data)
-
       if (!data.ok){
         return thunkAPI.rejectWithValue('wrong credentials')
       } 
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue('wrong credentials')
     }
