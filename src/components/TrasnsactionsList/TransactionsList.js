@@ -56,8 +56,10 @@ export default function TransactionsList() {
     if (accountBalance > 0) {
         deleteOptions = true;
     }
-    console.log(backupAccount);
-    console.log(AccountId);
+    // console.log(backupAccount);
+    // console.log(AccountId);
+    // console.log(savingsAccount);
+    console.log(recipient);
 
 
     const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
@@ -268,7 +270,6 @@ export default function TransactionsList() {
                 </div>
 
             </div>
-
             {deleteOptions ?
                 <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
                     <Modal.Header closeButton></Modal.Header>
@@ -370,12 +371,15 @@ export default function TransactionsList() {
                         Cancel
                     </Button>
                     <Button variant="primary" id="transferMoneyBtn" onClick={() => {
-                        if(savingsAccount.id === recipient){
-                            accountManager.transferToSavingsAccount(AccountId, recipient, transferingAmount)
-                        }else{
-                            accountManager.ordinaryTransfer(AccountId, recipient, transferingAmount)
-                        }
-                        setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username))
+                        // if(savingsAccount){
+                        //     if(savingsAccount.id === recipient){
+                        //         accountManager.transferToSavingsAccount(AccountId, recipient, transferingAmount)
+                        //     }
+                        // }else{
+                        //     accountManager.ordinaryTransfer(AccountId, recipient, transferingAmount)
+                        // }
+                        
+                        // setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username))
                         setRecipient('')
                         setTransferingAmount(0);
                         setTransferModal(false)
