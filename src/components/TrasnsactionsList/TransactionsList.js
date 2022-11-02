@@ -56,8 +56,10 @@ export default function TransactionsList() {
     if (accountBalance > 0) {
         deleteOptions = true;
     }
-    console.log(backupAccount);
-    console.log(AccountId);
+    // console.log(backupAccount);
+    // console.log(AccountId);
+    // console.log(savingsAccount);
+    console.log(recipient);
 
 
     const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
@@ -268,7 +270,6 @@ export default function TransactionsList() {
                 </div>
 
             </div>
-
             {deleteOptions ?
                 <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
                     <Modal.Header closeButton></Modal.Header>
