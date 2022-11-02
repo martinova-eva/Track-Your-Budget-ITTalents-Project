@@ -19,6 +19,9 @@ code {
 .bahur{
   background-color: #13b977!important;
 }
+.rs-btn-link, rs-btn-sm, rs-calendar-table-cell-day {
+  color: #13b977!important;
+}
 .rs-calendar-table-cell-content:hover, rs-calendar-table-cell:hover{
   
   color: #13b977!important;
