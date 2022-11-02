@@ -9,23 +9,6 @@ const initialState = {
 
 }
 
-// export const registerUser = createAsyncThunk(
-//   'register',
-//   ({username, password}, thunkAPi) => {
-//     return fetch(`https://itt-voting-api.herokuapp.com/users`, {
-//       method: 'POST',
-//       body: JSON.stringify({username, password}),
-//       headers: {
-//         'Content-Type': 'application/json'
-//       }
-//     }).then(res => res.json())
-//     .catch((error)=>{
-// return thunkAPi.rejectWithValue(error.response.message)
-//     })
-
-//   }
-// )
-
 
 export const registerUser = createAsyncThunk(
   'register',
@@ -63,12 +46,10 @@ export const registerUserSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(registerUser.fulfilled, (state, action) => {
-      console.log("yes")
         state.userLoading = false;
         state.usernameTaken = false;    
     })
     builder.addCase(registerUser.rejected, (state, action) => {
-      console.log("x")
       state.userLoading = false;
       state.usernameTaken = true;    
     })
@@ -79,7 +60,7 @@ export const registerUserSlice = createSlice({
   },
 })
 
-// Action creators are generated for each case reducer function
+
 export const { changeUsernameStatus } = registerUserSlice.actions
 
 export default registerUserSlice.reducer;

@@ -70,9 +70,8 @@ const deleteAccount=(savingsId)=>{
   }
   const deleteAndTransfer = (savingsId, recipientId) => {
     if (savingsAccount) {
-      accountManager.transferAllFunds(savingsId, recipientId)
+      accountManager.transferAllFunds(savingsId, recipientId);
       accountManager.removeSavingsAccount((savingsId));
-      navigate('/home');
     }
   }
 
@@ -145,7 +144,8 @@ const deleteAccount=(savingsId)=>{
                   <DeleteIcon fontSize="inherit" />
                 </IconButton>
               </div>}>
-              <Typography>{`Savings account: ${account.name}`}</Typography>
+              <Typography 
+              >{`Savings account: ${account.name}`}</Typography>
             </AccordionSummary>
           </Accordion>))}
 
@@ -180,7 +180,10 @@ const deleteAccount=(savingsId)=>{
           <Button variant="secondary" onClick={handleCloseDeleteModal}>
             Close
           </Button>
-          <Button variant="primary" id="deleteConfirmBtn" onClick={deleteAndTransfer}>
+          <Button variant="primary" id="deleteConfirmBtn" onClick={()=>{
+            deleteAndTransfer(savingsId, backupAccount)
+            handleCloseDeleteModal()
+          }}>
            Yes
           </Button>
         </Modal.Footer>
@@ -213,14 +216,16 @@ Yes
               <Box sx={{ borderColor: 'paper', boxShadow: 20, display: "flex", flexDirection: 'column' }}>
                 <Modal.Header closeButton>
                 </Modal.Header>
-                <Modal.Body><CreateCheckingAccount handleClose={handleClose} /></Modal.Body>
+                <Modal.Body>
+                  <CreateCheckingAccount handleClose={handleClose} />
+                  </Modal.Body>
               </Box>
             </Modal>
           </AccordionSummary>
         </Accordion>
-        {statisticsData ? <div className='accountsbarChart'>
+        {statisticsData.length>0 ? <div className='accountsbarChart'>
            <Typography >{`All checking accounts`}</Typography>
-        <BarChart data={data}></BarChart> </div> : null}
+        <BarChart data={data}></BarChart></div> : null}
       </div>
     </>
   );

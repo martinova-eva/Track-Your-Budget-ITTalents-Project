@@ -32,6 +32,7 @@ const regexPass = '^[A-Za-z0-9]{6,16}$' ;
 
  useEffect(()=>{
    if(username || password || confirmPass ){
+
       if(!validUsername){
          setUserNameTakenError(true)
       }
@@ -42,7 +43,10 @@ const regexPass = '^[A-Za-z0-9]{6,16}$' ;
          setPassDontMatch(false);
          
       }
-      if(password !== confirmPass){
+      if(password === confirmPass){
+         setPassDontMatch(false);
+         setHelperText("Password must be at least 6 letters")
+      }else{
          setPassDontMatch(true);
          setHelperText("Passwords do not match")
       }
@@ -55,8 +59,7 @@ const regexPass = '^[A-Za-z0-9]{6,16}$' ;
          setHelperText("Password must be at least 6 letters");
       }
    }
-  
- 
+
  },[username, password])
 
  useEffect(()=>{
@@ -129,6 +132,8 @@ const regexPass = '^[A-Za-z0-9]{6,16}$' ;
                />
                <Button type="button" variant="contained" size="large" id="submitButton" onClick={handleRegister}>Sign up</Button>
             </form>
+{user.userLoading ?  <div class="loader"></div>: null}
+           
 
             <Grid className="loginRegisterLinks">
 
