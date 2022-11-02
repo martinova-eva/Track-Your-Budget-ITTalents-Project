@@ -61,12 +61,11 @@ if(savingsAccount){
         const now = (Math.round(((savingsAccount.balance/savingsAccount.target)*100)))
         const icon = savingsAccount.icon.toLowerCase();
         const leftSum = (savingsAccount.balance);
-        if(now>100){
+        if(now>=100){
           accountManager.cteateAchievent(activeUser.username)
             buttonMessage = 'Transfer your balance'
         }
-        if(now===100){
-          accountManager.cteateAchievent(activeUser.username)
+        else if(now===100){
             buttonMessage = 'Create new savings target'
         }
       

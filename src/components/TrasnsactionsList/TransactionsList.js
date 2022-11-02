@@ -17,6 +17,8 @@ import EnhancedTable from "./transactionsTable";
 import { useNavigate } from "react-router-dom";
 import { Grid, TextField } from "@mui/material";
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import { AccountBalance } from "@mui/icons-material";
+import { isSameDateError } from "@mui/x-date-pickers/internals/hooks/validation/useDateValidation";
 
 export default function TransactionsList() {
     const params = useParams();
@@ -46,6 +48,23 @@ export default function TransactionsList() {
     const [transferingAmount, setTransferingAmount] = useState(0);
     let accountsForTransfer = accountManager.getAccountsForTransfer(AccountId, owner.username)
     let savingsAccount = accountManager.checkForSavingsAccount(owner.username)
+    let error = false;
+    let helperText = ``;
+
+    
+    if(transferingAmount<0 || transferingAmount>accountBalance){
+        if(transferingAmount<0){
+            helperText = `Invalid input` 
+        }else{
+            helperText = `The amount exceed your balance` 
+
+        }
+        error = true;
+       
+    }else{
+        error = false;
+        helperText = ``;
+    }
     
     let deleteOptions = false;
     if (accountBalance > 0) {
@@ -154,6 +173,8 @@ export default function TransactionsList() {
         setTransactions(arrOfTr);
     }
 
+   
+
 
     return (
         <div >
@@ -220,8 +241,7 @@ export default function TransactionsList() {
                 </Box>
             </Box>
 
-
-            <div className="listandChart">
+{transactions.length>0 ? <div className="listandChart">
                 <div id="table">
                     <Typography variant="subtitle2">{`Transactions for account: ${accountName}`}</Typography>
                     <Typography variant="subtitle2">{`Balance: ${accountBalance} ${accountCurrency}`}</Typography>
@@ -250,15 +270,35 @@ export default function TransactionsList() {
                         onClick={handleOpenTransferModal}
                     >
                     <SwapHorizIcon key={uuidV4()}></SwapHorizIcon> Transfer money to another account </Button>
-
                 </div>
-
                 <div className="pieChart">
                     <PieChart data={data}></PieChart>
-
                 </div>
+            </div> : <div className="listandChart">
+                <div id="table">
+                    <Typography variant="subtitle2">{`Transactions for account: ${accountName}`}</Typography>
+                    <Typography variant="subtitle2">{`Balance: ${accountBalance} ${accountCurrency}`}</Typography>
+                    <Typography variant="subtitle2">{`You don't have any transactions.`}</Typography>
 
-            </div>
+                    <Button
+                        type="button"
+                        variant="contained"
+                        size="large"
+                        id="delete-btn"
+                        onClick={handleOpenDeleteModal}
+                    >Delete Account
+                    </Button>
+                    <Button
+                        type="button"
+                        variant="contained"
+                        size="large"
+                        id="incomes-btn"
+                        onClick={handleOpenTransferModal}
+                    >
+                    <SwapHorizIcon key={uuidV4()}></SwapHorizIcon> Transfer money to another account </Button>
+                </div>
+            </div>}
+            
             {deleteOptions ?
                 <Modal show={openDeleteModal} onHide={handleCloseDeleteModal}>
                     <Modal.Header closeButton></Modal.Header>
@@ -332,8 +372,9 @@ export default function TransactionsList() {
                             id="outlined-select-currency"
                             select
                             value={recipient}
+                            
                             onChange={(e) => setRecipient(e.target.value)}
-                            helperText={`Please choose account.`}
+                            helperText={`Please choose an account`}
                         >
                             {accountsForTransfer.map((option) => (
                                 <MenuItem key={uuidV4()} value={option.id}>
@@ -343,8 +384,11 @@ export default function TransactionsList() {
                         </TextField>
 
                         <TextField
+                        
                             required
                             fullWidth
+                            error={error}
+                            helperText={helperText}
                             type="number"
                             InputProps={{ inputProps: { min: 0, max: { accountBalance } } }}
                             id="outlined-number"
@@ -359,13 +403,20 @@ export default function TransactionsList() {
                     <Button variant="secondary" onClick={handleCloseTransferModal}>
                         Cancel
                     </Button>
-                    <Button variant="primary" id="transferMoneyBtn" onClick={() => {
+                    <Button 
+                     disabled={error}
+                    variant="primary" 
+                    id="transferMoneyBtn" 
+                    onClick={() => {
+                       
                         accountManager.ordinaryTransfer(AccountId, recipient, transferingAmount);
                         setTransactions(accountManager.getFormatedTransactions(AccountId));
                         setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username));
                         setRecipient('');
                         setTransferingAmount(0);
                         setTransferModal(false);
+                        setTransactions(accountManager.getFormatedTransactions(AccountId))
+                       
                     }}>
                         Transfer
                     </Button>

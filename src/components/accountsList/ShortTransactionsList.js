@@ -31,7 +31,7 @@ export default function ShortTransactionsList({ id }) {
         })
 
     }
-    console.log(transactions)
+ 
 
     return (
         <TableContainer component={Paper}>
@@ -40,7 +40,7 @@ export default function ShortTransactionsList({ id }) {
           <TableBody>
             { transactions ?   transactions.map((row,id) => (
               <TableRow
-                key={row.id}
+                key={id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell align="left">
@@ -57,7 +57,7 @@ export default function ShortTransactionsList({ id }) {
                     })
                 }
                 </Icon>
-            <Typography variant="subtitle2" className="transactionListTitles">
+            <Typography variant="subtitle2" className="tableDescriptionOverflow">
                 {row.name}
             </Typography>
         </div>
