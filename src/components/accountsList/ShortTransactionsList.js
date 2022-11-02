@@ -17,7 +17,6 @@ import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 export default function ShortTransactionsList({ id }) {
     const accounts = accountManager.getAllAccounts();
     const[ transactions, setTransactions] = useState(accountManager.showLastFiveTransactionsForAccount(id));
-    //let transactions = accountManager.showLastFiveTransactionsForAccount(id);
     let accountCurrency = accounts.map(a => {
         if(a.id === id){
             return a.currency

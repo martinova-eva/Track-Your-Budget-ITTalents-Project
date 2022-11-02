@@ -8,7 +8,6 @@ import ShortTransactionsList from './ShortTransactionsList';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import "./accountList.css"
 import Box from '@mui/material/Box';
-//import Modal from '@mui/material/Modal';
 import CreateCheckingAccount from '../CheckingAccountForm/CheckingAccountForm';
 import { accountManager } from '../../server/accountManager/accountManager';
 import { useNavigate, useParams } from 'react-router-dom';

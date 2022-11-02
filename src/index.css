@@ -14,7 +14,21 @@ code {
 
 .rs-btn-primary {
   background-color: #13b977!important;
+  color: white!important;
 }
 .bahur{
   background-color: #13b977!important;
+}
+.rs-calendar-table-cell-content:hover, rs-calendar-table-cell:hover{
+  
+  color: #13b977!important;
+}
+.rs-picker-toggle-textbox{
+  color: #13b977!important;
+}
+.rs-calendar-table-cell-in-range{
+  color: #13b977!important;
+}
+.rs-picker-daterange-panel:hover{
+  color: #13b977!important;
 }

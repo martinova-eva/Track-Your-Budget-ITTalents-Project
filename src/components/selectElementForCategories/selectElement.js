@@ -9,11 +9,8 @@ export default function SelectElement(props) {
 
     const handleChange = (e) => {
       if(e.target.value ){
-        //console.log(e.target.value)
         setOption(e.target.value);
         props.onChange(e.target.value);
-      }else{
-        console.log('Choose something')
       }
     }
     return (
