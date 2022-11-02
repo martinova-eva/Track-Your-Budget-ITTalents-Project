@@ -1,9 +1,7 @@
-import { React, useState, useEffect } from "react";
-import { ListGroup, Modal } from "react-bootstrap";
+import { React, useState} from "react";
+import {  Modal } from "react-bootstrap";
 import "./transactionsList.css";
-import { Typography, Box, MenuItem, Button, IconButton, Paper, Table, TableRow, TableCell, TableBody, TableHead, TableContainer, Icon, TablePagination } from "@mui/material";
-import { Doughnut, Pie } from "react-chartjs-2";
-import { Chart, ArcElement } from 'chart.js';
+import { Typography, Box, MenuItem, Button} from "@mui/material";
 import SelectElement from "../selectElementForCategories/selectElement";
 import { accountManager } from "../../server/accountManager/accountManager";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -11,15 +9,12 @@ import { Navigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PieChart from "./pieChart";
 import { DateRangePicker } from 'rsuite';
-import Container from 'react-bootstrap/Container';
 import 'rsuite/dist/rsuite.min.css';
 import { v4 as uuidV4 } from 'uuid';
-import BarChart from "./barChart";
 import getTheIcon, { iconsArrOfObjects } from "../categoryCreator/icons";
 import { updateTransactions } from "../../store/checkingAccountSlice";
 import EnhancedTable from "./transactionsTable";
 import { useNavigate } from "react-router-dom";
-import DropDownOptions from "../CheckingAccountForm/dropDownOptions";
 import { Grid, TextField } from "@mui/material";
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 
@@ -56,12 +51,7 @@ export default function TransactionsList() {
     if (accountBalance > 0) {
         deleteOptions = true;
     }
-    // console.log(backupAccount);
-    // console.log(AccountId);
-    // console.log(savingsAccount);
-    console.log(recipient);
-
-
+ 
     const stylesDatePicker = { width: 260, display: 'block', marginBottom: 10 };
     const [data, setData] = useState({
         labels: allTransactionForAccount.map(data => data.name),
@@ -265,8 +255,6 @@ export default function TransactionsList() {
 
                 <div className="pieChart">
                     <PieChart data={data}></PieChart>
-                    {/* пазим за друга статистика този*/}
-                    {/* {<BarChart data={data}></BarChart>} */}
                 </div>
 
             </div>
@@ -371,14 +359,10 @@ export default function TransactionsList() {
                         Cancel
                     </Button>
                     <Button variant="primary" id="transferMoneyBtn" onClick={() => {
-                        // if(savingsAccount.id === recipient){
-                        //     accountManager.transferToSavingsAccount(AccountId, recipient, transferingAmount)
-                        // }else{
-                        //     accountManager.ordinaryTransfer(AccountId, recipient, transferingAmount)
-                        // }
                         accountManager.ordinaryTransfer(AccountId, recipient, transferingAmount);
-                        setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username))
-                        setRecipient('')
+                        setTransactions(accountManager.getFormatedTransactions(AccountId));
+                        setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username));
+                        setRecipient('');
                         setTransferingAmount(0);
                         setTransferModal(false);
                     }}>

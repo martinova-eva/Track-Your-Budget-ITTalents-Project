@@ -391,7 +391,7 @@ export let accountManager = (function(){
                                 amount *= 1.01;
                             }
                         a.balance = Number((Number(a.balance) + Number(amount)).toFixed(2));   
-                        a.transactions.push(new Transaction(`Transfer to ${nameOfTransferAccount}`, this.getCurrentDate(), "income", amount, "", recipientId));
+                        a.transactions.push(new Transaction(`Transfer from ${nameOfTransferAccount}`, this.getCurrentDate(), "income", amount, "", recipientId));
                         a.transactions.sort(function(a, b){
                             return new Date(b.date) - new Date(a.date);
                         });
