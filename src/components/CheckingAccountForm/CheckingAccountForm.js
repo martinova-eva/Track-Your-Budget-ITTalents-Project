@@ -13,7 +13,7 @@ import { createSavingsAccount } from "../../store/SavingsAccountSlice";
 import { userManager } from "../../server/userManager/userManager";
 import { accountManager } from "../../server/accountManager/accountManager";
 
-export default function CreateCheckingAccount() {
+export default function CreateCheckingAccount({handleClose}) {
    const [accountName, setAccountName] = useState('');
    const [accountStartAmount, setAccountStartAmount] = useState('');
    const [currency, setCurrency] = useState('');
@@ -32,14 +32,12 @@ export default function CreateCheckingAccount() {
    const handleDispatch = ()=> {
       if(type === "checking"){  
          dispatch(create({owner, accountName, currency, accountStartAmount}))
-         navigate('/home');
          setAccountName('');
          setCurrency('');
          setAccountStartAmount('');     
       }
       if(type === "savings"){
          dispatch(createSavingsAccount({owner, accountName, currency, target , accountStartAmount, percentage, icon}))
-         navigate('/home');
          setAccountName('');
          setCurrency('');
          setAccountStartAmount('');
@@ -217,6 +215,8 @@ export default function CreateCheckingAccount() {
                 id="createButton" 
                 onClick={()=>{
                   handleDispatch();
+                  handleClose();
+                 
                   
                 }}
                  >

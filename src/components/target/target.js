@@ -185,7 +185,10 @@ const deleteAccount=(savingsId)=>{
           <Button variant="secondary" onClick={handleCloseDeleteModal}>
             Close
           </Button>
-          <Button variant="primary" id="deleteConfirmBtn" onClick={deleteAndTransfer}>
+          <Button variant="primary" id="deleteConfirmBtn" onClick={()=>{
+            deleteAndTransfer(savingsId, backupAccount)
+
+          }}>
            Yes
           </Button>
         </Modal.Footer>
