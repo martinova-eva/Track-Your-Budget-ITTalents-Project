@@ -45,14 +45,14 @@ if(savingsAccount){
   }
 
 }
-const deleteAccount=(savingsId)=>{
-    if(savingsAccount){
-      accountManager.removeSavingsAccount((savingsId));
-  }
+  const deleteAccount=(savingsId)=>{
+      if(savingsAccount){
+        accountManager.removeSavingsAccount((savingsId));
     }
+      }
     const deleteAndTransfer = (savingsId, recipientId) => {
       if (savingsAccount) {
-        accountManager.transferAllFunds(savingsId, recipientId)
+        accountManager.transferAllFunds(savingsId, recipientId);
         accountManager.removeSavingsAccount((savingsId));
       }
     }
