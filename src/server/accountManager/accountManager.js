@@ -359,7 +359,7 @@ export let accountManager = (function(){
                 accounts.map(a => {
                     if(a.id === transferId){
                         nameOfTransferAccount = a.name;
-                        if(Number(a.balance) > Number(amount)){
+                        if(Number(a.balance) >= Number(amount)){
                             a.balance = Number((Number(a.balance) - Number(amount)).toFixed(2));
                             transferCurrency = a.currency;
                             a.transactions.push(new Transaction(`Transfer to another account`, 
