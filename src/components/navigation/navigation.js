@@ -13,6 +13,7 @@ import {logOutUser} from '../../store/activeUserSlice';
 import { userManager } from '../../server/userManager/userManager';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 
 
 export default function Navigation() {
@@ -20,22 +21,16 @@ export default function Navigation() {
   const sessionId = activeUser.sessionId;
   const dispatch = useDispatch();
 const navigate = useNavigate()
-const isOut = activeUser.username;
 
-useEffect(()=>{
-  if(!isOut){
-     navigate('/login');     
-  }
-},[isOut])
 
 
 
   const handleLogout = ()=> {
     userManager.logoutFromStorage();
-    dispatch(logOutUser(sessionId));
-
-     
+    dispatch(logOutUser(sessionId))
+    navigate('/')  
   }
+
     return (
         <Navbar key="lg" bg="light" expand="lg" className="mb-3">
         <Container fluid>
