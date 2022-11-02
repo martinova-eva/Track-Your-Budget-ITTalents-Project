@@ -376,6 +376,7 @@ export default function TransactionsList() {
                         // }else{
                         //     accountManager.ordinaryTransfer(AccountId, recipient, transferingAmount)
                         // }
+                        console.log(recipient)
                         accountManager.ordinaryTransfer(AccountId, recipient, transferingAmount);
                         setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username))
                         setRecipient('')
