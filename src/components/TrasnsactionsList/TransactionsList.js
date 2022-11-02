@@ -370,11 +370,12 @@ export default function TransactionsList() {
                         Cancel
                     </Button>
                     <Button variant="primary" id="transferMoneyBtn" onClick={() => {
-                        if(savingsAccount.id === recipient){
-                            accountManager.transferToSavingsAccount(AccountId, recipient, transferingAmount)
-                        }else{
-                            accountManager.ordinaryTransfer(AccountId, recipient, transferingAmount)
-                        }
+                        // if(savingsAccount.id === recipient){
+                        //     accountManager.transferToSavingsAccount(AccountId, recipient, transferingAmount)
+                        // }else{
+                        //     accountManager.ordinaryTransfer(AccountId, recipient, transferingAmount)
+                        // }
+                        accountManager.ordinaryTransfer(AccountId, recipient, transferingAmount);
                         setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username))
                         setRecipient('')
                         setTransferingAmount(0);
