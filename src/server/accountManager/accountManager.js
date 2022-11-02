@@ -231,6 +231,7 @@ export let accountManager = (function(){
             localStorage.setItem('accounts', JSON.stringify(accounts));
         }
         transferAllFunds(transferId, recipientId){
+            let savingsAccounts = this.getAllSavingsAccounts();
             let accounts = this.getAllAccounts();
             if(transferId !== recipientId){
                 let nameOfTransferAccount;
@@ -238,7 +239,7 @@ export let accountManager = (function(){
                 let transferCurrency;
                 let date = new Date();
                 let dateToString = `${date.getMonth() + 1}. ${date.getDate()}. ${date.getFullYear()}`;
-                accounts.map(a => {
+                savingsAccounts.map(a => {
                     if(a.id === transferId){
                         nameOfTransferAccount = a.name;
                         transferAmount = Number(a.balance);
@@ -259,8 +260,8 @@ export let accountManager = (function(){
                             }else if(transferCurrency === "EUR" && a.currency === "USD"){ 
                                 transferAmount *= 1.01;
                             }
-
-                        a.transactions.push(new Transaction(`Transfer form ${nameOfTransferAccount}`, dateToString, transferAmount), "", recipientId);
+                                    //name, date, type, amount, description = '', title, accountsId
+                        a.transactions.push(new Transaction(`Transfer`, dateToString, "income", transferAmount, "", "", recipientId));
                         a.transactions.sort(function(a, b){
                             return new Date(b.date) - new Date(a.date);
                         });
@@ -270,8 +271,11 @@ export let accountManager = (function(){
                 }else{
                     return false;
                 }
+            }else{
+                return false;
             }
            localStorage.setItem('accounts', JSON.stringify(accounts));
+           localStorage.setItem('savings', JSON.stringify(savingsAccounts));
            return true; 
         }
         getCurrentDate(){

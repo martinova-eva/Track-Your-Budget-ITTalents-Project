@@ -16,11 +16,11 @@ import { v4 as uuidV4 } from 'uuid';
 
 
 
-export default function Target({savingsAccount, accounts}) {
+export default function Target({ accounts}) {
     const activeUser = useSelector(state => state.activeUser);
     
     //const[savingsAccount, setSavingsAccount ] = useState(accountManager.checkForSavingsAccount(activeUser.username))
-    //const savingsAccount = accountManager.checkForSavingsAccount(activeUser.username);
+    const savingsAccount = accountManager.checkForSavingsAccount(activeUser.username);
     const [show, setShow] = useState(false);  
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -45,14 +45,14 @@ if(savingsAccount){
   }
 
 }
-const deleteAccount=(savingsId)=>{
-    if(savingsAccount){
-      accountManager.removeSavingsAccount((savingsId));
-  }
+  const deleteAccount=(savingsId)=>{
+      if(savingsAccount){
+        accountManager.removeSavingsAccount((savingsId));
     }
+      }
     const deleteAndTransfer = (savingsId, recipientId) => {
       if (savingsAccount) {
-        accountManager.transferAllFunds(savingsId, recipientId)
+        accountManager.transferAllFunds(savingsId, recipientId);
         accountManager.removeSavingsAccount((savingsId));
       }
     }
