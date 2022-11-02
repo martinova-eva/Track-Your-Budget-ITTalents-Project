@@ -15,7 +15,6 @@ import { v4 as uuidV4 } from 'uuid';
 export default function HistoryPage() {
     const owner = useSelector(state => state.activeUser);
     const navigate = useNavigate();
-    const savingsAccounts = accountManager.getAllSavingsAccounts(owner.username);
     const savingsAccount = accountManager.checkForSavingsAccount(owner.username);
     const allUserAchievments = accountManager.checkForAchievments(owner.username);
 

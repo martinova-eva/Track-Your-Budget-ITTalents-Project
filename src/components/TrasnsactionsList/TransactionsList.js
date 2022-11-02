@@ -255,6 +255,7 @@ export default function TransactionsList() {
 
                 <div className="pieChart">
                     <PieChart data={data}></PieChart>
+
                 </div>
 
             </div>

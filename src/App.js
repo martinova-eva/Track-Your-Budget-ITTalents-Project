@@ -20,65 +20,85 @@ export default function App() {
   const loggedUser = useSelector(state => state.activeUser)
 
   return (
-    
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<>
-        <DemoPage/>
-       
-        <Link className='loginRegisterLinks' to="/register">Click here to join Budget tracker</Link><br></br>
-        <Link className='loginRegisterLinks' to="/login">You already have an account, click here!</Link>
-        </>} />
+    loggedUser.username ? (<div className="App">
+    <Routes>
+      <Route path="/" element={<>
+      <DemoPage/>
+     
+      <Link className='loginRegisterLinks' to="/register">Click here to join Budget tracker</Link><br></br>
+      <Link className='loginRegisterLinks' to="/login">You already have an account, click here!</Link>
+      </>} />
 
-        <Route path="/register" element={<>
-        <RegistrationForm></RegistrationForm>
-        </>} />
+      <Route path="/register" element={<>
+      <RegistrationForm></RegistrationForm>
+      </>} />
 
-        <Route path="/login" element={<>
-        <LoginForm/>
-        </>} />
-        <Route path="/home" element={<>
-        
-          <Navigation/>
-        <AccountsList/>
-        </>} />
+      <Route path="/login" element={<>
+      <LoginForm/>
+      </>} />
+      <Route path="/home" element={<>
+      
+        <Navigation/>
+      <AccountsList/>
+      </>} />
 
-        <Route path="/transactions/:id" element={<>
-          <Navigation/>
-          <TransactionsList/>
-        </>} />
+      <Route path="/transactions/:id" element={<>
+        <Navigation/>
+        <TransactionsList/>
+      </>} />
 
-        <Route path="/add-account" element={<>
-          <Navigation/>
-          <CreateCheckingAccount/>
-        </>} />
-
-        <Route path="/add-transaction" element={<>
-            <Navigation/>
-            <TransactionPage></TransactionPage>
-        </>} />
-
-        <Route path="/create-category" element={<>
-          <Navigation/> 
-          <CreateCategoryPage/>
-        </>} />
-
-        <Route path="/create-account" element={<>
-          <Navigation/>
+      <Route path="/add-account" element={<>
+        <Navigation/>
         <CreateCheckingAccount/>
-        </>} />
+      </>} />
 
-        <Route path="/history" element={<>
+      <Route path="/add-transaction" element={<>
           <Navigation/>
-          <HistoryPage/>
-        </>} />
-        
-        <Route path="*" element={<>
-        <ErrorPage></ErrorPage>
-        </>} />
-      </Routes>
-    </div>
-  
+          <TransactionPage></TransactionPage>
+      </>} />
 
+      <Route path="/create-category" element={<>
+        <Navigation/> 
+        <CreateCategoryPage/>
+      </>} />
+
+      <Route path="/create-account" element={<>
+        <Navigation/>
+      <CreateCheckingAccount/>
+      </>} />
+
+      <Route path="/history" element={<>
+        <Navigation/>
+        <HistoryPage/>
+      </>} />
+      
+      <Route path="*" element={<>
+      <ErrorPage></ErrorPage>
+      </>} />
+    </Routes>
+  </div>
+
+) : (<div className="App">
+<Routes>
+  <Route path="/" element={<>
+  <DemoPage/>
+ 
+  <Link className='loginRegisterLinks' to="/register">Click here to join Budget tracker</Link><br></br>
+  <Link className='loginRegisterLinks' to="/login">You already have an account, click here!</Link>
+  </>} />
+
+  <Route path="/register" element={<>
+  <RegistrationForm></RegistrationForm>
+  </>} />
+
+  <Route path="/login" element={<>
+  <LoginForm/>
+  </>} />
+  <Route path="*" element={<>
+  <ErrorPage></ErrorPage>
+  </>} />
+</Routes>
+</div>
+) 
   );
 }

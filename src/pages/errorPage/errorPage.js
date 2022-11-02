@@ -5,7 +5,7 @@ import "./errorPage.css";
 export default function ErrorPage(){
     const navigate = useNavigate();
     const handleClick = () => {
-            navigate('/home');
+            navigate('/login');
     }
     return (
         <>
