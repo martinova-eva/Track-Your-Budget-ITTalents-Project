@@ -29,38 +29,39 @@ const regexPass = '^[A-Za-z0-9]{6,16}$' ;
  const validUsername = username.match(regex);
  const validPassword = password.match(regexPass);
 
-
  useEffect(()=>{
-   if(username || password || confirmPass ){
+   
+   if(username || password || confirmPass){
 
       if(!validUsername){
          setUserNameTakenError(true)
+
       }
-      if(validUsername){
+      else{
          setUserNameTakenError(false)
-      }
-      if(validPassword){
-         setPassDontMatch(false);
-         
-      }
-      if(password === confirmPass){
-         setPassDontMatch(false);
-         setHelperText("Password must be at least 6 letters")
-      }else{
-         setPassDontMatch(true);
-         setHelperText("Passwords do not match")
+         setHelperTextUsername("");
+
       }
       if(!validPassword){
          setPassDontMatch(true);
          setHelperText("Password must be at least 6 letters");
 
       }else{
-         setPassDontMatch(false);
-         setHelperText("Password must be at least 6 letters");
+         setPassDontMatch(false); 
+         setHelperText("");
+
       }
+      if(password === confirmPass){
+         setPassDontMatch(false);
+         setHelperText("")
+      }else{
+         setPassDontMatch(true);
+         setHelperText("Passwords do not match")
+      }
+    
    }
 
- },[username, password])
+ },[username, password, confirmPass])
 
  useEffect(()=>{
    
@@ -76,7 +77,7 @@ const regexPass = '^[A-Za-z0-9]{6,16}$' ;
  
 
    const handleRegister = () => {
-      if(validUsername && validPassword){
+      if(validUsername && validPassword && password === confirmPass){
          dispatch(registerNewUser({ username, password }))
          .then((data)=>{
             console.log(data);

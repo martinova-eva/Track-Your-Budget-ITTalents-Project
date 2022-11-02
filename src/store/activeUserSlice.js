@@ -23,15 +23,14 @@ export const loginUser = createAsyncThunk(
       })
       const data = await response.json()
       if (!response.ok) {
-        return thunkAPI.rejectWithValue('GRESHNI KREDENCII')
+        return thunkAPI.rejectWithValue('wrong credentials')
       } else {
-        // thunkAPI.dispatch(login({username}))
         userManager.setActiveLocal(username, data.sessionId)
         return { ...data, username }
       }
     } catch (error) {
 
-      return thunkAPI.rejectWithValue('GRESHNO')
+      return thunkAPI.rejectWithValue('wrong credentials')
     }
   }
 )
@@ -85,13 +84,13 @@ export const activeUserSlice = createSlice({
       state.wrongCredentials = false;
     })
     builder.addCase(logOutUser.fulfilled, (state, action) => {
-      state.sessionId = initialState.sessionId
-      state.username = initialState.username
-      console.log('successful exit')
+      state.sessionId = ''
+      state.username = ''
+     
 
     })
     builder.addCase(logOutUser.rejected, (state, action) => {
-      console.log('cant exit')
+
 
     })
     builder.addCase(logOutUser.pending, (state, action) => {

@@ -19,7 +19,7 @@ export const checkingAccountSlice = createSlice({
       state.accountName = action.payload.accountName;
       state.currency = action.payload.currency;
       state.accountStartAmount = action.payload.accountStartAmount;
-      if (state.accountName && state.currency && state.accountStartAmount) {
+      if (state.accountName && state.currency && state.accountStartAmount>0) {
         accountManager.addAccount(state.owner, state.accountName, state.currency, state.accountStartAmount);  
        
       }
