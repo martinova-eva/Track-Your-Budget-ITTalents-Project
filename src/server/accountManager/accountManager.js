@@ -359,7 +359,7 @@ export let accountManager = (function(){
                 accounts.map(a => {
                     if(a.id === transferId){
                         nameOfTransferAccount = a.name;
-                        if(Number(a.balance) > Number(amount)){
+                        if(Number(a.balance) >= Number(amount)){
                             a.balance = Number((Number(a.balance) - Number(amount)).toFixed(2));
                             transferCurrency = a.currency;
                             a.transactions.push(new Transaction(`Transfer to another account`, 
@@ -390,7 +390,7 @@ export let accountManager = (function(){
                             }else if(transferCurrency === "EUR" && a.currency === "USD"){ 
                                 amount *= 1.01;
                             }
-                        a.balance = Number((Number(a.balance) + amount).toFixed(2));   
+                        a.balance = Number((Number(a.balance) + Number(amount)).toFixed(2));   
                         a.transactions.push(new Transaction(`Transfer to ${nameOfTransferAccount}`, this.getCurrentDate(), "income", amount, "", recipientId));
                         a.transactions.sort(function(a, b){
                             return new Date(b.date) - new Date(a.date);

@@ -381,7 +381,7 @@ export default function TransactionsList() {
                         setAccountBalance(accountManager.checkAccountBalance(AccountId, owner.username))
                         setRecipient('')
                         setTransferingAmount(0);
-                        setTransferModal(false)
+                        setTransferModal(false);
                     }}>
                         Transfer
                     </Button>
