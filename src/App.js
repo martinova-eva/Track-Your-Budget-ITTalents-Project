@@ -22,6 +22,11 @@ export default function App() {
   return (
     loggedUser.username ? (<div className="App">
     <Routes>
+      <Route path="/home" element={<>
+        
+        <Navigation/>
+      <AccountsList/>
+      </>} />
       <Route path="/" element={<>
       <DemoPage/>
      
@@ -35,11 +40,6 @@ export default function App() {
 
       <Route path="/login" element={<>
       <LoginForm/>
-      </>} />
-      <Route path="/home" element={<>
-      
-        <Navigation/>
-      <AccountsList/>
       </>} />
 
       <Route path="/transactions/:id" element={<>
