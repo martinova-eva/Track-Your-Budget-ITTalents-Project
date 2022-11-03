@@ -41,7 +41,6 @@ export const logOutUser = createAsyncThunk(
       "id": `${sessionId}`
     }
     try {
-      console.log(JSON.stringify(sessionId));
       const response = await fetch(`https://itt-voting-api.herokuapp.com/logout`, {
         method: 'POST',
         body: JSON.stringify(body),
@@ -70,15 +69,13 @@ export const activeUserSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(loginUser.fulfilled, (state, { payload }) => {
-      console.log('TUK SYM!', payload);
       state.sessionId = payload.sessionId;
       state.username = payload.username;
       state.wrongCredentials = false;
     })
     builder.addCase(loginUser.rejected, (state, action) => {
-      console.log('qiwueiqw')
       state.wrongCredentials = true;
-      console.log(state.wrongCredentials)
+
     })
     builder.addCase(loginUser.pending, (state, action) => {
       state.wrongCredentials = false;
