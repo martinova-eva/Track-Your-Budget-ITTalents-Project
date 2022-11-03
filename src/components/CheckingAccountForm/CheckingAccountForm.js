@@ -110,7 +110,6 @@ export default function CreateCheckingAccount({handleClose}) {
             id="outlined-required"
             label="Account Name"
             placeholder="Enter name for your account"
-            value={accountName}
             onChange={(e)=> setAccountName(e.target.value)}
             />
          <DropDownOptions
@@ -128,6 +127,7 @@ export default function CreateCheckingAccount({handleClose}) {
             type="number"
             id="outlined-number"
             error={error}
+      
             helperText= {helperText}
             InputProps={{ inputProps: { min: 0 } }}
             label="Starting amount"
@@ -137,6 +137,7 @@ export default function CreateCheckingAccount({handleClose}) {
          <TextField
             required
             fullWidth
+           
             type="number"
             error={errorTarget}
             helperText= {helperTextTarget}
@@ -150,6 +151,7 @@ export default function CreateCheckingAccount({handleClose}) {
             required
             fullWidth
             type="number"
+           
             id="outlined-number"
             InputProps={{ inputProps: { min: 0, max: 100 } }}
             label="Incomes %"
@@ -219,7 +221,8 @@ export default function CreateCheckingAccount({handleClose}) {
                   Create new money account
                </Typography> 
             </div>
-            <form className="formStyle">
+            <div className="formStyle">
+           
                <DropDownOptions
                   required
                   fullWidth
@@ -242,7 +245,9 @@ export default function CreateCheckingAccount({handleClose}) {
                  >
                   Create new account
                   </Button>
-            </form>
+
+            
+            </div>
          
          </div>
       </Grid>
