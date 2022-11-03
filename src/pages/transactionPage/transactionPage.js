@@ -33,6 +33,7 @@ export default function TransactionPage() {
     if (selectedAccount && typeOfTransaction && categoryName && date && (amount > 0)) {
       let accountBalance = accountManager.checkAccountBalance(selectedAccount, owner.username);
       if (accountBalance >= Number(amount) && typeOfTransaction === 'outcome') {
+
         setMissingData(false)
         setBalance(false);
         accountManager.addTransaction(categoryName, `${date.$M + 1}.${date.$D}.${date.$y}`, typeOfTransaction, amount, description, iconTitle, selectedAccount, owner.username);

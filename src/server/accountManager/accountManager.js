@@ -4,6 +4,7 @@ import { v4 as uuidV4 } from 'uuid';
 import { iconsArrOfObjects } from '../../components/categoryCreator/icons';
 import { possibleIncomeArr } from '../../components/categoryCreator/listOfAllIncomes';
 import { possibleOutcomeArr } from '../../components/categoryCreator/listOfAllOutcomes';
+import {USD_TO_EUR, USD_TO_BGN, EUR_TO_BGN, EUR_TO_USD, BGN_TO_EUR, BGN_TO_USD} from './currencyConstants';
 
 export let accountManager = (function(){
     class Account{
@@ -238,8 +239,6 @@ export let accountManager = (function(){
                 let nameOfTransferAccount;
                 let transferAmount;
                 let transferCurrency;
-                let date = new Date();
-                let dateToString = `${date.getMonth() + 1}. ${date.getDate()}. ${date.getFullYear()}`;
                 savingsAccounts.map(a => {
                     if(a.id === transferId){
                         nameOfTransferAccount = a.name;
@@ -262,7 +261,7 @@ export let accountManager = (function(){
                                 transferAmount *= 1.01;
                             }
                         a.balance = Number(a.balance) + Number(transferAmount);
-                        a.transactions.push(new Transaction(`Transfer`, dateToString, "income", transferAmount, "", "", recipientId));
+                        a.transactions.push(new Transaction(`Transfer`, this.getCurrentDate(), "income", transferAmount, "", "", recipientId));
                         a.transactions.sort(function(a, b){
                             return new Date(b.date) - new Date(a.date);
                         });
@@ -287,8 +286,6 @@ export let accountManager = (function(){
                 let nameOfTransferAccount;
                 let transferAmount;
                 let transferCurrency;
-                let date = new Date();
-                let dateToString = `${date.getMonth() + 1}. ${date.getDate()}. ${date.getFullYear()}`;
                 accounts.map(a => {
                     if(a.id === transferId){
                         nameOfTransferAccount = a.name;
@@ -311,7 +308,7 @@ export let accountManager = (function(){
                                 transferAmount *= 1.01;
                             }
                         a.balance = Number(a.balance) + Number(transferAmount);
-                        a.transactions.push(new Transaction(`Transfer`, dateToString, "income", transferAmount, "", "", recipientId));
+                        a.transactions.push(new Transaction(`Transfer`, this.getCurrentDate(), "income", transferAmount, "", "", recipientId));
                         a.transactions.sort(function(a, b){
                             return new Date(b.date) - new Date(a.date);
                         });
@@ -487,20 +484,21 @@ export let accountManager = (function(){
                         let savingsAccount = this.checkForSavingsAccount(owner);
                         if(savingsAccount){
                             let savingsIncome = 0;
+                            let percentage = Number(savingsAccount.percentage)/100;
                                 if(a.currency === savingsAccount.currency){
-                                    savingsIncome = (Number(transaction.amount) * Number(savingsAccount.percentage)/100);
+                                    savingsIncome = (Number(transaction.amount) * percentage);
                                 }else if(a.currency === "EUR" &&  savingsAccount.currency === "BGN"){
-                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*1.96;
+                                    savingsIncome = ((Number(transaction.amount) * percentage))*EUR_TO_BGN;
                                 }else if(a.currency === "EUR" &&  savingsAccount.currency === "USD"){
-                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*1.01;
+                                    savingsIncome = ((Number(transaction.amount) * percentage))*EUR_TO_USD;
                                 }else if(a.currency === "BGN" &&  savingsAccount.currency === "USD"){
-                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*0.51;
+                                    savingsIncome = ((Number(transaction.amount) * percentage))*BGN_TO_USD;
                                 }else if(a.currency === "BGN" &&  savingsAccount.currency === "EUR"){
-                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*0.51;
+                                    savingsIncome = ((Number(transaction.amount) * percentage))*BGN_TO_EUR;
                                 }else if(a.currency === "USD" &&  savingsAccount.currency === "EUR"){
-                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*0.99;
+                                    savingsIncome = ((Number(transaction.amount) * percentage))*USD_TO_EUR;
                                 }else if(a.currency === "USD" &&  savingsAccount.currency === "BGN"){
-                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*1.94;
+                                    savingsIncome = ((Number(transaction.amount) * percentage))*USD_TO_BGN;
                                 }
 
                                 let allSavingsAccounts = this.getAllSavingsAccounts();
@@ -550,22 +548,22 @@ export let accountManager = (function(){
                                         savingsAccount.balance = Number(savingsAccount.balance)- Number(tr.amount)*ratio;
 
                                     }else if(a.currency === "EUR" &&  savingsAccount.currency === "BGN"){
-                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*1.96;
+                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*EUR_TO_BGN;
 
                                     }else if(a.currency === "EUR" &&  savingsAccount.currency === "USD"){
-                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*1.01;
+                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*EUR_TO_USD;
 
                                     }else if(a.currency === "BGN" &&  savingsAccount.currency === "USD"){
-                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*0.51;
+                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*BGN_TO_USD;
 
                                     }else if(a.currency === "BGN" &&  savingsAccount.currency === "EUR"){
-                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*0.51;
+                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*BGN_TO_EUR;
 
                                     }else if(a.currency === "USD" &&  savingsAccount.currency === "EUR"){
-                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*0.99;
+                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*USD_TO_EUR;
 
                                     }else if(a.currency === "USD" &&  savingsAccount.currency === "BGN"){
-                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*1.94;
+                                        savingsAccount.balance = Number(savingsAccount.balance)- (Number(tr.amount)*ratio)*USD_TO_BGN;
                                     }
                                     let allSavingsAccounts = this.getAllSavingsAccounts();
                                     allSavingsAccounts.map(s => {

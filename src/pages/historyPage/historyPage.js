@@ -16,7 +16,6 @@ import { TextField, Typography } from '@mui/material';
 export default function HistoryPage() {
     const owner = useSelector(state => state.activeUser);
     const navigate = useNavigate();
-    const savingsAccount = accountManager.checkForSavingsAccount(owner.username);
     const allUserAchievments = accountManager.checkForAchievments(owner.username);
 
     return (
