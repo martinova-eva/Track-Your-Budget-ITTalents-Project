@@ -115,7 +115,7 @@ export let accountManager = (function(){
             let balance = 0;
             userAccounts.map(a => {
                 if(a.id === accountId){
-                    balance = a.balance;
+                    balance = Number((a.balance).toFixed(2));
                 }
             })
             return balance;
@@ -260,7 +260,7 @@ export let accountManager = (function(){
                             }else if(transferCurrency === "EUR" && a.currency === "USD"){ 
                                 transferAmount *= 1.01;
                             }
-                        a.balance = Number(a.balance) + Number(transferAmount);
+                        a.balance = Number((Number(a.balance) + Number(transferAmount)).toFixed(2));
                         a.transactions.push(new Transaction(`Transfer`, this.getCurrentDate(), "income", transferAmount, "", "", recipientId));
                         a.transactions.sort(function(a, b){
                             return new Date(b.date) - new Date(a.date);
@@ -307,7 +307,7 @@ export let accountManager = (function(){
                             }else if(transferCurrency === "EUR" && a.currency === "USD"){ 
                                 transferAmount *= 1.01;
                             }
-                        a.balance = Number(a.balance) + Number(transferAmount);
+                        a.balance = Number((Number(a.balance) + Number(transferAmount)).toFixed(2));
                         a.transactions.push(new Transaction(`Transfer`, this.getCurrentDate(), "income", transferAmount, "", "", recipientId));
                         a.transactions.sort(function(a, b){
                             return new Date(b.date) - new Date(a.date);
@@ -328,7 +328,7 @@ export let accountManager = (function(){
                             }else if(transferCurrency === "EUR" && a.currency === "USD"){ 
                                 transferAmount *= 1.01;
                             }
-                        a.balance = Number(a.balance) + Number(transferAmount);
+                        a.balance = Number((Number(a.balance) + Number(transferAmount)).toFixed(2));
                         }
                     });
                 }else{
@@ -407,7 +407,7 @@ export let accountManager = (function(){
                             }else if(transferCurrency === "EUR" && a.currency === "USD"){ 
                                 amount *= 1.01;
                             }
-                        a.balance = Number(a.balance) + Number(amount);
+                        a.balance = Number((Number(a.balance) + Number(amount)).toFixed(2));
                         }
                     });
                 }
