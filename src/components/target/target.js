@@ -50,6 +50,7 @@ if(savingsAccount){
       }
     const deleteAndTransfer = (savingsId, recipientId) => {
       if (savingsAccount) {
+        accountManager.cteateAchievent(activeUser.username)
         accountManager.transferAllFunds(savingsId, recipientId);
         accountManager.removeSavingsAccount((savingsId));
       }
@@ -62,7 +63,6 @@ if(savingsAccount){
         const icon = savingsAccount.icon.toLowerCase();
         const leftSum = (savingsAccount.balance);
         if(now>=100){
-          accountManager.cteateAchievent(activeUser.username)
             buttonMessage = 'Transfer your balance'
         }
         else if(now===100){
