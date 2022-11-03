@@ -15,12 +15,10 @@ import { v4 as uuidV4 } from 'uuid';
 export default function HistoryPage() {
     const owner = useSelector(state => state.activeUser);
     const navigate = useNavigate();
-    const savingsAccount = accountManager.checkForSavingsAccount(owner.username);
     const allUserAchievments = accountManager.checkForAchievments(owner.username);
 
     return (
         <>
-        <Target savingsAccount={savingsAccount}></Target>
         <Box sx={{ borderColor: 'paper', boxShadow: 5, display: "flex", flexDirection: 'column',  mx: '6rem',alignItems:'center' }}>
         <List component="nav" aria-label="mailbox folders">
         <ListItemText key={uuidV4()} primary='Achievments:' />
