@@ -95,7 +95,7 @@ export default function App() {
   <LoginForm/>
   </>} />
   <Route path="*" element={<>
-  <ErrorPage></ErrorPage>
+    <RegistrationForm></RegistrationForm>
   </>} />
 </Routes>
 </div>
