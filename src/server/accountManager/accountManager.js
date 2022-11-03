@@ -238,8 +238,6 @@ export let accountManager = (function(){
                 let nameOfTransferAccount;
                 let transferAmount;
                 let transferCurrency;
-                let date = new Date();
-                let dateToString = `${date.getMonth() + 1}. ${date.getDate()}. ${date.getFullYear()}`;
                 savingsAccounts.map(a => {
                     if(a.id === transferId){
                         nameOfTransferAccount = a.name;
@@ -262,7 +260,7 @@ export let accountManager = (function(){
                                 transferAmount *= 1.01;
                             }
                         a.balance = Number(a.balance) + Number(transferAmount);
-                        a.transactions.push(new Transaction(`Transfer`, dateToString, "income", transferAmount, "", "", recipientId));
+                        a.transactions.push(new Transaction(`Transfer`, this.getCurrentDate(), "income", transferAmount, "", "", recipientId));
                         a.transactions.sort(function(a, b){
                             return new Date(b.date) - new Date(a.date);
                         });
@@ -287,8 +285,6 @@ export let accountManager = (function(){
                 let nameOfTransferAccount;
                 let transferAmount;
                 let transferCurrency;
-                let date = new Date();
-                let dateToString = `${date.getMonth() + 1}. ${date.getDate()}. ${date.getFullYear()}`;
                 accounts.map(a => {
                     if(a.id === transferId){
                         nameOfTransferAccount = a.name;
@@ -311,7 +307,7 @@ export let accountManager = (function(){
                                 transferAmount *= 1.01;
                             }
                         a.balance = Number(a.balance) + Number(transferAmount);
-                        a.transactions.push(new Transaction(`Transfer`, dateToString, "income", transferAmount, "", "", recipientId));
+                        a.transactions.push(new Transaction(`Transfer`, this.getCurrentDate(), "income", transferAmount, "", "", recipientId));
                         a.transactions.sort(function(a, b){
                             return new Date(b.date) - new Date(a.date);
                         });
@@ -487,20 +483,21 @@ export let accountManager = (function(){
                         let savingsAccount = this.checkForSavingsAccount(owner);
                         if(savingsAccount){
                             let savingsIncome = 0;
+                            let percentage = Number(savingsAccount.percentage)/100;
                                 if(a.currency === savingsAccount.currency){
-                                    savingsIncome = (Number(transaction.amount) * Number(savingsAccount.percentage)/100);
+                                    savingsIncome = (Number(transaction.amount) * percentage);
                                 }else if(a.currency === "EUR" &&  savingsAccount.currency === "BGN"){
-                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*1.96;
+                                    savingsIncome = ((Number(transaction.amount) * percentage))*1.96;
                                 }else if(a.currency === "EUR" &&  savingsAccount.currency === "USD"){
-                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*1.01;
+                                    savingsIncome = ((Number(transaction.amount) * percentage))*1.01;
                                 }else if(a.currency === "BGN" &&  savingsAccount.currency === "USD"){
-                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*0.51;
+                                    savingsIncome = ((Number(transaction.amount) * percentage))*0.51;
                                 }else if(a.currency === "BGN" &&  savingsAccount.currency === "EUR"){
-                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*0.51;
+                                    savingsIncome = ((Number(transaction.amount) * percentage))*0.51;
                                 }else if(a.currency === "USD" &&  savingsAccount.currency === "EUR"){
-                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*0.99;
+                                    savingsIncome = ((Number(transaction.amount) * percentage))*0.99;
                                 }else if(a.currency === "USD" &&  savingsAccount.currency === "BGN"){
-                                    savingsIncome = ((Number(transaction.amount) * Number(savingsAccount.percentage)/100))*1.94;
+                                    savingsIncome = ((Number(transaction.amount) * percentage))*1.94;
                                 }
 
                                 let allSavingsAccounts = this.getAllSavingsAccounts();
