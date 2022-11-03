@@ -4,29 +4,45 @@ import "./accountForm.css";
 import DropDownOptions from "./dropDownOptions";
 import CloseIcon from '@mui/icons-material/Close';
 import { iconsArrOfObjects } from '../../components/categoryCreator/icons';
-import { useState, useEffect } from "react";
-import { create, udateAccountCreationStatus } from "../../store/checkingAccountSlice";
+import { useState} from "react";
+import { create } from "../../store/checkingAccountSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createSavingsAccount } from "../../store/SavingsAccountSlice";
-
-import { userManager } from "../../server/userManager/userManager";
 import { accountManager } from "../../server/accountManager/accountManager";
 
 export default function CreateCheckingAccount({handleClose}) {
    const [accountName, setAccountName] = useState('');
-   const [accountStartAmount, setAccountStartAmount] = useState('');
+   const [accountStartAmount, setAccountStartAmount] = useState(0);
    const [currency, setCurrency] = useState('');
    const [type, setType] = useState('');
-   const [target, setTarget] = useState('');
+   const [target, setTarget] = useState(0);
    const [percentage, setPercentage] = useState('');
    const [icon, setIcon] = useState('');
+   let error = false;
+   let errorTarget = false;
+   let helperText = ``;
+   let helperTextTarget = ``;
    
 
    const user = useSelector(state => state.activeUser);
    const owner = user.username;
    const navigate = useNavigate();
    const dispatch = useDispatch();
+
+   if(accountStartAmount<0 || target<0){
+      if(accountStartAmount<0){
+         helperText = `You can't use negative amount` 
+         error = true;
+      }
+      if(target<0){
+         helperTextTarget = `You can't use negative amount` 
+         errorTarget = true;
+      }
+  }else{
+      error = false;
+      helperText = ``;
+  }
    
    
    const handleDispatch = ()=> {
@@ -111,6 +127,8 @@ export default function CreateCheckingAccount({handleClose}) {
             fullWidth
             type="number"
             id="outlined-number"
+            error={error}
+            helperText= {helperText}
             InputProps={{ inputProps: { min: 0 } }}
             label="Starting amount"
             placeholder="Enter starting amount"
@@ -120,6 +138,8 @@ export default function CreateCheckingAccount({handleClose}) {
             required
             fullWidth
             type="number"
+            error={errorTarget}
+            helperText= {helperTextTarget}
             InputProps={{ inputProps: { min: 0 } }}
             id="outlined-number"
             label="Target amount"
@@ -177,6 +197,8 @@ export default function CreateCheckingAccount({handleClose}) {
          />
          <TextField
             required
+            error={error}
+            helperText= {helperText}
             fullWidth
             type="number"
             id="outlined-number"
@@ -215,10 +237,8 @@ export default function CreateCheckingAccount({handleClose}) {
                 id="createButton" 
                 onClick={()=>{
                   handleDispatch();
-                  handleClose();
-                 
-                  
-                }}
+                  handleClose();   
+               }}
                  >
                   Create new account
                   </Button>

@@ -4,21 +4,17 @@ import "./transactionsList.css";
 import { Typography, Box, MenuItem, Button} from "@mui/material";
 import SelectElement from "../selectElementForCategories/selectElement";
 import { accountManager } from "../../server/accountManager/accountManager";
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PieChart from "./pieChart";
 import { DateRangePicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import { v4 as uuidV4 } from 'uuid';
-import getTheIcon, { iconsArrOfObjects } from "../categoryCreator/icons";
-import { updateTransactions } from "../../store/checkingAccountSlice";
 import EnhancedTable from "./transactionsTable";
 import { useNavigate } from "react-router-dom";
 import { Grid, TextField } from "@mui/material";
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
-import { AccountBalance } from "@mui/icons-material";
-import { isSameDateError } from "@mui/x-date-pickers/internals/hooks/validation/useDateValidation";
+
 
 export default function TransactionsList() {
     const params = useParams();
