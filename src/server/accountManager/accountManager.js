@@ -115,7 +115,7 @@ export let accountManager = (function(){
             let balance = 0;
             userAccounts.map(a => {
                 if(a.id === accountId){
-                    balance = Number((a.balance).toFixed(2));
+                    balance = Number((a.balance));
                 }
             })
             return balance;

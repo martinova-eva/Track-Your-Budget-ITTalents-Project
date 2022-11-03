@@ -80,7 +80,6 @@ const regexPass = '^[A-Za-z0-9]{6,16}$' ;
       if(validUsername && validPassword && password === confirmPass){
          dispatch(registerNewUser({ username, password }))
          .then((data)=>{
-            console.log(data);
             if(data.type !== "register/rejected"){
                navigate('/login')
             }
